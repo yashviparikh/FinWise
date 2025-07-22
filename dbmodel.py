@@ -47,4 +47,4 @@ class FIFOLot(db.Model):
     companyname = db.Column(db.String(100), nullable=False)
     quantityremaining = db.Column(db.Integer, nullable=False)  
     pricepershare = db.Column(db.Numeric(12, 2), nullable=False) 
-    buydate = db.Column(db.DateTime, default=datetime.utcnow)
+    buydate = db.Column(db.DateTime, default=datetime)

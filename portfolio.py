@@ -1,9 +1,10 @@
 import yfinance as yf
 import requests
 import certifi
-from dbmodel import db,Portfolio 
+from dbmodel import db,Portfolio,Transactionhistory,User
 from app import app
 from datetime import datetime
+from decimal import Decimal
 old_get = requests.get
 def safe_get(*args, **kwargs):
      kwargs['verify'] = certifi.where()
@@ -23,7 +24,7 @@ def getfromapi(stockname):
         print(f"[ERROR] regularMarketPrice not found for {name}")
         print(f"Available keys: {list(info.keys())}")
         return None
-getfromapi("RELIANCE.NS")
+#print(getfromapi("TCS.NS"))
 
 def calc(qty,name):
     if qty==0:
@@ -68,83 +69,122 @@ def gettingfromdb(userid):
 # for each company in portfolio get stockname,companyname,total quantity,average buy price,total invested from db function
 #call calc function with totalqty,stockname to get ltp,loss/profit,percent
 
-def buy(userid,name,qty,price,companyname):
-    fromdb=get_stock_entry(1,"reliance.ns")
-    if fromdb:
-        previousqty=fromdb.totalquantity
-        previoustotalinvested=fromdb.totalinvested
-        totalquantity=qty+previousqty
-        totalinvested=previoustotalinvested+(qty*price)
-        averagebuyprice=totalinvested/totalquantity
-        fromdb.totalquantity=totalquantity
-        fromdb.totalinvested=totalinvested
-        fromdb.averagebuyprice=averagebuyprice
-    else:
-        totalinvested=qty*price
-        averagebuyprice=price
-        
-    new_entry = Portfolio(
+def buy(userid,stockname,qty,price,companyname):
+    usermoney=usercheck(userid)["money"]
+    if usermoney>0 and usermoney>(qty*price):
+        fromdb=get_stock_entry(userid,stockname)
+        if fromdb:
+            previousqty=fromdb.totalquantity
+            previoustotalinvested=fromdb.totalinvested
+            totalquantity=qty+previousqty
+            totalinvested = previoustotalinvested + (Decimal(qty) * Decimal(price))
+            averagebuyprice = totalinvested / totalquantity if totalquantity else Decimal(0)
+            fromdb.totalquantity=totalquantity
+            fromdb.totalinvested=totalinvested
+            fromdb.averagebuyprice=averagebuyprice
+
+            db.session.add(fromdb)
+            db.session.commit()
+            portfolioid = fromdb.portfolioid
+        else:
+            totalinvested = Decimal(qty) * Decimal(price)
+            averagebuyprice = Decimal(price)
+            new_entry = Portfolio(
+                userid=userid,
+                stockname=stockname,
+                companyname=companyname,
+                totalquantity=qty,
+                totalinvested=totalinvested,
+                averagebuyprice=averagebuyprice
+            )
+            db.session.add(new_entry)
+            db.session.commit()
+            user = userfromdb(userid)
+            user.money = Decimal(user.money) - Decimal(qty) * Decimal(price)
+            db.session.add(user)
+            db.session.commit()
+
+            portfolioid=new_entry.portfolioid
+
+        newtransactionentry=Transactionhistory(
+            portfolioid=portfolioid,
             userid=userid,
-            stockname=name,
+            stockname=stockname,
             companyname=companyname,
-            totalquantity=qty,
-            totalinvested=totalinvested,
-            averagebuyprice=averagebuyprice
+            quantity=qty,
+            price=price,
+            transactiontype="buy",
+            timestamp=datetime.now()
         )
-    newtransactionentry=Transactionhistory(
-        userid=userid,
-        stockname=name,
-        companyname=companyname,
-        quantity=qty,
-        price=price,
-        transactiontype="buy",
-        timestamp=datetime.now()
-    )
-    db.session.add(new_entry)
-    db.session.add(newtransactionentry)
-    db.session.commit()
-    print("updateddb")
+        db.session.add(newtransactionentry)
+        db.session.commit()
+        print("updateddb")
+    else:
+        print("insufficient funds")
+
 def get_stock_entry(userid, stockname):
     return Portfolio.query.filter_by(userid=userid, stockname=stockname).first()
+
+def userfromdb(userid):
+    return User.query.filter_by(userid=userid).one()
+
+def usercheck(userid):
+    user=userfromdb(userid)
+    if user:
+        return{
+            "userid":user.userid,
+            "money":user.money,
+            "name":user.name,
+            "profit": float(user.profit),
+            "loss": float(user.loss),
+            "profitpercent": user.profitpercent,
+            "losspercent": user.losspercent,
+            "last_login": user.last_login.strftime("%Y-%m-%d %H:%M:%S") if user.last_login else None,
+            "progress": user.progress,
+            "level": user.level
+            }
+    else:
+        return {"error": "User not found"}
 
 def sell(userid,stockname,companyname,qty,price):
     fromdb=get_stock_entry(userid,stockname)
     if fromdb:
         previousqty=fromdb.totalquantity
         previoustotalinvested=fromdb.totalinvested
-        if previousqty==0:
-            print("cannot sell what you dont own")
+        if qty>previousqty:
+            print("cannot sell what you don't own")
         totalquantity=previousqty-qty
-        totalinvested=previoustotalinvested-(qty*price)
-        averagebuyprice=totalinvested/totalquantity
+        totalinvested = previoustotalinvested - Decimal(qty) * Decimal(price)
+        averagebuyprice = totalinvested / totalquantity if totalquantity else 0
         fromdb.totalquantity=totalquantity
         fromdb.totalinvested=totalinvested
         fromdb.averagebuyprice=averagebuyprice
-           
+        db.session.add(fromdb)
+        db.session.commit()
+
+        user = userfromdb(userid)
+        user.money = Decimal(user.money) + Decimal(qty) * Decimal(price)
+        db.session.add(user)
+        db.session.commit()
+        portfolioid = fromdb.portfolioid
     else:
         print("cant sell what you dont own")
-    new_entry = Portfolio(
-            userid=userid,
-            stockname=stockname,
-            companyname=companyname,
-            totalquantity=qty,
-            totalinvested=totalinvested,
-            averagebuyprice=averagebuyprice
-        )
+        return
     newtransactionentry=Transactionhistory(
+        portfolioid=portfolioid,
         userid=userid,
         stockname=stockname,
         companyname=companyname,
         quantity=qty,
         price=price,
-        transactiontype="buy",
+        transactiontype="sell",
         timestamp=datetime.now()
     )
-    db.session.add(new_entry)
     db.session.add(newtransactionentry)
     db.session.commit()
     print("updateddb")
 if __name__ == '__main__':
     with app.app_context():
-        gettingfromdb(1)
-        buy(1,"RELIANCE.NS",3,300,"reliance")
+        #gettingfromdb(1)
+        buy(userid=1,stockname="TCS.NS",qty=6,price=getfromapi(stockname="TCS.NS"),companyname="TCS")
+        #print(usercheck())
