@@ -146,5 +146,5 @@ def sell(userid,stockname,companyname,qty,price):
     print("updateddb")
 if __name__ == '__main__':
     with app.app_context():
-        #gettingfromdb(1)
-        #buy(1,"RELIANCE.NS",3,300,"reliance")
+        gettingfromdb(1)
+        buy(1,"RELIANCE.NS",3,300,"reliance")
