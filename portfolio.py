@@ -26,29 +26,32 @@ def getfromapi(stockname):
         return None
 #print(getfromapi("TCS.NS"))
 
-def calc(qty,name):
+def calc(buyprice,qty,name):
     if qty==0:
-        return 0,0
-    loss,losspercent,profit,profitpercent=0,0,0,0
+        return{
+        "name":name,
+        "ltp":ltp,
+        "profitorloss":0,
+        "percentage":0
+    }
+    profitorloss=0
+    percentage=0
     ltp=getfromapi(name)
     if ltp is None:
         return {"error": f"LTP not available for {name}"}
+    boughtvalue=buyprice*qty
     nowvalue=ltp*qty
-    if(ltp<nowvalue):
-        loss=ltp-nowvalue
-        losspercent=loss/(nowvalue-ltp)*100
-    else:
-        profit=nowvalue-ltp
-        profitpercent=profit/(nowvalue-ltp)*100
+    profitorloss = nowvalue - boughtvalue
+    percentage = (profitorloss / boughtvalue) * 100
     return{
         "name":name,
         "ltp":ltp,
-        "loss":loss,
-        "losspercent":losspercent,
-        "profit":profit,
-        "profitpercent":profitpercent,
+        "profitorloss":profitorloss,
+        "percentage":percentage,
+        "boughtvalue":boughtvalue,
+        "nowvalue":nowvalue
     }
-#print(calc(100,200,"RELIANCE.NS"))
+#print(calc(buyprice=10,qty=20,name="DAVANGERE.NS"))
 #to display- no. of shares invested,total value invested,ltp,profit,profitper,loss,losspercent
 
 def gettingfromdb(userid):
@@ -63,7 +66,7 @@ def gettingfromdb(userid):
         averagebuyprice=i.averagebuyprice
         totalinvested=i.totalinvested
         portfolio.append({stockname,companyname,totalquantity,averagebuyprice,totalinvested})
-        stocksummary=calc(totalquantity,stockname)
+        stocksummary=calc(buyprice=averagebuyprice,qty=totalquantity,name=stockname)
         portfolio.append(stocksummary)
     #print(portfolio)
 # for each company in portfolio get stockname,companyname,total quantity,average buy price,total invested from db function
@@ -242,31 +245,32 @@ if __name__ == '__main__':
         #gettingfromdb(1)
         #buy(userid=1,stockname="TCS.NS",qty=6,price=getfromapi(stockname="TCS.NS"),companyname="TCS")
         #print(usercheck())
-        print("----- Starting FIFO Test -----")
+        # print("----- Starting FIFO Test -----")
 
-        # 1. Buy 10 shares at price 100
-        buy(userid=1, stockname="TCS.NS", qty=10, price=100, companyname="TCS")
+        # # 1. Buy 10 shares at price 100
+        # buy(userid=1, stockname="TCS.NS", qty=10, price=100, companyname="TCS")
 
-        # 2. Buy 5 shares at price 120
-        buy(userid=1, stockname="TCS.NS", qty=5, price=120, companyname="TCS")
+        # # 2. Buy 5 shares at price 120
+        # buy(userid=1, stockname="TCS.NS", qty=5, price=120, companyname="TCS")
 
-        # 3. Sell 12 shares (should use 10 from first lot and 2 from second)
-        sell(userid=1, stockname="TCS.NS", qty=12, price=130, companyname="TCS")
+        # # 3. Sell 12 shares (should use 10 from first lot and 2 from second)
+        # sell(userid=1, stockname="TCS.NS", qty=12, price=130, companyname="TCS")
 
-        # 4. Check remaining FIFO lots
-        lots = FIFOLot.query.filter_by(userid=1).all()
-        for lot in lots:
-            print(f"LotID {lot.lotid} | Qty Remaining: {lot.quantityremaining} | Price: {lot.pricepershare} | BuyDate: {lot.buydate}")
+        # # 4. Check remaining FIFO lots
+        # lots = FIFOLot.query.filter_by(userid=1).all()
+        # for lot in lots:
+        #     print(f"LotID {lot.lotid} | Qty Remaining: {lot.quantityremaining} | Price: {lot.pricepershare} | BuyDate: {lot.buydate}")
 
-        # 5. Check updated portfolio
-        fromdb = get_stock_entry(1, "TCS.NS")
-        print(f"\nPortfolio - Qty: {fromdb.totalquantity} | Invested: {fromdb.totalinvested} | Avg Price: {fromdb.averagebuyprice}")
+        # # 5. Check updated portfolio
+        # fromdb = get_stock_entry(1, "TCS.NS")
+        # print(f"\nPortfolio - Qty: {fromdb.totalquantity} | Invested: {fromdb.totalinvested} | Avg Price: {fromdb.averagebuyprice}")
 
-        # 6. Check transaction history
-        transactions = Transactionhistory.query.filter_by(userid=1).all()
-        for t in transactions:
-            print(f"{t.transactiontype.upper()} | Qty: {t.quantity} | Price: {t.price} | Time: {t.timestamp}")
+        # # 6. Check transaction history
+        # transactions = Transactionhistory.query.filter_by(userid=1).all()
+        # for t in transactions:
+        #     print(f"{t.transactiontype.upper()} | Qty: {t.quantity} | Price: {t.price} | Time: {t.timestamp}")
 
-        # 7. Check user money
-        user = userfromdb(1)
-        print(f"\nUser Balance: ₹{user.money}")
+        # # 7. Check user money
+        # user = userfromdb(1)
+        # print(f"\nUser Balance: ₹{user.money}")
+        pass
