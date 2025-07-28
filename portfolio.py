@@ -1,8 +1,8 @@
 import yfinance as yf
 import requests
 import certifi
-from dbmodel import db,Portfolio,Transactionhistory,User,FIFOLot
-from app import app
+from dbmodel import Portfolio,Transactionhistory,User,FIFOLot
+from extensions import db
 from datetime import datetime
 from decimal import Decimal
 from sqlalchemy.orm.exc import NoResultFound
@@ -270,8 +270,6 @@ def fifo_sell(userid, portfolioid, companyname, sellqty, sellprice):
     db.session.commit()
     return total_cost
 
-if __name__ == '__main__':
-    with app.app_context():
         #gettingfromdb(1)
         #buy(userid=1,stockname="TCS.NS",qty=6,price=getfromapi(stockname="TCS.NS"),companyname="TCS")
         #print(usercheck())
@@ -320,4 +318,3 @@ if __name__ == '__main__':
         # print(f"\nQty: {fromdb.totalquantity}, Invested: {fromdb.totalinvested}, Avg: {fromdb.averagebuyprice}")
         # print(f"User Balance: {userfromdb(1).money}")
 
-        pass
