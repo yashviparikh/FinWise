@@ -63,11 +63,11 @@ def get_live_price(symbol):
 def add_to_watchlist():
     data = request.get_json()
     print(data)
-    user_id = data.get('user_id')
+    user_id = data.get('userid')
     stock_id = data.get('stock_id')
 
     if not user_id or not stock_id:
-        return jsonify({'error': 'Missing user_id or stock_id'}), 400
+        return jsonify({'error': 'Missing userid or stock_id'}), 400
 
     existing = Watchlist.query.filter_by(user_id=user_id, stock_id=stock_id).first()
     if existing:
@@ -80,11 +80,11 @@ def add_to_watchlist():
     return jsonify({'message': 'Stock added to watchlist'}), 201
 
 
-@app.route('/get_watchlist/<int:user_id>', methods=['GET'])
-def get_watchlist(user_id):
+@app.route('/get_watchlist/<int:userid>', methods=['GET'])
+def get_watchlist(userid):
     try:
         #get all stock_ids in watchlist for this user
-        watchlist_entries = Watchlist.query.filter_by(user_id=user_id).all()
+        watchlist_entries = Watchlist.query.filter_by(user_id=userid).all()
 
         #fetch stock symbols from Stock table
         stock_data = []
@@ -123,7 +123,7 @@ def remove_from_watchlist():
     try:
         data = request.get_json()
         print(data)
-        user_id = data.get('user_id')
+        user_id = data.get('userid')
         stock_id = data.get('stock_id')
 
         if not user_id or not stock_id:
@@ -148,11 +148,11 @@ def remove_from_watchlist():
 @app.route('/buy_from_watchlist', methods=['POST'])
 def buy_from_watchlist():
     data = request.json
-    user_id = data.get('user_id')
-    symbol = data.get('symbol')
-    quantity = data.get('quantity')
+    userid = data.get('userid')
+    symbol=data.get('symbol')
+    totalquantity = data.get('quantity')
 
-    if not all([user_id, symbol, quantity]):
+    if not all([userid, symbol, totalquantity]):
         return jsonify({'error': 'Missing data'}), 400
 
     # Find stock by symbol (FIXED)
@@ -167,23 +167,28 @@ def buy_from_watchlist():
         if not live_price:
             return jsonify({'error': 'Could not fetch live price'}), 500
 
-        total_invested = round(live_price * int(quantity), 2)
+        totalinvested = round(live_price * int(totalquantity), 2)
+        stockname = (symbol+".NS")
+        companyname =symbol
 
         # Add to Portfolio
         new_entry = Portfolio(
-            user_id=user_id,
-            stock_id=stock.id,
-            quantity=quantity,
-            total_invested=total_invested
+            userid=userid,
+            stock_id = stock.stock_id,
+            stockname=stockname,
+            companyname=companyname,
+            totalquantity=totalquantity,
+            totalinvested=live_price,
+            averagebuyprice=totalinvested/totalquantity
         )
         db.session.add(new_entry)
         db.session.commit()
 
         return jsonify({
-            'message': f'{quantity} shares of {symbol} bought!',
+            'message': f'{totalquantity} shares of {symbol} bought!',
             'symbol': symbol,
-            'quantity': quantity,
-            'total_invested': total_invested
+            'quantity': totalquantity,
+            'totalinvested': totalinvested
         }), 201
 
     except Exception as e:

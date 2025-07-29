@@ -1,9 +1,9 @@
 import csv
-from invest.models import Person,Stock,Watchlist
+from invest.models import Stock
 from invest import db,app
 
 with app.app_context():
-    with open('stock_list.csv', mode='r', encoding='utf-8') as file:
+    with open('invest/stock_list.csv', mode='r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         for row in reader:
             symbol = row['SYMBOL'].strip()
