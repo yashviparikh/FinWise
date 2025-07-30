@@ -1,3 +1,5 @@
-invest/__pycache__/
-/__pycache__
-/venv
+venv/
+__pycache__/
+logicforportfolio.txt
+portfoliopy.txt
+.env

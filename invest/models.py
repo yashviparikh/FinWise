@@ -1,6 +1,5 @@
 from invest import db
 from datetime import datetime 
-#from extensions import db
 
 class Users(db.Model):
     __tablename__='users'
