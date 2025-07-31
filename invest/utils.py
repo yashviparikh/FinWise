@@ -15,5 +15,6 @@ def get_stock_data(ticker):
         }
     except Exception as e:
         return {"error": str(e)}
+    
 result = get_stock_data("DAVANGERE.NS")
 print(result)

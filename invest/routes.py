@@ -6,58 +6,82 @@ import pandas as pd
 from invest import watchlist
 from invest.portfolio import gettingfromdb, buy, sell, usercheck
 
+
+# Load stock list once at start
 stock_df = pd.read_csv('invest/stock_list.csv', dtype=str)
 
 # ------------------- Dashboard -------------------
-# @app.route('/')
-# def dashboard():
-#     print("hello")
-#     return render_template("index.html")
+
+@app.route('/')
+def dashboard():
+    print("hello")
+    return render_template("index.html")
 
 
 # ------------------- Autocomplete & Live Price -------------------
-@app.route('/autocomplete', methods=['GET'])
+
+@app.route('/autocomplete')
 def autocomplete():
-    query = request.args.get('query', '').upper()
-    matches = stock_df[stock_df['Symbol'].str.contains(query, na=False)]
-    suggestions = matches[['Symbol', 'Company Name']].to_dict(orient='records')
-    return jsonify(suggestions)
+    query = request.args.get('q', '').upper()
 
-@app.route('/get_stock_data', methods=['GET'])
-def get_stock_data():
-    symbol = request.args.get('symbol')
-    if not symbol:
-        return jsonify({'error': 'Symbol not provided'}), 400
+    if not query:
+        return jsonify([])
 
+    matches = stock_df[
+        stock_df['SYMBOL'].str.upper().str.startswith(query, na=False) |
+        stock_df['NAME OF COMPANY'].str.upper().str.startswith(query, na=False)
+    ]
+
+    results = matches[['SYMBOL', 'NAME OF COMPANY']].dropna().head(10).to_dict(orient='records')
+    return jsonify(results)
+
+
+@app.route('/get-price/<symbol>', methods=['GET'])
+def get_live_price(symbol):
     try:
-        ticker = yf.Ticker(symbol + ".NS")
+        ticker = yf.Ticker(symbol)
         info = ticker.info
-        ltp = info.get('regularMarketPrice', 'N/A')
-        change_percent = info.get('regularMarketChangePercent', 'N/A')
-        return jsonify({'ltp': ltp, 'change_percent': change_percent})
+
+        price = info.get("regularMarketPrice")
+        previous_close = info.get("previousClose")
+
+        if price is not None and previous_close:
+            change = round(price - previous_close, 2)
+            change_percent = round((change / previous_close) * 100, 2)
+
+            return jsonify({
+                'symbol': symbol.upper(),
+                'price': round(price, 2),
+                'change': change,
+                'change_percent': change_percent
+            })
+        else:
+            return jsonify({'error': 'Price data incomplete'}), 404
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    
+        return jsonify({'error': f'Failed to fetch price for {symbol}: {str(e)}'}), 500
+
     
 # ------------------- Watchlist Routes -------------------
-@app.route('/add_to_watchlist', methods=['POST'])
+
+@app.route('/add_to_watchlist', methods=['POST']) #takes userid and stockid
 def add_to_watchlist_route():
     return watchlist.add_to_watchlist()
 
-@app.route('/get_watchlist', methods=['GET'])
-def get_watchlist_route():
-    return watchlist.get_watchlist()
+@app.route('/get_watchlist/<int:userid>', methods=['GET'])
+def get_watchlist_route(userid):
+    return watchlist.get_watchlist(userid)
 
-@app.route('/remove_from_watchlist', methods=['POST'])
-def remove_from_watchlist_route():
-    return watchlist.remove_from_watchlist()
+@app.route('/remove_from_watchlist/<int:userid>/<int:stock_id>', methods=['POST'])
+def remove_from_watchlist_route(userid,stock_id):
+    return watchlist.remove_from_watchlist(userid,stock_id)
 
-@app.route('/buy_from_watchlist', methods=['POST'])
+@app.route('/buy_from_watchlist', methods=['POST'])#takes userid, symbol and qty
 def buy_from_watchlist_route():
     return watchlist.buy_from_watchlist()
 
 
 # ------------------- Portfolio Routes -------------------
+
 @app.route('/portfolio/<int:userid>', methods=['GET'])
 def getportfoliofromuserid(userid):
     try:
@@ -67,7 +91,7 @@ def getportfoliofromuserid(userid):
         return jsonify({"error": str(e)}), 500
 
 @app.route('/buy', methods=['POST'])
-def buystock():
+def buystock(): 
     data = request.get_json()
     try:
         buy(

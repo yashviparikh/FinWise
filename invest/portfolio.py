@@ -1,7 +1,7 @@
 import yfinance as yf
 import requests
 import certifi
-from invest import Portfolio,Transactionhistory,User,FIFOLot
+from invest.models import Users,Stock,Watchlist,Portfolio,Transactionhistory,FIFOLot
 from invest.models import db
 from datetime import datetime
 from decimal import Decimal
@@ -89,7 +89,7 @@ def buy(userid,stockname,qty,price,companyname):
     usermoney=usercheck(userid)["money"]
     if Decimal(usermoney) > 0 and Decimal(usermoney) >= Decimal(qty) * Decimal(price):
         fromdb=get_stock_entry(userid,stockname)
-        print("1")
+
         if fromdb:
             previousqty=fromdb.totalquantity
             previoustotalinvested=fromdb.totalinvested
@@ -117,7 +117,6 @@ def buy(userid,stockname,qty,price,companyname):
             db.session.add(new_entry)
             db.session.commit()
             portfolioid=new_entry.portfolioid
-            print("2")
 
 
         try:
@@ -130,7 +129,7 @@ def buy(userid,stockname,qty,price,companyname):
             user.money = Decimal(user.money) - Decimal(qty) * Decimal(price)
             db.session.add(user)
             db.session.commit()
-        print("3")
+
         fifo_buy(userid=userid,
          portfolioid=portfolioid,
          companyname=companyname,
@@ -159,14 +158,14 @@ def get_stock_entry(userid, stockname):
 
 def userfromdb(userid):
     try:
-        return User.query.filter_by(userid=userid).one()
+        return Users.query.filter_by(userid=userid).one()
     except NoResultFound:
         return None
 
 def usercheck(userid):
     user=userfromdb(userid)
     if user:
-        print("5")
+
         return{
             "userid":user.userid,
             "money":user.money,
@@ -241,7 +240,7 @@ def fifo_buy(userid, portfolioid, companyname, qty, price, date):
         pricepershare=price,
         buydate=date
     )
-    print("6")
+
     db.session.add(new_lot)
     db.session.commit()
 

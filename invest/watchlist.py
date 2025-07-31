@@ -57,16 +57,12 @@ def get_watchlist(userid):
         return jsonify({'error': f'Failed to get watchlist: {str(e)}'}), 500
 
 
-def remove_from_watchlist():
+def remove_from_watchlist(userid, stock_id):
     try:
-        data = request.get_json()
-        user_id = data.get('userid')
-        stock_id = data.get('stock_id')
+        if not userid or not stock_id:
+            return jsonify({'error': 'userid and stock_id are required'}), 400
 
-        if not user_id or not stock_id:
-            return jsonify({'error': 'user_id and stock_id are required'}), 400
-
-        entry = Watchlist.query.filter_by(user_id=user_id, stock_id=stock_id).first()
+        entry = Watchlist.query.filter_by(user_id=userid, stock_id=stock_id).first()
         if not entry:
             return jsonify({'message': 'Entry not found in watchlist'}), 404
 
@@ -76,6 +72,7 @@ def remove_from_watchlist():
 
     except Exception as e:
         return jsonify({'error': f'Failed to remove stock: {str(e)}'}), 500
+
 
 
 def buy_from_watchlist():
