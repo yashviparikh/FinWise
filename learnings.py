@@ -1,7 +1,31 @@
 from datetime import datetime
 import os
 import json
+import requests
+def getheadlines():
+    url="https://gnews.io/api/v4/search?q=stock%20market&lang=en&country=in&token=806590bf32b625657aa33acc223d405b"
+    headlines=requests.get(url)
+    if headlines.status_code==200:
+        data=headlines.json()
+        articles = data.get("articles", [])[:10]  
+        cleaned_articles = []
+        for article in articles:
+            cleaned = {
+                "title": article.get("title", "").strip(),
+                "description": article.get("description", "").strip(),
+                "content": article.get("content", "").strip(),
+                "url": article.get("url"),
+                "image": article.get("image"),
+                "publishedAt": article.get("publishedAt"),
+                "source_name": article.get("source", {}).get("name"),
+                "source_url": article.get("source", {}).get("url")
+            }
+            cleaned_articles.append(cleaned)
 
+        return cleaned_articles     
+    else: 
+        print("error:",headlines.status_code)
+getheadlines()
 def get_news():
     should_refresh = True
     json_data = {}
@@ -17,15 +41,17 @@ def get_news():
             print("❗ Cache file invalid or corrupted:", e)
 
     if should_refresh:
-        json_data = {
-            "last_updated": datetime.now().isoformat(),
-            "headline": "new headline",
-            "summary": "this is some summary",
-            "sentiment": "this is the sentiment",
-            "impact": "this is the market impact"
-        }
+        latest = getheadlines()
+        if latest:
+            json_data = {
+                "last_updated": datetime.now().isoformat(),
+                "headline": "new headline",
+                "summary": "this is some summary",
+                "sentiment": "this is the sentiment",
+                "impact": "this is the market impact"
+            }
         with open(cache_path, "w") as file:
             json.dump(json_data, file, indent=2)
 
     return json_data
-print(get_news())
+#print(get_news())
