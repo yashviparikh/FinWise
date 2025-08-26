@@ -2,6 +2,7 @@ from datetime import datetime
 import os
 import json
 import requests
+from summarizermodel import summarize_news
 def getheadlines():
     url="https://gnews.io/api/v4/search?q=stock%20market&lang=en&country=in&token=806590bf32b625657aa33acc223d405b"
     headlines=requests.get(url)
@@ -25,7 +26,9 @@ def getheadlines():
         return cleaned_articles     
     else: 
         print("error:",headlines.status_code)
-getheadlines()
+# headlines=getheadlines()
+# for i in headlines:
+#     print(i,"\n")
 def get_news():
     should_refresh = True
     json_data = {}
@@ -42,11 +45,12 @@ def get_news():
 
     if should_refresh:
         latest = getheadlines()
+        summary=summarize_news()
         if latest:
             json_data = {
                 "last_updated": datetime.now().isoformat(),
-                "headline": "new headline",
-                "summary": "this is some summary",
+                "headline": latest["title"],
+                "summary": summary,
                 "sentiment": "this is the sentiment",
                 "impact": "this is the market impact"
             }
@@ -54,4 +58,4 @@ def get_news():
             json.dump(json_data, file, indent=2)
 
     return json_data
-#print(get_news())
+# print(get_news())
