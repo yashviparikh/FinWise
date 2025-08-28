@@ -1,7 +1,35 @@
 {
-  "last_updated": "2025-08-26T09:06:31.971441",
-  "headline": "new headline",
-  "summary": "this is some summary",
-  "sentiment": "this is the sentiment",
-  "impact": "this is the market impact"
+  "last_updated": "2025-08-29T02:57:30.505297",
+  "news": [
+    {
+      "headline": "Market Rally Amid Nvidia's China Concerns and Interest Rate Speculations",
+      "summary": " The dollar fell against major currencies as traders expected interest rate cuts . Nvidia's strong forecast reassured investors, countering fears of a slowdown . Economic data showed robust U.S. growth, lifting",
+      "sentiment": "this is the sentiment",
+      "impact": "this is the market impact"
+    },
+    {
+      "headline": "Groww's IPO Greenlit: A Fintech Powerhouse Prepares for Massive Market Debut",
+      "summary": " Billionbrains Garage Ventures has received approval for an IPO aimed at raising between USD 700 million and USD 1 billion . The Bengaluru-based firm anticipates a valuation of approximately USD 7",
+      "sentiment": "this is the sentiment",
+      "impact": "this is the market impact"
+    },
+    {
+      "headline": "Upcoming IPO: Mumbai-based SFC Environmental Tech files draft papers with Sebi to raise funds via public issue - Details",
+      "summary": " Mumbai-based wastewater and solid waste treatment firm SFC Environmental Technologies is seeking to raise funds from the Indian stock market .",
+      "sentiment": "this is the sentiment",
+      "impact": "this is the market impact"
+    },
+    {
+      "headline": "Ahead of Market: 10 things that will decide stock market action on Friday",
+      "summary": " Indian market closed lower on Thursday . BSE Sensex fell by 705.97 points . NSE Nifty declined by 211.15 points . Most sectors traded in the red .",
+      "sentiment": "this is the sentiment",
+      "impact": "this is the market impact"
+    },
+    {
+      "headline": "US stocks mixed as Dow sinks, S&P 500 nears record, Nasdaq rides AI boom - Nvidia earnings jolt but GDP growth surprises Wall street",
+      "summary": " U.S. stock market movements on 28 August 2025 as Nvidia earnings shake tech stocks . Get insights on GDP growth, inflation trends, and market implications for investors navigating volatility .",
+      "sentiment": "this is the sentiment",
+      "impact": "this is the market impact"
+    }
+  ]
 }

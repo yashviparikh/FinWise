@@ -8,7 +8,7 @@ def getheadlines():
     headlines=requests.get(url)
     if headlines.status_code==200:
         data=headlines.json()
-        articles = data.get("articles", [])[:10]  
+        articles = data.get("articles", [])[:5]  
         cleaned_articles = []
         for article in articles:
             cleaned = {
@@ -38,24 +38,29 @@ def get_news():
             with open(cache_path, "r") as file:
                 json_data = json.load(file)
                 last_updated = datetime.fromisoformat(json_data['last_updated']).date()
-                if last_updated == datetime.now().date().isoformat():
+                if last_updated == datetime.now().date():
                     should_refresh = False
         except (json.JSONDecodeError, KeyError, ValueError) as e:
             print("❗ Cache file invalid or corrupted:", e)
 
     if should_refresh:
-        latest = getheadlines()
-        summary=summarize_news()
+        latest = getheadlines()   
         if latest:
-            json_data = {
-                "last_updated": datetime.now().isoformat(),
-                "headline": latest["title"],
-                "summary": summary,
-                "sentiment": "this is the sentiment",
-                "impact": "this is the market impact"
+            newsdata = []
+            for article in latest:
+                summary = summarize_news(article["description"])
+                newsdata.append({
+                    "headline": article["title"],
+                    "summary": summary,
+                    "sentiment": "this is the sentiment",
+                    "impact": "this is the market impact"
+                })
+        json_data = {
+            "last_updated": datetime.now().isoformat(),
+            "news": newsdata
             }
         with open(cache_path, "w") as file:
             json.dump(json_data, file, indent=2)
 
     return json_data
-# print(get_news())
+print(get_news())
