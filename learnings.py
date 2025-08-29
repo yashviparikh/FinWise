@@ -3,6 +3,7 @@ import os
 import json
 import requests
 from summarizermodel import summarize_news
+from ragbased import impacttosentiment,getimpact,sentiment_to_market_action
 def getheadlines():
     url="https://gnews.io/api/v4/search?q=stock%20market&lang=en&country=in&token=806590bf32b625657aa33acc223d405b"
     headlines=requests.get(url)
@@ -49,11 +50,15 @@ def get_news():
             newsdata = []
             for article in latest:
                 summary = summarize_news(article["description"])
+                impacts=getimpact(article["title"],summary)
+                sentiment=impacttosentiment(impacts)
+                reaction,action = sentiment_to_market_action(sentiment)
                 newsdata.append({
                     "headline": article["title"],
                     "summary": summary,
-                    "sentiment": "this is the sentiment",
-                    "impact": "this is the market impact"
+                    "sentiment": sentiment,
+                    "market reaction": reaction,
+                    "investor reaction":action
                 })
         json_data = {
             "last_updated": datetime.now().isoformat(),

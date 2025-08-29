@@ -1,19 +1,4 @@
 {
-  "sensex": "Bearish or bullish depending on index movement",
-  "nifty": "Bearish or bullish depending on index movement",
-  "dow jones": "Signals US market sentiment",
-  "nasdaq": "Tech-heavy index, bullish or bearish for technology sector",
-  "s&p 500": "Benchmark for US equities sentiment",
-  "ftse 100": "UK market sentiment indicator",
-  "nikkei": "Japanese stock market movement",
-  "hang seng": "Hong Kong stock market movement",
-  "shanghai composite": "Chinese stock market sentiment",
-  "kospi": "South Korea market sentiment",
-  "dax": "German market index sentiment",
-  "cac 40": "French market index sentiment",
-  "tsx": "Canadian stock market impact",
-  "ibovespa": "Brazilian market movement",
-  "msci emerging markets": "Sentiment on developing markets",
   "global rally": "Bullish sentiment across markets",
   "market crash": "Severe bearish sentiment",
   "market rally": "Strong bullish sentiment",
@@ -410,5 +395,3 @@
   "golden cross": "Strong bullish",
   "death cross": "Strong bearish"
 }
-
-

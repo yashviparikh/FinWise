@@ -1,35 +1,40 @@
 {
-  "last_updated": "2025-08-29T02:57:30.505297",
+  "last_updated": "2025-08-29T22:18:50.830994",
   "news": [
     {
-      "headline": "Market Rally Amid Nvidia's China Concerns and Interest Rate Speculations",
-      "summary": " The dollar fell against major currencies as traders expected interest rate cuts . Nvidia's strong forecast reassured investors, countering fears of a slowdown . Economic data showed robust U.S. growth, lifting",
-      "sentiment": "this is the sentiment",
-      "impact": "this is the market impact"
+      "headline": "Corporate bond market is taking off and needs support",
+      "summary": " If trading in these bonds can be facilitated on stock exchange platforms through stockbrokers, it will boost demand for these securities .",
+      "sentiment": "neutral",
+      "market reaction": "Hold or sideways",
+      "investor reaction": "Hold positions, monitor closely"
     },
     {
-      "headline": "Groww's IPO Greenlit: A Fintech Powerhouse Prepares for Massive Market Debut",
-      "summary": " Billionbrains Garage Ventures has received approval for an IPO aimed at raising between USD 700 million and USD 1 billion . The Bengaluru-based firm anticipates a valuation of approximately USD 7",
-      "sentiment": "this is the sentiment",
-      "impact": "this is the market impact"
+      "headline": "Chaman Lal Setia Share Price Today, Chaman Lal Setia Stock Price Live NSE",
+      "summary": " Chaman Lal Setia Share Price \u2013 Track LIVE BSE/NSE stock prices of the company . Track live market share prices with insights on performance, fundamentals, market cap, share",
+      "sentiment": "neutral",
+      "market reaction": "Hold or sideways",
+      "investor reaction": "Hold positions, monitor closely"
     },
     {
-      "headline": "Upcoming IPO: Mumbai-based SFC Environmental Tech files draft papers with Sebi to raise funds via public issue - Details",
-      "summary": " Mumbai-based wastewater and solid waste treatment firm SFC Environmental Technologies is seeking to raise funds from the Indian stock market .",
-      "sentiment": "this is the sentiment",
-      "impact": "this is the market impact"
+      "headline": "US stock market in trouble today: Dow, S&P 500, Nasdaq slide after record highs \u2014 inflation heats up, Trump tariffs rattle stocks ahead of volatile September",
+      "summary": " US stock market slipped Friday, with the Dow down 202 points, the S&P 500 off 0.8%, and the Nasdaq losing 1.3%, as inflation ticked higher",
+      "sentiment": "bearish",
+      "market reaction": "Selling pressure",
+      "investor reaction": "Consider reducing positions or hedging"
     },
     {
-      "headline": "Ahead of Market: 10 things that will decide stock market action on Friday",
-      "summary": " Indian market closed lower on Thursday . BSE Sensex fell by 705.97 points . NSE Nifty declined by 211.15 points . Most sectors traded in the red .",
-      "sentiment": "this is the sentiment",
-      "impact": "this is the market impact"
+      "headline": "Sorry Europe, American luxury brands are in",
+      "summary": " High-end U.S. fashion houses outperforming in shops and in the stock market .",
+      "sentiment": "neutral",
+      "market reaction": "Hold or sideways",
+      "investor reaction": "Hold positions, monitor closely"
     },
     {
-      "headline": "US stocks mixed as Dow sinks, S&P 500 nears record, Nasdaq rides AI boom - Nvidia earnings jolt but GDP growth surprises Wall street",
-      "summary": " U.S. stock market movements on 28 August 2025 as Nvidia earnings shake tech stocks . Get insights on GDP growth, inflation trends, and market implications for investors navigating volatility .",
-      "sentiment": "this is the sentiment",
-      "impact": "this is the market impact"
+      "headline": "Market Swings: Inflation Data Bolsters Rate Cut Hopes",
+      "summary": " Major stock indexes dipped while U.S. Treasury yields slightly increased . Technology shares, particularly Dell Technologies, led declines . This data supports expectations of a Federal Reserve rate cut in September .",
+      "sentiment": "bearish",
+      "market reaction": "Selling pressure",
+      "investor reaction": "Consider reducing positions or hedging"
     }
   ]
 }
