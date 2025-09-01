@@ -3,8 +3,9 @@ from invest import app
 from invest.models import Users,Stock,Watchlist,Portfolio,Transactionhistory,FIFOLot
 import yfinance as yf
 import pandas as pd
-from invest import watchlist
+from invest import watchlist, learnings
 from invest.portfolio import gettingfromdb, buy, sell, usercheck
+import os
 
 
 # Load stock list once at start
@@ -14,7 +15,7 @@ stock_df = pd.read_csv('invest/stock_list.csv', dtype=str)
 
 @app.route('/')
 def dashboard():
-    print("hello")
+    #print("hello")
     return render_template("index.html")
 
 
@@ -127,6 +128,35 @@ def get_user(userid):
         return jsonify(user)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+# ------------------- Learnings -------------------
+
+@app.route('/learnings', methods=['GET'])
+def get_learnings():
+    try:
+        data = learnings.get_news()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/learnings/refresh', methods=['POST'])
+def refresh_learnings():
+    try:
+        # Force refresh by deleting cache
+        cache_path = "cache_news.json"
+        if os.path.exists(cache_path):
+            os.remove(cache_path)
+
+        data = learnings.get_news()
+        return jsonify({
+            "message": "News refreshed successfully",
+            "data": data
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
 
