@@ -7,32 +7,13 @@ def normalize(text: str) -> str:
     return text.strip()
 
 
-def getimpact(headline,summary):
-    cache_path='kb.json'
-    if os.path.exists(cache_path):
-        try:
-            with open(cache_path, "r") as file:
-                kb = json.load(file)
-        except (json.JSONDecodeError, KeyError, ValueError) as e:
-            print("❗ Cache file invalid or corrupted:", e)
-            kb={}
-    combined=headline+" "+summary
-    normalized=normalize(combined)
-    #print(normalized)
+with open("kb.json", "r") as f:
+    KB = json.load(f)
 
-    results = []
-    for keyword, impact in kb.items():
-        if keyword in normalized:   
-            results.append(impact)  
-    unique_results = list(dict.fromkeys(results))
-
-    if not results:
-        impacts = {"impact": "no clear impact detected"}
-    else:
-        impacts = unique_results
-        #print(impacts)
-    return impacts
-
+def getimpact(headline, summary, kb=KB):
+    combined = (headline + " " + summary).lower()
+    results = [impact for k, impact in kb.items() if k in combined]
+    return results if results else ["no clear impact detected"]
 
 headline="Upcoming IPO: Mumbai-based SFC Environmental Tech files draft papers with Sebi to raise funds via public issue - Details"
 summary=" Mumbai-based wastewater and solid waste treatment firm SFC Environmental Technologies is seeking to raise funds from the Indian stock market ."
