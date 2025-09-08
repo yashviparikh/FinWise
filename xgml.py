@@ -36,6 +36,11 @@ for col in X.columns:
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=22, stratify=y
 )
+import pickle
+
+# Save the list of training columns
+with open("training_columns.pkl", "wb") as f:
+    pickle.dump(list(X_train.columns), f)
 
 # ----------------------------
 # Handle class imbalance
