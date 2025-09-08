@@ -1,0 +1,601 @@
+transactionid,userid,portfolioid,companyname,stockname,quantity,price,transactiontype,timestamp
+,1,1,Britannia Industries Limited,BRITANNIA,8,173.8,buy,2025-05-14 17:13:05
+,1,1,Bhartiya International Limited,BIL,9,3695.53,buy,2024-10-21 15:00:32
+,1,1,Blue Dart Express Limited,BLUEDART,35,480.35,buy,2024-09-18 02:26:43
+,1,1,Gujarat State Fertilizers & Chemicals Limited,GSFC,6,1132.26,buy,2025-06-23 09:04:47
+,1,1,Dr. Lal Path Labs Ltd.,LALPATHLAB,36,1034.25,buy,2024-12-24 04:47:14
+,1,1,Balu Forge Industries Limited,BALUFORGE,27,1141.18,buy,2024-12-12 11:53:09
+,1,1,V2 Retail Limited,V2RETAIL,1,3806.1,buy,2024-12-04 01:48:11
+,1,1,Sanofi Consumer Healthcare India Limited,SANOFICONR,22,1425.46,buy,2024-11-01 13:54:57
+,1,1,VIP Industries Limited,VIPIND,22,555.94,buy,2025-06-21 09:44:15
+,1,1,WESTLIFE FOODWORLD LIMITED,WESTLIFE,23,3038.44,sell,2024-10-18 04:39:09
+,1,1,Xchanging Solutions Limited,XCHANGING,30,2704.33,sell,2025-05-29 04:37:28
+,1,1,CRISIL Limited,CRISIL,6,2782.6,sell,2025-06-23 00:51:07
+,1,1,Infibeam Avenues Limited,INFIBEAM,24,2907.89,sell,2025-08-20 21:02:40
+,1,1,International Conveyors Limited,INTLCONV,43,1178.1,buy,2025-04-08 04:30:46
+,1,1,Gala Precision Engineering Limited,GALAPREC,15,4339.09,buy,2024-10-12 03:39:25
+,2,2,Diamines & Chemicals Limited,DIAMINESQ,41,4178.85,buy,2025-04-25 17:07:02
+,2,2,Punjab & Sind Bank,PSB,14,3367.37,sell,2025-02-19 05:55:29
+,2,2,Garware Technical Fibres Limited,GARFIBRES,42,403.44,buy,2024-09-20 17:33:51
+,2,2,Lloyds Metals And Energy Limited,LLOYDSME,47,1261.81,buy,2024-09-19 23:03:30
+,2,2,UCAL LIMITED,UCAL,41,3456.4,buy,2024-10-14 18:37:52
+,2,2,Network People Services Technologies Limited,NPST,50,3891.2,buy,2024-12-02 07:10:55
+,2,2,Indus Towers Limited,INDUSTOWER,21,2035.77,buy,2024-12-07 17:53:06
+,2,2,Apollo Pipes Limited,APOLLOPIPE,37,4388.02,buy,2025-03-23 15:34:51
+,2,2,Engineers India Limited,ENGINERSIN,32,2008.38,sell,2025-04-30 04:32:58
+,2,2,GRP Limited,GRPLTD,10,1361.16,buy,2024-09-18 16:39:41
+,2,2,Hitech Corporation Limited,HITECHCORP,35,1350.57,buy,2025-04-14 08:30:41
+,2,2,Fortis Healthcare Limited,FORTIS,38,2027.03,buy,2024-11-24 14:37:46
+,2,2,Gopal Snacks Limited,GOPAL,33,2492.9,sell,2025-06-13 11:06:53
+,2,2,Restaurant Brands Asia Limited,RBA,8,806.56,buy,2025-05-18 18:41:25
+,2,2,Garware Technical Fibres Limited,GARFIBRES,28,3002.22,buy,2025-06-07 18:09:03
+,3,3,R R Kabel Limited,RRKABEL,30,2669.12,sell,2025-04-08 00:33:03
+,3,3,Restaurant Brands Asia Limited,RBA,1,3417.4,buy,2025-02-18 07:32:11
+,3,3,Sobha Limited,SOBHA,35,3766.85,sell,2024-12-02 23:59:01
+,3,3,EPL Limited,EPL,8,1502.83,buy,2025-03-01 20:15:36
+,3,3,Sambhv Steel Tubes Limited,SAMBHV,47,4385.47,buy,2025-04-25 05:40:57
+,3,3,Supreme Petrochem Limited,SPLPETRO,49,934.33,sell,2024-12-25 10:15:13
+,3,3,AWL Agri Business Limited,AWL,41,1527.3,buy,2025-07-19 17:46:01
+,3,3,Apeejay Surrendra Park Hotels Limited,PARKHOTELS,13,806.55,sell,2025-08-11 23:47:40
+,3,3,Emami Limited,EMAMILTD,50,4616.05,sell,2024-09-10 21:54:04
+,3,3,RattanIndia Enterprises Limited,RTNINDIA,21,2468.6,buy,2025-06-30 01:55:32
+,3,3,Bal Pharma Limited,BALPHARMA,20,1235.29,buy,2025-07-18 08:06:29
+,3,3,Sagar Cements Limited,SAGCEM,6,473.98,buy,2024-11-09 09:27:39
+,3,3,Le Travenues Technology Limited,IXIGO,49,2686.9,buy,2025-06-06 12:27:32
+,3,3,Manoj Vaibhav Gems N Jewellers Limited,MVGJL,31,4736.9,buy,2025-02-19 12:22:48
+,3,3,Madras Fertilizers Limited,MADRASFERT,39,2144.53,buy,2025-01-18 12:41:34
+,4,4,Emami Limited,EMAMILTD,49,3663.16,buy,2024-12-25 07:16:37
+,4,4,GIC Housing Finance Limited,GICHSGFIN,26,4975.99,buy,2024-11-07 18:30:08
+,4,4,Alldigi Tech Limited,ALLDIGI,34,2284.86,buy,2024-12-01 00:11:52
+,4,4,Pokarna Limited,POKARNA,22,154.12,buy,2025-07-01 21:36:33
+,4,4,Premier Polyfilm Limited,PREMIERPOL,15,85.59,sell,2025-01-17 02:37:00
+,4,4,IOL Chemicals and Pharmaceuticals Limited,IOLCP,15,383.63,buy,2024-10-18 01:59:49
+,4,4,Uniparts India Limited,UNIPARTS,5,2595.07,buy,2024-10-14 09:46:56
+,4,4,Western Carriers (India) Limited,WCIL,14,2719.21,sell,2025-02-02 22:30:26
+,4,4,National Fertilizers Limited,NFL,37,2902.25,buy,2024-10-15 22:47:25
+,4,4,Power Grid Corporation of India Limited,POWERGRID,27,992.53,buy,2025-01-25 19:15:31
+,4,4,CG Power and Industrial Solutions Limited,CGPOWER,23,2146.71,buy,2025-08-03 12:32:54
+,4,4,Xchanging Solutions Limited,XCHANGING,4,3383.15,sell,2025-01-19 23:13:40
+,4,4,Gayatri Projects Limited,GAYAPROJ,4,2042.98,buy,2025-04-30 20:27:46
+,4,4,Restaurant Brands Asia Limited,RBA,7,1280.85,buy,2024-12-20 02:50:29
+,4,4,Orient Technologies Limited,ORIENTTECH,9,2138.31,buy,2025-07-18 20:18:32
+,5,5,Seshasayee Paper and Boards Limited,SESHAPAPER,5,2243.5,sell,2024-09-25 06:18:56
+,5,5,MMP Industries Limited,MMP,7,300.41,sell,2025-06-18 18:55:17
+,5,5,Juniper Hotels Limited,JUNIPER,1,4846.53,sell,2025-03-05 19:28:42
+,5,5,Star Cement Limited,STARCEMENT,16,873.24,buy,2025-04-04 15:20:11
+,5,5,Prime Securities Limited,PRIMESECU,26,4517.09,buy,2024-10-26 20:47:32
+,5,5,Sambhv Steel Tubes Limited,SAMBHV,25,1362.76,sell,2025-09-01 13:44:39
+,5,5,Diamines & Chemicals Limited,DIAMINESQ,19,2143.89,sell,2025-02-02 09:31:28
+,5,5,Texmaco Infrastructure & Holdings Limited,TEXINFRA,36,3326.26,buy,2024-10-08 23:47:57
+,5,5,Voltamp Transformers Limited,VOLTAMP,19,1127.62,buy,2025-04-10 18:43:11
+,5,5,India Tourism Development Corporation Limited,ITDC,35,351.74,buy,2024-12-31 05:56:52
+,5,5,The New India Assurance Company Limited,NIACL,38,2410.1,sell,2025-07-27 11:56:24
+,5,5,Madras Fertilizers Limited,MADRASFERT,11,331.55,buy,2025-05-10 12:40:33
+,5,5,Star Cement Limited,STARCEMENT,12,389.18,buy,2025-05-06 14:21:00
+,5,5,Restaurant Brands Asia Limited,RBA,16,2048.69,sell,2025-08-18 06:20:12
+,5,5,Sagar Cements Limited,SAGCEM,16,2915.65,buy,2025-08-09 01:01:07
+,6,6,Gala Precision Engineering Limited,GALAPREC,27,3304.0,buy,2025-01-26 20:00:39
+,6,6,Anmol India Limited,ANMOL,17,1061.08,sell,2025-04-20 14:38:25
+,6,6,Veedol Corporation Limited,VEEDOL,17,2009.14,buy,2024-11-22 01:35:16
+,6,6,Wockhardt Limited,WOCKPHARMA,30,1615.08,sell,2025-06-09 00:24:49
+,6,6,SecMark Consultancy Limited,SECMARK,1,2318.51,sell,2024-10-05 09:37:45
+,6,6,Gayatri Projects Limited,GAYAPROJ,5,2711.29,buy,2024-09-26 04:26:33
+,6,6,Viji Finance Limited,VIJIFIN,23,4410.28,sell,2025-05-23 04:44:57
+,6,6,Fertilizers and Chemicals Travancore Limited,FACT,19,830.85,sell,2024-12-05 21:29:39
+,6,6,Prataap Snacks Limited,DIAMONDYD,20,3077.8,sell,2025-07-05 14:50:51
+,6,6,Engineers India Limited,ENGINERSIN,34,88.72,sell,2024-12-29 18:37:10
+,6,6,Wockhardt Limited,WOCKPHARMA,43,562.75,sell,2024-10-09 09:02:36
+,6,6,Steel City Securities Limited,STEELCITY,8,4454.08,sell,2025-08-06 13:28:02
+,6,6,Cura Technologies Limited,CURAA,18,1444.69,buy,2024-12-07 19:05:47
+,6,6,EPL Limited,EPL,14,3453.11,sell,2025-08-10 21:32:29
+,6,6,Bank of India,BANKINDIA,32,1293.05,sell,2024-10-17 14:43:47
+,7,7,Shakti Pumps (India) Limited,SHAKTIPUMP,6,3189.71,sell,2025-02-03 00:21:41
+,7,7,International Conveyors Limited,INTLCONV,1,1701.1,buy,2024-12-25 08:13:48
+,7,7,Steel City Securities Limited,STEELCITY,11,3719.09,buy,2025-03-03 11:25:07
+,7,7,Expleo Solutions Limited,EXPLEOSOL,36,97.87,buy,2025-05-13 06:20:12
+,7,7,Sobha Limited,SOBHA,45,4524.45,buy,2025-07-29 07:48:03
+,7,7,Lypsa Gems & Jewellery Limited,LYPSAGEMS,24,2933.42,buy,2025-01-28 01:48:38
+,7,7,Bharat Gears Limited,BHARATGEAR,3,1575.88,sell,2024-11-10 13:22:27
+,7,7,Prudential Sugar Corporation Limited,PRUDMOULI,3,4499.68,buy,2025-01-30 03:39:54
+,7,7,Seshasayee Paper and Boards Limited,SESHAPAPER,43,558.83,sell,2025-01-24 08:41:28
+,7,7,Sobha Limited,SOBHA,27,4870.49,sell,2024-11-28 18:04:31
+,7,7,Wonderla Holidays Limited,WONDERLA,16,4329.8,sell,2025-05-26 15:48:49
+,7,7,V2 Retail Limited,V2RETAIL,12,4413.01,buy,2024-12-21 01:44:31
+,7,7,India Tourism Development Corporation Limited,ITDC,22,3922.81,buy,2025-06-07 22:46:03
+,7,7,Diffusion Engineers Limited,DIFFNKG,48,4063.21,buy,2025-09-07 03:34:54
+,7,7,GAIL (India) Limited,GAIL,45,585.07,sell,2025-05-31 20:27:15
+,8,8,Oberoi Realty Limited,OBEROIRLTY,31,1151.05,sell,2025-05-18 01:27:21
+,8,8,GRP Limited,GRPLTD,23,1560.69,sell,2024-10-06 02:50:52
+,8,8,T T Ltd-RE,TTL-RE,15,167.14,buy,2025-05-02 22:50:26
+,8,8,Uniparts India Limited,UNIPARTS,18,4328.55,sell,2025-05-12 23:45:17
+,8,8,Escorts Kubota Limited,ESCORTS,23,3225.33,buy,2024-11-13 20:27:22
+,8,8,Safari Industries (India) Limited,SAFARI,35,1689.19,buy,2025-04-03 19:52:22
+,8,8,Kritika Wires Limited,KRITIKA,17,933.91,sell,2025-06-18 13:16:57
+,8,8,Steel City Securities Limited,STEELCITY,3,586.59,buy,2024-12-12 11:07:53
+,8,8,Xchanging Solutions Limited,XCHANGING,21,2210.15,sell,2024-11-10 20:20:59
+,8,8,Anjani Portland Cement Limited,APCL,25,4502.55,buy,2025-03-06 21:54:20
+,8,8,International Conveyors Limited,INTLCONV,46,2208.48,buy,2025-02-02 18:06:33
+,8,8,Alkali Metals Limited,ALKALI,35,3449.94,sell,2024-12-22 05:25:27
+,8,8,India Tourism Development Corporation Limited,ITDC,43,1025.32,buy,2025-09-02 18:35:57
+,8,8,Mawana Sugars Limited,MAWANASUG,43,4607.82,buy,2025-05-14 22:33:30
+,8,8,Prakash Pipes Limited,PPL,8,3612.78,buy,2025-06-02 15:27:45
+,9,9,GIC Housing Finance Limited,GICHSGFIN,43,2071.54,buy,2025-04-12 16:28:34
+,9,9,UNO Minda Limited,UNOMINDA,36,680.07,buy,2024-12-02 16:17:24
+,9,9,Muthoot Capital Services Limited,MUTHOOTCAP,25,3402.72,sell,2025-06-01 06:23:44
+,9,9,Balaji Telefilms Limited,BALAJITELE,37,1539.7,buy,2025-01-12 07:51:44
+,9,9,Sambhv Steel Tubes Limited,SAMBHV,20,1470.22,buy,2025-08-01 17:16:39
+,9,9,SMC Global Securities Limited,SMCGLOBAL,39,3290.79,buy,2025-07-03 18:31:47
+,9,9,Netweb Technologies India Limited,NETWEB,44,1107.82,buy,2025-07-06 18:10:18
+,9,9,Voltas Limited,VOLTAS,48,889.97,buy,2024-09-30 02:42:28
+,9,9,Regency Ceramics Limited,REGENCERAM,43,3183.06,buy,2024-12-06 08:12:39
+,9,9,IDBI Bank Limited,IDBI,49,1212.6,buy,2025-07-24 13:05:01
+,9,9,Alkali Metals Limited,ALKALI,13,779.4,buy,2024-09-20 20:31:27
+,9,9,Power Grid Corporation of India Limited,POWERGRID,40,4256.2,buy,2025-07-18 00:53:56
+,9,9,Munjal Auto Industries Limited,MUNJALAU,41,2899.57,sell,2025-01-08 21:33:49
+,9,9,Hubtown Limited,HUBTOWN,32,2028.28,buy,2025-02-11 04:27:18
+,9,9,Exxaro Tiles Limited,EXXARO,1,4468.67,sell,2024-12-21 08:51:15
+,10,10,Sobha Limited,SOBHA,7,3903.18,buy,2024-10-04 02:15:03
+,10,10,Vinati Organics Limited,VINATIORGA,45,2613.89,buy,2024-11-29 07:49:51
+,10,10,Seshasayee Paper and Boards Limited,SESHAPAPER,8,2309.49,sell,2025-08-29 00:22:25
+,10,10,Vaishali Pharma Limited,VAISHALI,34,4940.07,buy,2025-04-16 15:49:46
+,10,10,India Glycols Limited,INDIAGLYCO,49,4462.56,buy,2025-08-14 17:39:59
+,10,10,Vadilal Industries Limited,VADILALIND,33,2162.37,sell,2025-06-14 04:46:27
+,10,10,Orient Technologies Limited,ORIENTTECH,11,3731.09,buy,2025-01-08 14:20:19
+,10,10,Vinyl Chemicals (India) Limited,VINYLINDIA,49,1273.84,buy,2024-11-29 23:09:04
+,10,10,D. P. Abhushan Limited,DPABHUSHAN,50,2630.43,buy,2025-05-20 22:27:34
+,10,10,Adroit Infotech Limited,ADROITINFO,29,433.54,buy,2025-03-21 06:30:03
+,10,10,UCAL LIMITED,UCAL,22,1632.56,buy,2025-02-09 00:53:05
+,10,10,Gopal Snacks Limited,GOPAL,10,1194.74,buy,2025-08-17 23:10:22
+,10,10,Prataap Snacks Limited,DIAMONDYD,14,367.93,buy,2025-08-29 13:31:46
+,10,10,Emami Limited,EMAMILTD,30,2108.08,buy,2025-05-16 01:08:31
+,10,10,Sun TV Network Limited,SUNTV,25,4528.95,buy,2025-03-05 14:08:15
+,11,11,Atam Valves Limited,ATAM,2,4290.82,sell,2024-11-02 20:59:17
+,11,11,Pennar Industries Limited,PENIND,31,79.19,buy,2024-12-20 06:11:25
+,11,11,Uniphos Enterprises Limited,UNIENTER,25,4274.57,sell,2024-11-01 14:46:38
+,11,11,Sun TV Network Limited,SUNTV,35,3750.2,buy,2024-12-13 04:03:47
+,11,11,BASF India Limited,BASF,15,2466.74,buy,2025-06-24 17:07:44
+,11,11,Western Carriers (India) Limited,WCIL,2,1974.84,buy,2025-04-14 09:39:30
+,11,11,Tata Technologies Limited,TATATECH,26,3634.7,sell,2025-04-05 16:57:38
+,11,11,Allcargo Logistics Limited,ALLCARGO,9,4904.57,buy,2024-12-19 10:15:27
+,11,11,Bajaj Consumer Care Limited,BAJAJCON,26,2979.87,buy,2025-06-25 12:00:06
+,11,11,Orchid Pharma Limited,ORCHPHARMA,42,2171.63,sell,2025-04-23 10:03:52
+,11,11,VIP Clothing Limited,VIPCLOTHNG,4,1337.77,buy,2025-02-21 18:37:15
+,11,11,Diamines & Chemicals Limited,DIAMINESQ,21,1720.63,sell,2025-08-23 01:38:38
+,11,11,Escorts Kubota Limited,ESCORTS,49,4758.46,buy,2025-04-23 00:14:57
+,11,11,Lypsa Gems & Jewellery Limited,LYPSAGEMS,6,2378.02,sell,2025-02-10 12:00:39
+,11,11,Shakti Pumps (India) Limited,SHAKTIPUMP,23,1159.9,buy,2025-01-26 23:22:47
+,12,12,Sun Pharma Advanced Research Company Limited,SPARC,42,249.28,buy,2024-12-02 13:32:45
+,12,12,Seshasayee Paper and Boards Limited,SESHAPAPER,13,4204.18,buy,2024-11-01 02:40:25
+,12,12,Veedol Corporation Limited,VEEDOL,9,2394.13,buy,2025-03-25 06:27:27
+,12,12,Mawana Sugars Limited,MAWANASUG,14,2351.92,buy,2025-03-19 01:13:45
+,12,12,Fertilizers and Chemicals Travancore Limited,FACT,11,3049.17,sell,2024-10-13 16:39:55
+,12,12,Borosil Scientific Limited,BOROSCI,8,3900.07,buy,2025-06-28 21:43:43
+,12,12,GIC Housing Finance Limited,GICHSGFIN,7,2914.49,sell,2024-09-26 16:29:05
+,12,12,Tamilnadu Telecommunication Limited,TNTELE,44,4544.73,buy,2025-08-08 19:23:21
+,12,12,Summit Securities Limited,SUMMITSEC,46,1031.73,buy,2024-10-20 23:19:56
+,12,12,Reliance Industries Limited,RELIANCE,41,1252.1,buy,2024-11-06 17:54:45
+,12,12,Indo Count Industries Limited,ICIL,44,3022.04,buy,2025-05-10 01:32:57
+,12,12,Sumeet Industries Limited,SUMEETINDS,3,1768.66,buy,2024-11-09 12:28:07
+,12,12,Fertilizers and Chemicals Travancore Limited,FACT,5,2554.51,buy,2025-07-13 00:02:35
+,12,12,Star Cement Limited,STARCEMENT,27,4120.54,buy,2025-05-30 15:52:22
+,12,12,Sun Pharma Advanced Research Company Limited,SPARC,24,3196.15,sell,2025-02-19 08:08:39
+,13,13,Agarwal Industrial Corporation Limited,AGARIND,10,2205.66,sell,2025-04-28 00:15:48
+,13,13,Transindia Real Estate Limited,TREL,42,1386.91,sell,2024-10-03 01:26:58
+,13,13,Deccan Cements Limited,DECCANCE,50,2443.31,buy,2025-02-04 19:37:10
+,13,13,Zinka Logistics Solutions Limited,BLACKBUCK,38,1378.56,sell,2025-02-03 14:16:40
+,13,13,Reliance Industries Limited,RELIANCE,6,1430.69,buy,2025-04-27 19:24:39
+,13,13,Uniphos Enterprises Limited,UNIENTER,30,2870.76,buy,2025-03-09 03:52:10
+,13,13,UCO Bank,UCOBANK,2,2496.82,buy,2025-04-01 21:01:53
+,13,13,Western Carriers (India) Limited,WCIL,14,1806.38,buy,2024-12-15 00:40:39
+,13,13,Escorts Kubota Limited,ESCORTS,39,3520.86,buy,2025-04-11 05:46:02
+,13,13,Brightcom Group Limited,BCG,34,4742.91,buy,2025-08-08 16:22:35
+,13,13,Vadilal Industries Limited,VADILALIND,27,2468.46,sell,2024-09-12 20:20:21
+,13,13,Exxaro Tiles Limited,EXXARO,31,3247.22,buy,2025-05-30 14:01:45
+,13,13,Ruchira Papers Limited,RUCHIRA,2,510.61,buy,2025-06-15 06:56:33
+,13,13,NLC India Limited,NLCINDIA,16,1565.72,buy,2024-10-22 21:01:40
+,13,13,Power Grid Corporation of India Limited,POWERGRID,36,2678.06,buy,2025-05-31 03:19:46
+,14,14,Gujarat Ambuja Exports Limited,GAEL,36,1687.42,sell,2025-08-18 00:09:15
+,14,14,UCAL LIMITED,UCAL,20,1294.45,buy,2025-04-04 22:15:16
+,14,14,Tirupati Forge Limited,TIRUPATIFL,21,641.8,buy,2025-06-27 00:01:00
+,14,14,VIP Industries Limited,VIPIND,45,966.49,buy,2024-12-21 00:19:09
+,14,14,Mtar Technologies Limited,MTARTECH,18,3636.7,sell,2025-07-03 21:11:15
+,14,14,BSE Limited,BSE,39,1450.84,buy,2025-05-15 07:31:31
+,14,14,Tirupati Forge Limited,TIRUPATIFL,19,1176.04,buy,2025-01-18 11:59:36
+,14,14,Dabur India Limited,DABUR,46,2693.97,buy,2024-10-21 17:04:11
+,14,14,DJ Mediaprint & Logistics Limited,DJML,4,2789.13,buy,2024-12-31 08:56:52
+,14,14,Bharat Gears Limited,BHARATGEAR,41,4348.88,buy,2025-02-24 05:38:03
+,14,14,Ethos Limited,ETHOSLTD,1,2891.62,buy,2024-11-08 19:27:55
+,14,14,Alldigi Tech Limited,ALLDIGI,22,962.6,buy,2025-03-03 14:20:23
+,14,14,Muthoot Capital Services Limited,MUTHOOTCAP,31,614.73,buy,2024-09-09 15:34:36
+,14,14,Tara Chand InfraLogistic Solutions Limited,TARACHAND,5,2906.25,buy,2025-06-15 19:42:50
+,14,14,Kirloskar Electric Company Limited,KECL,10,4065.15,sell,2025-08-14 12:52:09
+,15,15,Orchid Pharma Limited,ORCHPHARMA,16,636.34,sell,2025-06-14 21:14:18
+,15,15,Apeejay Surrendra Park Hotels Limited,PARKHOTELS,39,3964.17,buy,2024-12-19 16:17:31
+,15,15,ETERNAL LIMITED,ETERNAL,25,2280.05,buy,2025-03-21 19:07:44
+,15,15,Restaurant Brands Asia Limited,RBA,38,4950.65,buy,2025-07-01 07:19:50
+,15,15,Infibeam Avenues Limited,INFIBEAM,4,3067.67,sell,2024-11-16 18:29:04
+,15,15,Mawana Sugars Limited,MAWANASUG,49,1078.55,buy,2025-03-24 13:15:52
+,15,15,Prakash Pipes Limited,PPL,6,827.43,buy,2025-08-28 19:38:10
+,15,15,Silly Monks Entertainment Limited,SILLYMONKS,11,63.24,buy,2024-10-19 17:08:56
+,15,15,R R Kabel Limited,RRKABEL,31,1491.73,buy,2025-08-12 11:08:58
+,15,15,Prataap Snacks Limited,DIAMONDYD,19,3529.79,buy,2025-05-09 05:32:54
+,15,15,Rane (Madras) Limited,RML,15,4623.36,sell,2025-01-02 07:02:07
+,15,15,Sigma Solve Limited,SIGMA,38,3322.86,sell,2025-08-01 06:15:18
+,15,15,Sanofi Consumer Healthcare India Limited,SANOFICONR,8,2745.58,buy,2025-05-14 12:46:09
+,15,15,Bajaj Consumer Care Limited,BAJAJCON,18,4141.82,buy,2025-03-24 13:05:21
+,15,15,Banaras Beads Limited,BANARBEADS,20,2995.47,sell,2025-05-02 21:20:31
+,16,16,Allcargo Logistics Limited,ALLCARGO,19,2223.81,buy,2024-11-24 15:18:51
+,16,16,Indo Count Industries Limited,ICIL,45,2042.42,buy,2024-11-06 17:53:36
+,16,16,Emami Limited,EMAMILTD,32,2216.91,buy,2025-01-31 14:27:28
+,16,16,Indogulf Cropsciences Limited,IGCL,28,3685.94,buy,2025-07-01 12:26:38
+,16,16,Dr. Lal Path Labs Ltd.,LALPATHLAB,6,1183.18,buy,2024-11-10 03:04:28
+,16,16,Restaurant Brands Asia Limited,RBA,37,2956.26,buy,2025-04-05 20:42:18
+,16,16,VIP Industries Limited,VIPIND,44,4116.04,buy,2025-07-07 18:39:11
+,16,16,VIP Industries Limited,VIPIND,49,917.19,buy,2025-09-01 15:02:13
+,16,16,Netweb Technologies India Limited,NETWEB,18,948.37,buy,2025-04-02 08:34:58
+,16,16,Nakoda Group of Industries Limited,NGIL,32,4846.82,buy,2025-08-31 02:18:29
+,16,16,PVR INOX Limited,PVRINOX,22,1639.24,buy,2024-09-08 14:39:31
+,16,16,SHREE CEMENT LIMITED,SHREECEM,22,2087.64,buy,2025-04-28 23:53:47
+,16,16,Prakash Pipes Limited,PPL,26,4077.15,buy,2025-01-12 06:40:54
+,16,16,Diamines & Chemicals Limited,DIAMINESQ,6,1606.86,buy,2025-03-17 03:27:49
+,16,16,Aaron Industries Limited,AARON,50,2050.67,buy,2024-09-15 22:51:53
+,17,17,Sambhv Steel Tubes Limited,SAMBHV,43,4353.37,buy,2024-10-21 20:00:39
+,17,17,Shakti Pumps (India) Limited,SHAKTIPUMP,13,2616.27,buy,2025-09-04 05:09:18
+,17,17,ShreeOswal Seeds And Chemicals Limited,OSWALSEEDS,41,2238.1,buy,2025-01-27 08:33:15
+,17,17,Imagicaaworld Entertainment Limited,IMAGICAA,36,698.52,buy,2025-08-15 15:36:35
+,17,17,National Fertilizers Limited,NFL,45,2449.32,buy,2025-07-28 09:00:46
+,17,17,Harsha Engineers International Limited,HARSHA,39,4006.6,sell,2025-07-18 17:00:52
+,17,17,GIC Housing Finance Limited,GICHSGFIN,36,117.69,buy,2025-01-05 19:34:03
+,17,17,Bhartiya International Limited,BIL,8,2334.17,buy,2024-12-10 09:11:08
+,17,17,Lypsa Gems & Jewellery Limited,LYPSAGEMS,10,2516.96,sell,2024-09-30 21:13:48
+,17,17,TVS Supply Chain Solutions Limited,TVSSCS,46,1403.45,sell,2024-12-10 22:24:51
+,17,17,Aegis Vopak Terminals Limited,AEGISVOPAK,16,2311.09,buy,2025-08-15 08:58:15
+,17,17,Voltamp Transformers Limited,VOLTAMP,39,2565.79,sell,2025-04-16 17:28:41
+,17,17,Tracxn Technologies Limited,TRACXN,5,1417.42,sell,2024-10-08 23:23:50
+,17,17,Munjal Auto Industries Limited,MUNJALAU,22,4674.53,buy,2024-10-11 15:40:34
+,17,17,Prabha Energy Limited,PRABHA,1,1450.05,buy,2025-06-19 15:12:05
+,18,18,Premier Polyfilm Limited,PREMIERPOL,38,4994.57,buy,2025-03-16 03:05:15
+,18,18,Kirloskar Electric Company Limited,KECL,29,2715.97,buy,2025-07-22 07:12:58
+,18,18,Sadhana Nitrochem Limited,SADHNANIQ,49,2739.98,buy,2024-10-05 06:26:08
+,18,18,TruCap Finance Limited,TRU,13,4904.83,buy,2025-06-30 18:39:15
+,18,18,Hubtown Limited,HUBTOWN,15,4287.26,buy,2025-04-03 06:30:34
+,18,18,JK Tyre & Industries Limited,JKTYRE,48,2391.23,sell,2025-07-02 19:25:21
+,18,18,Pennar Industries Limited,PENIND,25,4942.65,sell,2024-10-27 05:30:04
+,18,18,Punjab National Bank,PNB,10,2501.88,buy,2024-10-28 06:01:24
+,18,18,Supreme Petrochem Limited,SPLPETRO,38,1693.37,buy,2025-05-22 14:39:06
+,18,18,Dharmaj Crop Guard Limited,DHARMAJ,29,543.57,sell,2025-03-11 23:16:52
+,18,18,Dabur India Limited,DABUR,47,763.57,sell,2025-04-09 21:52:09
+,18,18,Aaron Industries Limited,AARON,10,420.4,sell,2024-11-11 12:25:23
+,18,18,Steel City Securities Limited,STEELCITY,22,3135.13,buy,2024-12-20 07:50:06
+,18,18,Gala Precision Engineering Limited,GALAPREC,22,4269.09,sell,2025-04-01 07:36:16
+,18,18,Pennar Industries Limited,PENIND,21,3152.66,sell,2025-08-13 04:59:37
+,19,19,Western Carriers (India) Limited,WCIL,35,227.7,buy,2025-05-01 23:11:36
+,19,19,Harsha Engineers International Limited,HARSHA,44,4608.6,sell,2025-02-19 17:15:35
+,19,19,HDFC Life Insurance Company Limited,HDFCLIFE,6,2198.16,buy,2024-11-29 15:25:50
+,19,19,Nakoda Group of Industries Limited,NGIL,46,4369.27,buy,2025-09-04 03:25:46
+,19,19,NLC India Limited,NLCINDIA,20,4521.95,buy,2025-04-05 19:55:55
+,19,19,Prudential Sugar Corporation Limited,PRUDMOULI,4,1502.17,buy,2025-06-28 16:54:36
+,19,19,Northern Arc Capital Limited,NORTHARC,16,2679.27,buy,2025-06-18 20:46:44
+,19,19,Ruchira Papers Limited,RUCHIRA,12,891.42,buy,2025-06-03 07:21:38
+,19,19,AWL Agri Business Limited,AWL,25,3117.57,buy,2024-11-25 12:11:31
+,19,19,Apollo Pipes Limited,APOLLOPIPE,38,758.43,buy,2025-06-12 06:29:39
+,19,19,Ola Electric Mobility Limited,OLAELEC,30,1313.87,buy,2025-01-07 10:44:05
+,19,19,Vinati Organics Limited,VINATIORGA,30,4510.99,buy,2025-02-10 08:12:21
+,19,19,Fine Organic Industries Limited,FINEORG,5,2236.56,buy,2025-05-27 05:54:16
+,19,19,Premier Polyfilm Limited,PREMIERPOL,20,3212.75,buy,2025-05-18 18:37:51
+,19,19,Signatureglobal (India) Limited,SIGNATURE,30,4234.25,buy,2025-01-31 09:51:34
+,20,20,Hubtown Limited,HUBTOWN,31,577.93,buy,2025-02-25 12:43:01
+,20,20,WESTLIFE FOODWORLD LIMITED,WESTLIFE,37,1514.57,buy,2025-08-23 18:20:21
+,20,20,Datamatics Global Services Limited,DATAMATICS,43,2009.24,buy,2025-03-28 09:29:05
+,20,20,Tracxn Technologies Limited,TRACXN,44,3902.64,sell,2025-03-02 17:29:03
+,20,20,Apollo Pipes Limited,APOLLOPIPE,39,3738.6,sell,2024-10-25 09:10:09
+,20,20,Sampann Utpadan India Limited,SAMPANN,19,3889.92,buy,2024-12-13 15:58:34
+,20,20,Vinati Organics Limited,VINATIORGA,23,1134.07,buy,2024-12-04 15:39:33
+,20,20,Signatureglobal (India) Limited,SIGNATURE,44,3790.11,sell,2024-10-03 06:05:34
+,20,20,Garware Technical Fibres Limited,GARFIBRES,9,3159.83,sell,2025-01-17 16:30:51
+,20,20,CIE Automotive India Limited,CIEINDIA,3,1579.22,buy,2024-09-16 13:22:54
+,20,20,SMC Global Securities Limited,SMCGLOBAL,24,3675.18,buy,2025-04-24 20:45:46
+,20,20,UNO Minda Limited,UNOMINDA,21,3750.03,buy,2025-04-11 12:15:04
+,20,20,Viji Finance Limited,VIJIFIN,35,4388.48,buy,2024-12-06 18:09:11
+,20,20,Supreme Petrochem Limited,SPLPETRO,18,4160.84,buy,2025-04-24 21:59:15
+,20,20,ATLANTAA LIMITED,ATLANTAA,31,4838.55,buy,2024-12-02 21:54:11
+,21,21,AWL Agri Business Limited,AWL,22,4030.95,buy,2024-09-11 04:21:06
+,21,21,Silly Monks Entertainment Limited,SILLYMONKS,10,3783.05,buy,2024-10-05 23:01:54
+,21,21,Anuh Pharma Limited,ANUHPHR,47,3388.31,buy,2025-06-10 06:53:02
+,21,21,Dharmaj Crop Guard Limited,DHARMAJ,36,1860.59,sell,2025-05-11 11:38:03
+,21,21,Dabur India Limited,DABUR,17,2706.03,buy,2024-10-01 06:04:17
+,21,21,Energy Development Company Limited,ENERGYDEV,48,3378.09,buy,2024-12-06 07:13:13
+,21,21,Prabha Energy Limited,PRABHA,41,4704.44,buy,2024-10-04 13:32:41
+,21,21,AGI Greenpac Limited,AGI,31,173.87,sell,2025-08-26 00:27:16
+,21,21,Hitech Corporation Limited,HITECHCORP,21,4580.52,buy,2024-09-20 14:07:05
+,21,21,Pokarna Limited,POKARNA,41,4128.08,sell,2025-08-08 05:42:39
+,21,21,Indo Count Industries Limited,ICIL,42,2071.06,buy,2025-01-14 17:08:42
+,21,21,Mawana Sugars Limited,MAWANASUG,3,1556.6,buy,2024-10-05 21:46:00
+,21,21,Pilani Investment and Industries Corporation Limited,PILANIINVS,16,4441.93,buy,2025-03-27 01:36:38
+,21,21,Diamines & Chemicals Limited,DIAMINESQ,24,3368.91,sell,2024-12-09 19:41:32
+,21,21,Mawana Sugars Limited,MAWANASUG,35,2124.68,sell,2024-12-25 12:55:28
+,22,22,Cura Technologies Limited,CURAA,27,3291.86,sell,2025-05-26 04:39:11
+,22,22,Balaji Telefilms Limited,BALAJITELE,27,4698.31,buy,2025-03-15 21:43:09
+,22,22,Exxaro Tiles Limited,EXXARO,24,1125.48,buy,2024-11-30 14:09:36
+,22,22,Hatsun Agro Product Limited,HATSUN,24,541.81,buy,2025-04-05 19:21:10
+,22,22,Balu Forge Industries Limited,BALUFORGE,42,1825.44,buy,2024-10-29 18:33:50
+,22,22,Voltamp Transformers Limited,VOLTAMP,8,4747.6,sell,2025-06-16 07:27:46
+,22,22,Davangere Sugar Company Limited,DAVANGERE,43,1099.92,buy,2025-09-06 16:57:10
+,22,22,Aaron Industries Limited,AARON,2,300.36,buy,2025-08-17 01:44:04
+,22,22,Bharat Gears Limited,BHARATGEAR,37,1065.77,sell,2025-04-18 03:50:08
+,22,22,Sadhana Nitrochem Limited,SADHNANIQ,14,2952.6,sell,2025-04-20 04:00:36
+,22,22,AGI Greenpac Limited,AGI,22,3883.12,sell,2025-03-10 22:56:29
+,22,22,R R Kabel Limited,RRKABEL,1,1422.51,sell,2024-12-11 18:13:36
+,22,22,Viji Finance Limited,VIJIFIN,35,1290.74,buy,2025-07-10 02:30:41
+,22,22,Prakash Pipes Limited,PPL,2,702.43,buy,2025-03-11 01:45:20
+,22,22,GAIL (India) Limited,GAIL,16,2964.82,buy,2025-07-18 23:44:45
+,23,23,Steel City Securities Limited,STEELCITY,4,677.45,buy,2025-02-13 11:24:07
+,23,23,Anjani Portland Cement Limited,APCL,48,364.61,buy,2024-11-21 08:04:38
+,23,23,Bal Pharma Limited,BALPHARMA,33,2988.65,buy,2024-10-15 00:30:30
+,23,23,Oriental Aromatics Limited,OAL,40,264.66,sell,2024-10-16 00:47:20
+,23,23,Tracxn Technologies Limited,TRACXN,43,2631.18,buy,2025-05-22 07:29:33
+,23,23,STL Global Limited,SGL,2,351.09,buy,2025-02-22 19:00:59
+,23,23,Shekhawati Industries Limited,SHEKHAWATI,28,3446.18,buy,2025-01-23 23:37:15
+,23,23,Bajaj Consumer Care Limited,BAJAJCON,29,413.78,buy,2025-02-19 21:22:02
+,23,23,Apeejay Surrendra Park Hotels Limited,PARKHOTELS,10,375.13,buy,2025-02-15 01:04:45
+,23,23,Nakoda Group of Industries Limited,NGIL,38,2764.36,buy,2025-03-08 18:18:49
+,23,23,R R Kabel Limited,RRKABEL,34,1509.74,buy,2025-08-09 20:52:13
+,23,23,CG Power and Industrial Solutions Limited,CGPOWER,7,3975.83,buy,2025-06-18 12:48:28
+,23,23,Engineers India Limited,ENGINERSIN,42,4394.65,buy,2024-09-29 10:14:25
+,23,23,Tracxn Technologies Limited,TRACXN,14,2178.85,sell,2025-05-27 21:32:26
+,23,23,Zim Laboratories Limited,ZIMLAB,22,4145.73,buy,2025-05-20 03:58:29
+,24,24,Xchanging Solutions Limited,XCHANGING,7,1597.11,buy,2025-05-17 08:09:36
+,24,24,Ola Electric Mobility Limited,OLAELEC,24,4770.28,buy,2024-10-16 14:38:57
+,24,24,Power Grid Corporation of India Limited,POWERGRID,5,501.56,buy,2024-10-01 22:16:45
+,24,24,CG Power and Industrial Solutions Limited,CGPOWER,7,3735.72,buy,2025-02-11 18:01:50
+,24,24,Viji Finance Limited,VIJIFIN,36,346.91,sell,2025-06-18 04:46:15
+,24,24,Hitech Corporation Limited,HITECHCORP,22,3366.57,buy,2025-01-18 03:51:28
+,24,24,Ethos Limited,ETHOSLTD,43,4708.59,buy,2025-07-16 07:23:28
+,24,24,Steel Authority of India Limited,SAIL,47,304.66,buy,2025-08-09 00:41:54
+,24,24,GIC Housing Finance Limited,GICHSGFIN,23,562.82,buy,2024-10-20 19:47:22
+,24,24,Cura Technologies Limited,CURAA,43,2436.84,sell,2024-12-13 22:58:24
+,24,24,Peninsula Land Limited,PENINLAND,36,1869.43,sell,2024-11-21 19:04:38
+,24,24,Agri-Tech (India) Limited,AGRITECH,15,4045.75,sell,2024-11-21 06:12:13
+,24,24,DJ Mediaprint & Logistics Limited,DJML,50,4101.21,buy,2025-04-04 15:52:25
+,24,24,UTI Asset Management Company Limited,UTIAMC,36,179.96,sell,2025-03-01 14:42:34
+,24,24,Reliance Industries Limited,RELIANCE,45,1373.87,buy,2024-11-01 19:55:19
+,25,25,Cupid Limited,CUPID,49,1579.47,buy,2025-02-19 05:33:00
+,25,25,Prozone Realty Limited,PROZONER,12,4355.82,buy,2024-11-18 15:33:38
+,25,25,Shekhawati Industries Limited,SHEKHAWATI,5,752.28,buy,2024-12-25 13:33:26
+,25,25,Gujarat State Fertilizers & Chemicals Limited,GSFC,6,3743.25,buy,2025-03-07 01:20:04
+,25,25,Sun TV Network Limited,SUNTV,30,1737.44,buy,2024-12-14 09:41:35
+,25,25,Vadilal Industries Limited,VADILALIND,21,3895.34,buy,2025-08-14 00:07:41
+,25,25,Orchid Pharma Limited,ORCHPHARMA,4,820.12,sell,2025-09-01 22:47:14
+,25,25,The New India Assurance Company Limited,NIACL,44,453.83,buy,2024-10-07 15:57:59
+,25,25,Sanofi Consumer Healthcare India Limited,SANOFICONR,32,3055.03,buy,2025-02-27 11:36:22
+,25,25,BirlaNu Limited,BIRLANU,49,2586.11,buy,2025-07-19 04:38:29
+,25,25,Shree Vasu Logistics Limited,SVLL,19,3407.18,buy,2025-08-08 21:41:01
+,25,25,BSE Limited,BSE,43,1576.68,buy,2025-08-06 19:31:04
+,25,25,RattanIndia Enterprises Limited,RTNINDIA,4,88.05,buy,2025-04-10 02:43:55
+,25,25,Prime Securities Limited,PRIMESECU,50,729.31,buy,2024-10-16 09:54:13
+,25,25,Network People Services Technologies Limited,NPST,8,88.26,sell,2024-09-28 00:50:44
+,26,26,Piramal Pharma Limited,PPLPHARMA,9,1932.03,sell,2025-05-19 15:45:33
+,26,26,Supreme Petrochem Limited,SPLPETRO,36,4175.1,sell,2025-04-06 07:58:23
+,26,26,SecMark Consultancy Limited,SECMARK,26,4315.73,buy,2025-07-30 01:40:12
+,26,26,Raj Television Network Limited,RAJTV,30,4609.75,sell,2024-09-14 02:52:53
+,26,26,Tamilnadu Telecommunication Limited,TNTELE,28,2888.33,sell,2024-10-14 14:36:01
+,26,26,Munjal Auto Industries Limited,MUNJALAU,19,620.11,buy,2025-09-03 03:41:39
+,26,26,Network People Services Technologies Limited,NPST,11,4016.54,buy,2025-06-28 01:04:04
+,26,26,Reliance Industries Limited,RELIANCE,45,4602.86,buy,2025-08-03 23:44:45
+,26,26,Dharmaj Crop Guard Limited,DHARMAJ,7,1254.42,buy,2024-12-09 04:32:41
+,26,26,BSE Limited,BSE,6,2009.05,buy,2024-11-11 23:27:36
+,26,26,UCO Bank,UCOBANK,15,1698.69,buy,2025-02-13 05:22:54
+,26,26,TVS Supply Chain Solutions Limited,TVSSCS,41,614.43,buy,2025-03-15 23:49:54
+,26,26,Sampann Utpadan India Limited,SAMPANN,50,1779.41,sell,2025-03-14 07:54:50
+,26,26,IDBI Bank Limited,IDBI,42,4084.43,buy,2024-11-30 09:35:51
+,26,26,Northern Arc Capital Limited,NORTHARC,17,1026.5,buy,2025-08-10 04:27:14
+,27,27,Khaitan (India) Limited,KHAITANLTD,49,3294.77,buy,2025-02-11 03:17:41
+,27,27,Bikaji Foods International Limited,BIKAJI,41,2495.88,sell,2025-08-24 20:42:19
+,27,27,Khaitan (India) Limited,KHAITANLTD,38,2272.08,sell,2024-10-01 03:50:59
+,27,27,Sumeet Industries Limited,SUMEETINDS,42,3194.73,buy,2024-11-11 07:51:27
+,27,27,Tracxn Technologies Limited,TRACXN,41,1614.89,buy,2025-02-02 13:36:49
+,27,27,Aegis Vopak Terminals Limited,AEGISVOPAK,29,3175.36,sell,2024-09-09 05:25:04
+,27,27,BGR Energy Systems Limited,BGRENERGY,4,1792.11,buy,2025-02-07 00:19:22
+,27,27,BALAXI PHARMACEUTICALS LIMITED,BALAXI,29,236.16,buy,2024-12-20 09:11:59
+,27,27,Prajay Engineers Syndicate Limited,PRAENG,5,3241.1,sell,2025-09-03 05:06:09
+,27,27,Davangere Sugar Company Limited,DAVANGERE,40,2990.7,buy,2025-07-09 21:23:45
+,27,27,SMC Global Securities Limited,SMCGLOBAL,36,4773.45,sell,2025-07-10 07:15:51
+,27,27,Shipping Corporation Of India Limited,SCI,29,4549.8,buy,2025-03-04 02:18:49
+,27,27,Voltamp Transformers Limited,VOLTAMP,21,3044.78,buy,2024-12-28 04:02:37
+,27,27,Sun Pharma Advanced Research Company Limited,SPARC,4,2280.09,sell,2025-02-19 16:02:37
+,27,27,Juniper Hotels Limited,JUNIPER,22,4912.81,buy,2025-06-05 22:01:54
+,28,28,CIE Automotive India Limited,CIEINDIA,12,243.75,sell,2025-06-19 02:07:52
+,28,28,Alldigi Tech Limited,ALLDIGI,34,2637.6,buy,2025-07-09 14:47:13
+,28,28,Clean Science and Technology Limited,CLEAN,19,1967.71,sell,2025-04-12 05:27:52
+,28,28,Anuh Pharma Limited,ANUHPHR,39,309.21,buy,2025-05-23 10:24:57
+,28,28,S. P. Apparels Limited,SPAL,5,1681.97,buy,2025-06-14 09:22:43
+,28,28,Hubtown Limited,HUBTOWN,19,1297.38,sell,2025-03-16 09:26:04
+,28,28,STL Global Limited,SGL,39,4372.73,buy,2024-11-07 12:08:21
+,28,28,Gujarat Mineral Development Corporation Limited,GMDCLTD,43,750.07,buy,2024-11-21 03:18:17
+,28,28,Transindia Real Estate Limited,TREL,42,3507.48,buy,2025-01-01 14:50:44
+,28,28,R R Kabel Limited,RRKABEL,46,4693.11,buy,2024-12-01 22:26:51
+,28,28,CRISIL Limited,CRISIL,42,3968.73,sell,2024-10-01 02:25:55
+,28,28,Diffusion Engineers Limited,DIFFNKG,45,4153.35,sell,2025-04-21 07:40:47
+,28,28,Rane (Madras) Limited,RML,34,512.59,buy,2025-06-21 02:53:45
+,28,28,TVS Supply Chain Solutions Limited,TVSSCS,24,140.24,buy,2025-04-06 22:57:14
+,28,28,India Glycols Limited,INDIAGLYCO,14,1741.58,sell,2024-10-02 01:29:38
+,29,29,Tirupati Forge Limited,TIRUPATIFL,15,4999.88,buy,2025-06-25 20:57:57
+,29,29,UNO Minda Limited,UNOMINDA,7,2563.06,buy,2025-01-08 04:20:13
+,29,29,California Software Company Limited,CALSOFT,34,236.85,buy,2024-09-30 14:08:50
+,29,29,D. P. Abhushan Limited,DPABHUSHAN,40,698.69,buy,2024-09-27 20:41:19
+,29,29,SHREE CEMENT LIMITED,SHREECEM,12,4165.16,sell,2025-04-23 06:15:29
+,29,29,V2 Retail Limited,V2RETAIL,11,3619.86,buy,2025-03-12 13:19:09
+,29,29,AXISCADES Technologies Limited,AXISCADES,44,3611.95,sell,2025-03-22 16:14:00
+,29,29,Ausom Enterprise Limited,AUSOMENT,19,3774.34,sell,2025-08-31 10:38:14
+,29,29,AGI Greenpac Limited,AGI,35,1233.88,sell,2025-08-05 13:15:13
+,29,29,Texmaco Infrastructure & Holdings Limited,TEXINFRA,31,4524.67,buy,2025-04-02 15:46:57
+,29,29,Anuh Pharma Limited,ANUHPHR,37,4922.98,buy,2024-11-08 12:42:27
+,29,29,Amines & Plasticizers Limited,AMNPLST,50,1940.27,buy,2024-09-30 11:29:03
+,29,29,Transindia Real Estate Limited,TREL,11,4093.61,sell,2025-03-24 14:37:58
+,29,29,Gopal Snacks Limited,GOPAL,17,308.29,buy,2024-10-09 12:01:16
+,29,29,Clean Science and Technology Limited,CLEAN,36,4674.75,sell,2025-08-05 00:24:57
+,30,30,Precision Camshafts Limited,PRECAM,8,1461.06,sell,2024-11-19 13:20:33
+,30,30,UCAL LIMITED,UCAL,29,4531.27,buy,2024-10-04 23:59:36
+,30,30,Laxmi Cotspin Limited,LAXMICOT,6,4734.75,buy,2025-04-27 11:27:27
+,30,30,Utkarsh Small Finance Bank Limited,UTKARSHBNK,23,4655.84,buy,2024-10-04 18:46:10
+,30,30,TCI Finance Limited,TCIFINANCE,33,1901.11,buy,2025-05-28 14:45:55
+,30,30,Gala Precision Engineering Limited,GALAPREC,24,1161.47,buy,2025-08-09 02:03:55
+,30,30,Gayatri Projects Limited,GAYAPROJ,46,3267.31,sell,2024-12-08 17:35:15
+,30,30,Gopal Snacks Limited,GOPAL,3,1470.05,sell,2025-02-12 04:47:21
+,30,30,Atam Valves Limited,ATAM,9,3806.26,buy,2024-10-24 22:45:09
+,30,30,Balaji Telefilms Limited,BALAJITELE,1,4533.99,buy,2025-08-20 03:24:27
+,30,30,BirlaNu Limited,BIRLANU,10,2766.58,sell,2025-04-17 15:05:16
+,30,30,Madras Fertilizers Limited,MADRASFERT,28,600.37,buy,2024-12-13 00:13:18
+,30,30,Indo Count Industries Limited,ICIL,8,286.36,buy,2025-04-21 05:14:42
+,30,30,Prudential Sugar Corporation Limited,PRUDMOULI,40,2312.71,buy,2025-04-27 06:38:54
+,30,30,Sampann Utpadan India Limited,SAMPANN,32,3003.86,buy,2024-09-23 19:44:50
+,31,31,Regency Ceramics Limited,REGENCERAM,37,1247.59,buy,2025-05-06 22:22:56
+,31,31,Expleo Solutions Limited,EXPLEOSOL,1,3093.31,buy,2024-10-10 05:28:08
+,31,31,Munjal Auto Industries Limited,MUNJALAU,12,3338.64,buy,2025-02-18 04:47:15
+,31,31,DJ Mediaprint & Logistics Limited,DJML,24,385.01,buy,2025-05-21 16:29:25
+,31,31,Bank of India,BANKINDIA,33,2793.05,buy,2025-04-23 01:32:54
+,31,31,Aegis Vopak Terminals Limited,AEGISVOPAK,3,3196.57,sell,2025-04-15 21:37:30
+,31,31,Signatureglobal (India) Limited,SIGNATURE,48,130.4,sell,2025-03-30 10:00:59
+,31,31,Linc Limited,LINC,16,3678.06,buy,2025-01-09 06:06:32
+,31,31,Bikaji Foods International Limited,BIKAJI,38,3689.18,buy,2025-09-06 09:25:19
+,31,31,International Conveyors Limited,INTLCONV,23,2752.77,sell,2024-12-18 15:50:26
+,31,31,Piramal Pharma Limited,PPLPHARMA,50,3439.18,sell,2024-11-26 17:09:43
+,31,31,Innovana Thinklabs Limited,INNOVANA,41,952.28,buy,2025-05-26 11:37:36
+,31,31,Borosil Scientific Limited,BOROSCI,50,4720.85,buy,2025-06-13 12:43:11
+,31,31,Lumax Auto Technologies Limited,LUMAXTECH,3,3965.99,sell,2025-01-08 09:44:03
+,31,31,Anmol India Limited,ANMOL,20,2601.15,sell,2024-12-10 02:02:33
+,32,32,Balu Forge Industries Limited,BALUFORGE,31,1303.9,sell,2024-12-20 13:02:06
+,32,32,Voltamp Transformers Limited,VOLTAMP,19,1817.02,sell,2025-02-09 02:19:11
+,32,32,Tracxn Technologies Limited,TRACXN,42,1693.03,buy,2024-10-29 05:12:08
+,32,32,Fertilizers and Chemicals Travancore Limited,FACT,28,4452.96,sell,2025-05-27 05:56:05
+,32,32,Fortis Healthcare Limited,FORTIS,25,1728.23,buy,2025-05-17 01:49:54
+,32,32,NLC India Limited,NLCINDIA,32,1868.37,sell,2025-01-02 21:30:13
+,32,32,Imagicaaworld Entertainment Limited,IMAGICAA,6,3649.05,buy,2025-03-04 22:58:12
+,32,32,BASF India Limited,BASF,12,2750.1,buy,2025-01-09 04:18:48
+,32,32,Gala Precision Engineering Limited,GALAPREC,21,3321.55,buy,2025-09-04 04:24:24
+,32,32,BASF India Limited,BASF,46,2159.27,buy,2025-06-27 09:12:47
+,32,32,Peninsula Land Limited,PENINLAND,29,259.66,sell,2025-09-06 19:00:14
+,32,32,Punjab & Sind Bank,PSB,40,4990.85,buy,2024-10-06 13:28:45
+,32,32,Ruchira Papers Limited,RUCHIRA,4,421.45,buy,2024-09-12 00:09:16
+,32,32,AXISCADES Technologies Limited,AXISCADES,33,4015.43,buy,2025-03-05 08:51:32
+,32,32,India Glycols Limited,INDIAGLYCO,2,756.76,buy,2025-05-07 14:57:07
+,33,33,Texmaco Infrastructure & Holdings Limited,TEXINFRA,29,222.25,buy,2025-04-15 00:48:33
+,33,33,Axis Bank Limited,AXISBANK,42,1863.33,buy,2024-10-17 05:13:16
+,33,33,Sagar Cements Limited,SAGCEM,3,3045.22,buy,2024-10-06 20:10:03
+,33,33,Mawana Sugars Limited,MAWANASUG,24,1891.47,sell,2025-04-05 04:26:39
+,33,33,Agri-Tech (India) Limited,AGRITECH,9,2670.83,buy,2024-11-30 04:04:13
+,33,33,Punjab National Bank,PNB,18,1285.58,buy,2025-03-23 20:30:55
+,33,33,India Tourism Development Corporation Limited,ITDC,12,2520.27,buy,2024-12-20 09:10:31
+,33,33,Hitech Corporation Limited,HITECHCORP,8,1345.79,buy,2024-10-29 19:54:46
+,33,33,Orient Technologies Limited,ORIENTTECH,14,4982.01,buy,2025-09-05 19:56:10
+,33,33,Steel Authority of India Limited,SAIL,32,1040.88,buy,2025-01-21 22:19:35
+,33,33,SecMark Consultancy Limited,SECMARK,29,904.65,sell,2025-08-16 11:34:39
+,33,33,ORIENT CERATECH LIMITED,ORIENTCER,44,4839.43,sell,2024-10-05 02:30:35
+,33,33,Vaishali Pharma Limited,VAISHALI,23,3562.23,buy,2025-08-15 20:43:15
+,33,33,HDB Financial Services Limited,HDBFS,20,4264.24,sell,2024-12-12 06:13:26
+,33,33,Dishman Carbogen Amcis Limited,DCAL,45,3206.62,sell,2025-01-29 21:34:13
+,34,34,TVS Supply Chain Solutions Limited,TVSSCS,15,650.74,buy,2024-12-28 01:36:12
+,34,34,Gopal Snacks Limited,GOPAL,16,3962.35,buy,2024-11-08 15:38:07
+,34,34,Sadhana Nitrochem Limited,SADHNANIQ,37,1876.11,sell,2025-02-25 13:30:16
+,34,34,Sadhana Nitrochem Limited,SADHNANIQ,9,3079.14,buy,2025-07-29 04:23:40
+,34,34,GIC Housing Finance Limited,GICHSGFIN,26,4998.0,sell,2025-04-07 08:29:12
+,34,34,BSE Limited,BSE,27,3857.36,sell,2025-06-08 14:47:44
+,34,34,SecMark Consultancy Limited,SECMARK,9,4863.28,buy,2025-01-03 20:59:32
+,34,34,Utkarsh Small Finance Bank Limited,UTKARSHBNK,30,3416.54,buy,2025-05-03 22:34:41
+,34,34,Kritika Wires Limited,KRITIKA,50,2778.95,buy,2025-07-18 20:02:42
+,34,34,D. P. Abhushan Limited,DPABHUSHAN,9,2191.46,sell,2025-05-20 08:49:45
+,34,34,Emami Paper Mills Limited,EMAMIPAP,8,2614.61,buy,2025-04-01 19:24:46
+,34,34,SHREE CEMENT LIMITED,SHREECEM,21,4676.95,buy,2024-09-11 10:14:41
+,34,34,Mawana Sugars Limited,MAWANASUG,34,4479.88,sell,2025-05-25 18:15:52
+,34,34,Signatureglobal (India) Limited,SIGNATURE,13,3193.53,buy,2025-07-22 17:17:27
+,34,34,Bharat Gears Limited,BHARATGEAR,41,1548.98,buy,2025-04-11 18:35:46
+,35,35,Supreme Petrochem Limited,SPLPETRO,42,884.75,sell,2025-01-02 15:44:25
+,35,35,Cura Technologies Limited,CURAA,11,3310.73,sell,2025-09-05 05:55:26
+,35,35,BASF India Limited,BASF,22,4220.52,buy,2025-05-24 00:33:33
+,35,35,ATLANTAA LIMITED,ATLANTAA,2,452.05,sell,2024-10-18 14:49:28
+,35,35,Bikaji Foods International Limited,BIKAJI,37,1360.05,buy,2025-09-08 00:47:24
+,35,35,Agri-Tech (India) Limited,AGRITECH,27,3109.64,buy,2025-08-15 10:03:53
+,35,35,Indogulf Cropsciences Limited,IGCL,41,2750.61,buy,2024-10-30 13:00:44
+,35,35,Indo Count Industries Limited,ICIL,31,1262.15,sell,2024-12-20 02:19:45
+,35,35,Shyam Century Ferrous Limited,SHYAMCENT,20,2295.04,buy,2024-10-23 05:12:05
+,35,35,Fine Organic Industries Limited,FINEORG,29,2107.33,buy,2025-08-19 22:03:06
+,35,35,EPL Limited,EPL,39,761.16,sell,2024-10-19 22:58:33
+,35,35,JK Tyre & Industries Limited,JKTYRE,47,4940.72,buy,2025-06-23 17:09:12
+,35,35,Shekhawati Industries Limited,SHEKHAWATI,9,3815.29,buy,2025-04-11 05:44:47
+,35,35,Mangalam Global Enterprise Limited,MGEL,21,1246.6,buy,2024-11-07 18:12:28
+,35,35,Utkarsh Small Finance Bank Limited,UTKARSHBNK,16,747.34,buy,2024-12-23 03:47:51
+,36,36,Mawana Sugars Limited,MAWANASUG,25,4327.61,buy,2024-12-26 19:29:13
+,36,36,STL Global Limited,SGL,11,4076.72,sell,2025-05-01 06:45:03
+,36,36,Vadilal Industries Limited,VADILALIND,21,989.68,buy,2024-11-29 04:32:20
+,36,36,Regency Ceramics Limited,REGENCERAM,30,2518.86,buy,2025-06-14 01:57:31
+,36,36,Datamatics Global Services Limited,DATAMATICS,6,4728.9,buy,2025-01-19 13:12:15
+,36,36,Transindia Real Estate Limited,TREL,16,1114.96,buy,2024-11-26 10:59:34
+,36,36,The New India Assurance Company Limited,NIACL,19,2499.73,sell,2025-06-02 09:15:57
+,36,36,Engineers India Limited,ENGINERSIN,44,2379.4,buy,2025-05-12 16:51:16
+,36,36,Dharmaj Crop Guard Limited,DHARMAJ,7,2183.09,sell,2025-08-05 15:03:07
+,36,36,Xchanging Solutions Limited,XCHANGING,24,3831.09,buy,2024-12-19 21:50:11
+,36,36,Shekhawati Industries Limited,SHEKHAWATI,4,2872.89,buy,2025-03-23 16:04:55
+,36,36,Sadhana Nitrochem Limited,SADHNANIQ,19,413.98,buy,2025-03-17 02:46:30
+,36,36,VIP Industries Limited,VIPIND,36,1434.62,sell,2024-12-14 21:56:52
+,36,36,Garware Technical Fibres Limited,GARFIBRES,40,638.11,sell,2025-08-25 23:40:33
+,36,36,BEML Land Assets Limited,BLAL,24,3984.74,buy,2025-08-27 01:59:02
+,37,37,Muthoot Capital Services Limited,MUTHOOTCAP,24,3787.08,buy,2025-08-02 23:35:11
+,37,37,TVS Supply Chain Solutions Limited,TVSSCS,26,2525.39,buy,2024-09-28 02:48:30
+,37,37,Gopal Snacks Limited,GOPAL,46,1698.55,buy,2024-10-14 05:36:44
+,37,37,Diamines & Chemicals Limited,DIAMINESQ,10,3050.99,buy,2025-05-12 17:17:16
+,37,37,Network People Services Technologies Limited,NPST,40,1626.72,buy,2025-02-19 21:20:26
+,37,37,Balaji Telefilms Limited,BALAJITELE,48,4220.88,buy,2025-07-27 11:24:46
+,37,37,Bank of India,BANKINDIA,33,2685.08,sell,2024-12-24 20:10:29
+,37,37,Wockhardt Limited,WOCKPHARMA,31,4087.96,buy,2024-09-25 12:14:48
+,37,37,Energy Development Company Limited,ENERGYDEV,8,4900.5,buy,2024-09-09 18:22:35
+,37,37,Prudential Sugar Corporation Limited,PRUDMOULI,47,4366.89,buy,2025-01-15 22:18:02
+,37,37,R R Kabel Limited,RRKABEL,31,1364.38,buy,2025-07-04 20:40:49
+,37,37,Aaron Industries Limited,AARON,50,2913.45,buy,2024-10-29 04:39:21
+,37,37,Shakti Pumps (India) Limited,SHAKTIPUMP,38,2428.22,buy,2025-05-13 19:39:19
+,37,37,Vadilal Industries Limited,VADILALIND,40,3884.3,buy,2024-12-19 02:55:42
+,37,37,Prabha Energy Limited,PRABHA,44,1248.87,buy,2024-11-10 03:22:53
+,38,38,Cupid Limited,CUPID,8,994.38,buy,2025-06-23 06:06:04
+,38,38,Sun TV Network Limited,SUNTV,10,2094.15,buy,2025-02-26 23:32:01
+,38,38,Supreme Petrochem Limited,SPLPETRO,50,3076.82,buy,2025-04-10 15:21:45
+,38,38,Star Cement Limited,STARCEMENT,48,3650.64,sell,2025-06-09 10:37:32
+,38,38,Precision Camshafts Limited,PRECAM,14,2826.39,sell,2025-02-21 11:39:33
+,38,38,Innovana Thinklabs Limited,INNOVANA,34,1915.28,sell,2025-04-14 05:21:33
+,38,38,GRP Limited,GRPLTD,35,1744.52,buy,2024-09-12 03:27:23
+,38,38,Bikaji Foods International Limited,BIKAJI,47,3419.69,sell,2024-10-21 20:04:06
+,38,38,Steel City Securities Limited,STEELCITY,40,2446.69,sell,2024-10-07 14:39:06
+,38,38,Escorts Kubota Limited,ESCORTS,36,1527.57,sell,2025-08-17 08:28:35
+,38,38,Wockhardt Limited,WOCKPHARMA,50,1480.57,buy,2025-06-03 18:05:52
+,38,38,Prataap Snacks Limited,DIAMONDYD,32,1619.35,buy,2025-08-25 10:33:11
+,38,38,Jubilant Foodworks Limited,JUBLFOOD,47,1403.61,buy,2024-11-05 06:36:53
+,38,38,Anuh Pharma Limited,ANUHPHR,35,1929.49,sell,2025-04-08 06:35:54
+,38,38,IDBI Bank Limited,IDBI,23,4775.31,sell,2024-09-22 09:08:05
+,39,39,HDB Financial Services Limited,HDBFS,3,1473.77,sell,2025-07-29 12:19:03
+,39,39,Linc Limited,LINC,29,3297.06,sell,2025-01-29 18:40:14
+,39,39,Prime Securities Limited,PRIMESECU,13,4148.36,buy,2025-04-22 14:42:39
+,39,39,Hitech Corporation Limited,HITECHCORP,45,1394.53,buy,2025-04-10 23:14:07
+,39,39,California Software Company Limited,CALSOFT,38,1234.45,buy,2024-11-04 21:39:44
+,39,39,Sampann Utpadan India Limited,SAMPANN,34,1167.07,buy,2025-02-22 07:13:51
+,39,39,Gayatri Projects Limited,GAYAPROJ,27,1684.95,buy,2024-10-27 21:12:24
+,39,39,Garware Technical Fibres Limited,GARFIBRES,50,730.46,sell,2024-09-24 15:12:05
+,39,39,Dishman Carbogen Amcis Limited,DCAL,11,2064.19,sell,2025-01-06 02:30:15
+,39,39,Kritika Wires Limited,KRITIKA,31,2413.37,buy,2025-01-28 00:07:36
+,39,39,STL Global Limited,SGL,19,1639.78,buy,2025-08-23 12:26:35
+,39,39,Bajaj Consumer Care Limited,BAJAJCON,50,492.83,buy,2025-09-05 18:20:20
+,39,39,Lloyds Metals And Energy Limited,LLOYDSME,48,3629.43,sell,2025-07-14 13:43:33
+,39,39,Apollo Pipes Limited,APOLLOPIPE,12,2118.53,sell,2025-08-08 15:39:28
+,39,39,Jubilant Foodworks Limited,JUBLFOOD,3,4986.0,buy,2024-09-23 21:10:31
+,40,40,Hind Rectifiers Limited,HIRECT,12,4686.21,sell,2025-08-23 11:54:47
+,40,40,Dishman Carbogen Amcis Limited,DCAL,19,4389.88,buy,2025-01-25 08:21:07
+,40,40,Sagar Cements Limited,SAGCEM,39,581.14,sell,2024-11-28 23:23:00
+,40,40,Amines & Plasticizers Limited,AMNPLST,30,4946.04,buy,2025-05-31 06:39:02
+,40,40,Hind Rectifiers Limited,HIRECT,9,4262.75,buy,2024-12-14 07:06:50
+,40,40,Tirupati Forge Limited,TIRUPATIFL,8,1686.89,sell,2025-05-25 09:35:53
+,40,40,CIE Automotive India Limited,CIEINDIA,17,3607.06,buy,2024-10-18 07:26:03
+,40,40,UCO Bank,UCOBANK,19,2860.52,sell,2025-01-23 17:51:07
+,40,40,Piramal Pharma Limited,PPLPHARMA,40,4287.93,sell,2025-07-08 08:32:19
+,40,40,ATLANTAA LIMITED,ATLANTAA,28,2600.64,buy,2025-04-13 19:49:15
+,40,40,Diffusion Engineers Limited,DIFFNKG,7,964.67,buy,2025-08-17 18:03:39
+,40,40,TruCap Finance Limited,TRU,16,83.81,buy,2025-08-14 02:14:30
+,40,40,Orient Technologies Limited,ORIENTTECH,49,1371.62,buy,2025-02-13 05:02:24
+,40,40,Gujarat Mineral Development Corporation Limited,GMDCLTD,47,2885.74,buy,2025-05-07 10:18:46
+,40,40,Bal Pharma Limited,BALPHARMA,45,1219.7,buy,2025-06-26 10:57:57
