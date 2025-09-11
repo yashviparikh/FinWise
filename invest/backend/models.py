@@ -1,4 +1,4 @@
-from invest import db
+from . import db
 from datetime import datetime 
 
 class Users(db.Model):
@@ -12,7 +12,8 @@ class Users(db.Model):
     losspercent=db.Column(db.Float,default=0.0)
     last_login=db.Column(db.DateTime)
     progress = db.Column(db.Integer,default=0)
-    level = db.Column(db.Integer,default=0)
+    level = db.Column(db.String(20), default="Beginner")
+
 
     watchlist = db.relationship('Watchlist', backref='users', lazy=True)
     portfolio =db.relationship('Portfolio', backref='users',cascade="all, delete")
@@ -68,7 +69,64 @@ class FIFOLot(db.Model):
     pricepershare = db.Column(db.Numeric(12, 2), nullable=False) 
     buydate = db.Column(db.DateTime, default=datetime)
 
+class StockHistory(db.Model):
+    __tablename__ = 'stockhistory'
+    
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)   # <-- AUTO_INCREMENT
+    userid = db.Column(db.Integer, nullable=False)
+    stock_name = db.Column(db.String(50), nullable=False)
+    dates = db.Column(db.Date, nullable=False)
+    close_price = db.Column(db.Float, nullable=False)
+
+    __table_args__ = (
+        db.UniqueConstraint('userid', 'stock_name', 'dates', name='unique_user_stock_date'),
+    )
+
+class UserActivity(db.Model):
+    __tablename__ = 'useractivity'
+
+    activity_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    userid = db.Column(db.Integer, db.ForeignKey('users.userid'), nullable=False)
+    activity_type = db.Column(db.String(50), nullable=False)
+    activity_value = db.Column(db.Float, default=0)
+    activity_date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Relationship to Users
+    user = db.relationship('Users', backref='activities', lazy=True)
+
+class Milestones(db.Model):
+    __tablename__ = 'milestones'
+
+    milestone_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(50))
+    description = db.Column(db.String(255))
+    type = db.Column(db.String(20)) 
+    threshold_value = db.Column(db.Float, nullable=False)
+
+    user_milestones = db.relationship('UserMilestones', backref='milestones', lazy=True)
 
 
+class UserMilestones(db.Model):
+    __tablename__ = 'usermilestones'
 
+    usermilestone_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    userid = db.Column(db.Integer, db.ForeignKey('users.userid'))
+    milestone_id = db.Column(db.Integer, db.ForeignKey('milestones.milestone_id'))
+    achieved_on = db.Column(db.DateTime, default=datetime.utcnow)
 
+class StockData(db.Model):
+    __tablename__ = 'stockdata'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    symbol = db.Column(db.String(30), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    open = db.Column(db.Float)
+    high = db.Column(db.Float)
+    low = db.Column(db.Float)
+    close = db.Column(db.Float)
+    adj_close = db.Column(db.Float)
+    volume = db.Column(db.BigInteger)
+
+    __table_args__ = (
+        db.UniqueConstraint('symbol', 'date', name='unique_symbol_date'),
+    )

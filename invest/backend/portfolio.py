@@ -1,8 +1,8 @@
 import yfinance as yf
 import requests
 import certifi
-from invest.models import Users,Stock,Watchlist,Portfolio,Transactionhistory,FIFOLot
-from invest.models import db
+from .models import Users,Stock,Watchlist,Portfolio,Transactionhistory,FIFOLot
+from . import db
 from datetime import datetime
 from decimal import Decimal
 from sqlalchemy.orm.exc import NoResultFound

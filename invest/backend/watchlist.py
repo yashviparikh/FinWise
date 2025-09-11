@@ -1,6 +1,6 @@
 from flask import request, jsonify
-from invest import db
-from invest.models import Users, Stock, Watchlist, Portfolio, FIFOLot, Transactionhistory
+from . import db
+from .models import Users, Stock, Watchlist, Portfolio, FIFOLot, Transactionhistory
 from datetime import datetime
 from decimal import Decimal
 import yfinance as yf

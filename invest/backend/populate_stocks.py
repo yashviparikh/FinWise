@@ -1,7 +1,7 @@
 import csv
-from invest import app
-from invest.models import Stock
-from invest import db
+from . import app
+from .models import Stock
+from .import db
 
 with app.app_context():
     with open('invest/stock_list.csv', mode='r', encoding='utf-8') as file:
