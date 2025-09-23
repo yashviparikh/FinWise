@@ -1,3 +1,0 @@
-FinWise – Learn, Simulate, and Invest Smarter—Risk-Free with AI-Powered Insights.
-
-FinWise is an AI-powered, educational stock market simulation platform designed for beginners and students to learn and practice investing without financial risk. It provides a user-friendly interface featuring a personal portfolio, watchlist management, real-time stock news, and a dashboard for monitoring performance. Leveraging machine learning models, FinWise offers personalized stock predictions and recommendations, helping users make informed decisions while practicing trading in a risk-free, simulated environment. The platform bridges the gap between theory and practice, offering a hands-on learning experience that is accessible, interactive, and educational.
