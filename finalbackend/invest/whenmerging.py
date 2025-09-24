@@ -8,7 +8,7 @@ import requests
 # ----------------------------
 # Config
 # ----------------------------
-PORTFOLIO_API = "http://localhost:5000/portfolio"   # replace with actual backend URL
+TRANSACTIONS_API = "http://localhost:5000/transactions"
 LTP_API = "http://localhost:5000/ltp"               # replace with actual backend URL
 
 # ----------------------------
@@ -34,17 +34,36 @@ def add_technical_indicators(df):
     df["volatility"] = df.groupby("stockname")["price"].transform(lambda x: x.rolling(10, min_periods=1).std())
     df["avg_return"] = df.groupby("stockname")["price"].transform(lambda x: x.pct_change().rolling(10, min_periods=1).mean())
     df.fillna(0, inplace=True)
+    
     return df
 
 
 # ----------------------------
 # Fetch portfolio + stock master + prices
 # ----------------------------
-def fetch_portfolio(userid: int) -> pd.DataFrame:
-    resp = requests.get(f"{PORTFOLIO_API}/{userid}")
+def fetch_transactions(userid: int) -> pd.DataFrame:
+    resp = requests.get(f"{TRANSACTIONS_API}/{userid}")
     resp.raise_for_status()
-    data = resp.json()  # assumes API returns list of dicts
-    return pd.DataFrame(data)
+    data = resp.json()
+    df = pd.DataFrame(data)
+    df.columns = df.columns.str.lower()
+
+    # ✅ ensure numeric values
+    if "price" in df.columns:
+        df["price"] = pd.to_numeric(df["price"], errors="coerce")
+    if "quantity" in df.columns:
+        df["quantity"] = pd.to_numeric(df["quantity"], errors="coerce")
+
+    # ✅ ensure lowercase for transaction type
+    if "type" in df.columns:
+        df["type"] = df["type"].str.lower()
+
+    # ✅ parse datetime
+    if "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+
+    return df
+
 
 
 def fetch_stock_universe(limit=100) -> pd.DataFrame:
@@ -68,8 +87,21 @@ def fetch_ltp(symbols: list[str]) -> pd.DataFrame:
 def recommend_top_stocks(transactions_df, stocks_df, top_n=5):
     # Merge portfolio with master stock info
     data = transactions_df.merge(stocks_df, on="stockname", how="left")
+    
+    # Merge portfolio with master stock info + LTP
+    data = transactions_df.merge(stocks_df, on="stockname", how="left")
+
+    # Fix price column (prefer live price if available)
+    if "price_x" in data.columns and "price_y" in data.columns:
+        data["price"] = data["price_y"].fillna(data["price_x"])
+    elif "price_x" in data.columns:
+        data.rename(columns={"price_x": "price"}, inplace=True)
+    elif "price_y" in data.columns:
+        data.rename(columns={"price_y": "price"}, inplace=True)
 
     # Temporal features
+    if "timestamp" not in data.columns:
+        data["timestamp"] = pd.Timestamp.now()
     data["timestamp"] = pd.to_datetime(data["timestamp"])
     data["day_of_week"] = data["timestamp"].dt.dayofweek
     data["month"] = data["timestamp"].dt.month

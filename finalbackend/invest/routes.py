@@ -458,52 +458,76 @@ def predict_stock(symbol):
         "logs": logs
     })
 
-@routes_bp.route("/ltp", methods=["POST"])
-def get_ltp():
-    """
-    Returns last traded prices for given stock symbols.
-    Expects: { "symbols": ["INFY","TCS",...] }
-    """
-    data = request.get_json()
-    symbols = data.get("symbols", [])
-    now = time.time()
-    prices = {}
-
-    for sym in symbols:
-        sym = str(sym)
-        cached = _price_cache.get(sym)
-        if cached:
-            price, ts = cached
-            if now - ts < CACHE_TTL:
-                prices[sym] = price
-                continue
-        try:
-            price, _, _ = _get_live_price_for_symbol(sym)
-            if price:
-                prices[sym] = price
-                _price_cache[sym] = (price, now)
-        except Exception:
-            if cached:
-                price, _ = cached
-                prices[sym] = price
-    _save_cache()
-    return jsonify(prices)
-
-# ----------------------------
-# Recommendations endpoint
-# ----------------------------
+from invest.whenmerging import fetch_transactions, fetch_stock_universe, fetch_ltp, recommend_top_stocks
 @routes_bp.route("/recommendations/<int:userid>", methods=["GET"])
 def get_recommendations(userid):
-    """
-    Generate top 5 stock recommendations for given user.
-    """
     try:
-        transactions_df = base_recommend.fetch_portfolio(userid)
-        stocks_df = base_recommend.fetch_stock_universe(limit=100)
-        ltp_df = base_recommend.fetch_ltp(stocks_df["stockname"].tolist())
-        stocks_df = stocks_df.merge(ltp_df, on="stockname", how="left")
+        # Fetch data
+        transactions_df = fetch_transactions(userid)
+        if transactions_df.empty:
+            return jsonify({"error": "No transactions found for user"}), 404
 
-        recs = base_recommend.recommend_top_stocks(transactions_df, stocks_df, top_n=5)
-        return jsonify(recs.to_dict(orient="records"))
+        stocks_df = fetch_stock_universe(limit=100)
+
+        # Fetch live prices
+        try:
+            ltp_df = fetch_ltp(stocks_df["stockname"].tolist())
+            stocks_df = stocks_df.merge(ltp_df, on="stockname", how="left")
+        except Exception as e:
+            return jsonify({"error": f"LTP fetch failed: {str(e)}"}), 500
+
+        # Run recommender
+        top5 = recommend_top_stocks(transactions_df, stocks_df, top_n=5)
+
+        return jsonify(top5.to_dict(orient="records"))
+
     except Exception as e:
+        import traceback
+        print("Error in recommendations:", traceback.format_exc())  # logs full stack trace
+        return jsonify({"error": str(e)}), 500
+    
+
+@routes_bp.route("/ltp", methods=["POST"])
+def ltp_batch():
+    try:
+        data = request.get_json() or {}
+        symbols = data.get("symbols", [])
+
+        results = []
+        for sym in symbols:
+            try:
+                price, change, change_percent = _get_live_price_for_symbol(sym)
+                if price is not None:
+                    results.append({"stockname": sym, "price": price})
+            except Exception:
+                continue
+
+        return jsonify({row["stockname"]: row["price"] for row in results})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+from invest.models import Transactionhistory
+from flask import current_app
+
+@routes_bp.route("/transactions/<int:userid>", methods=["GET"])
+def get_transactions(userid):
+    try:
+        txns = Transactionhistory.query.filter_by(userid=userid).all()
+        if not txns:
+            return jsonify([])
+
+        result = [
+            {
+                "userid": t.userid,
+                "stockname": t.stockname,
+                "quantity": t.quantity,
+                "price": t.price,
+                "type": t.transactiontype,   # buy/sell
+                "date": t.timestamp.strftime("%Y-%m-%d %H:%M:%S") if t.timestamp else None
+            }
+            for t in txns
+        ]
+        return jsonify(result)
+    except Exception as e:
+        current_app.logger.error(f"Failed to fetch transactions for user {userid}: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500

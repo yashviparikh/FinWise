@@ -512,7 +512,12 @@ export default function Portfolio({ userid = 1 }) {
         </div>
       )}
 
-      {showReco && <RecommendationModal onClose={() => setShowReco(false)} />}
+      {showReco && (
+  <RecommendationModal 
+    userId={userid} 
+    onClose={() => setShowReco(false)} 
+  />
+)}
     </div>
   );
 }

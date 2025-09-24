@@ -425,6 +425,7 @@ function Watchlist({ userid = 1 }) {
       {/* Celebration / Recommendation Modal */}
       {showCelebrate && purchasedStock && (
         <RecommendationModal
+          userId={userid}
           stock={purchasedStock}
           type="buy"
           onClose={() => setShowCelebrate(false)}

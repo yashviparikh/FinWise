@@ -23,48 +23,54 @@ def getheadlines():
 # for i in headlines:
 #     print(i,"\n")
 def get_news():
-    should_refresh = True
-    json_data = {}
-    cache_path='cache_news.json'
-    if os.path.exists(cache_path):
-        try:
-            with open(cache_path, "r") as file:
-                json_data = json.load(file)
-                last_updated = datetime.fromisoformat(json_data['last_updated']).date()
-                if last_updated == datetime.now().date():
-                    return json_data  
-                else:
-                    should_refresh = True
-        except (json.JSONDecodeError, KeyError, ValueError) as e:
-            print("❗ Cache file invalid or corrupted:", e)
+    try:
+        should_refresh = True
+        json_data = {}
+        cache_path = 'cache_news.json'
 
-    if should_refresh:
-        latest = getheadlines() 
+        if os.path.exists(cache_path):
+            try:
+                with open(cache_path, "r") as file:
+                    json_data = json.load(file)
+                    last_updated = datetime.fromisoformat(json_data.get('last_updated', '1970-01-01')).date()
+                    if last_updated == datetime.now().date():
+                        return json_data
+            except Exception as e:
+                print("❗ Cache read failed:", e)
+
+        latest = getheadlines()
+        if not latest:
+            return {"error": "No news from API"}
+
         from invest.summarizermodel import summarize_news  
-        if latest:
-            newsdata = []
-            for article in latest:
+
+        newsdata = []
+        for article in latest:
+            try:
                 desc = article.get("description") or article.get("content") or ""
-                if len(desc) < 20: 
-                    summary = desc
-                else:
-                    summary = summarize_news(desc)
-                impacts=getimpact(article["title"],summary)
-                sentiment=impacttosentiment(impacts)
-                reaction,action = sentiment_to_market_action(sentiment)
+                summary = desc if len(desc) < 20 else summarize_news(desc)
+                impacts = getimpact(article["title"], summary)
+                sentiment = impacttosentiment(impacts)
+                reaction, action = sentiment_to_market_action(sentiment)
                 newsdata.append({
                     "headline": article["title"],
                     "summary": summary,
                     "sentiment": sentiment,
                     "market reaction": reaction,
-                    "investor reaction":action
+                    "investor reaction": action
                 })
+            except Exception as e:
+                print("❗ Error processing article:", e)
+
         json_data = {
             "last_updated": datetime.now().isoformat(),
             "news": newsdata
-            }
+        }
         with open(cache_path, "w") as file:
             json.dump(json_data, file, indent=2)
 
-    return json_data
+        return json_data
+    except Exception as e:
+        print("❗ Fatal error in get_news:", e)
+        return {"error": str(e)}
 # print(get_news())
