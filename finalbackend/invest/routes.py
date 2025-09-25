@@ -464,21 +464,27 @@ def get_recommendations(userid):
     try:
         # Fetch data
         transactions_df = fetch_transactions(userid)
+        print("transactions:",transactions_df)
+        print(transactions_df.columns)
+        print(transactions_df.head())
+
         if transactions_df.empty:
             return jsonify({"error": "No transactions found for user"}), 404
 
         stocks_df = fetch_stock_universe(limit=100)
-
-        # Fetch live prices
+        print("stocks_df:",stocks_df)
+# Fetch live prices
         try:
             ltp_df = fetch_ltp(stocks_df["stockname"].tolist())
+            print("ltp df:",ltp_df)
             stocks_df = stocks_df.merge(ltp_df, on="stockname", how="left")
+            print("stocks df on merge:", stock_df.head())
         except Exception as e:
             return jsonify({"error": f"LTP fetch failed: {str(e)}"}), 500
 
         # Run recommender
         top5 = recommend_top_stocks(transactions_df, stocks_df, top_n=5)
-
+        print("top5:",top5)
         return jsonify(top5.to_dict(orient="records"))
 
     except Exception as e:

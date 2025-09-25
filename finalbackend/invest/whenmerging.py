@@ -5,6 +5,11 @@ import pickle
 from datetime import datetime
 import requests
 
+
+def normalize_stocknames(df, col="stockname"):
+    df[col] = df[col].astype(str).str.replace(r"\.NS$", "", regex=True).str.upper().str.strip()
+    return df
+
 # ----------------------------
 # Config
 # ----------------------------
@@ -41,28 +46,26 @@ def add_technical_indicators(df):
 # ----------------------------
 # Fetch portfolio + stock master + prices
 # ----------------------------
+
 def fetch_transactions(userid: int) -> pd.DataFrame:
     resp = requests.get(f"{TRANSACTIONS_API}/{userid}")
     resp.raise_for_status()
     data = resp.json()
-    df = pd.DataFrame(data)
+    
+    # Force dataframe with explicit column order
+    df = pd.DataFrame(data, columns=["userid", "stockname", "quantity", "price", "type", "date"])
     df.columns = df.columns.str.lower()
+    
+    df = normalize_stocknames(df, "stockname")
 
-    # ✅ ensure numeric values
-    if "price" in df.columns:
-        df["price"] = pd.to_numeric(df["price"], errors="coerce")
-    if "quantity" in df.columns:
-        df["quantity"] = pd.to_numeric(df["quantity"], errors="coerce")
-
-    # ✅ ensure lowercase for transaction type
-    if "type" in df.columns:
-        df["type"] = df["type"].str.lower()
-
-    # ✅ parse datetime
-    if "date" in df.columns:
-        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+    # numeric conversions
+    df["price"] = pd.to_numeric(df["price"], errors="coerce")
+    df["quantity"] = pd.to_numeric(df["quantity"], errors="coerce")
+    df["type"] = df["type"].str.lower()
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
 
     return df
+
 
 
 
@@ -70,6 +73,7 @@ def fetch_stock_universe(limit=100) -> pd.DataFrame:
     # For demo, read from your NSE master CSV
     stocks_df = pd.read_csv("invest/stocks_df_ready.csv").head(limit)
     stocks_df.rename(columns={"SYMBOL": "stockname", "NAME OF COMPANY": "companyname"}, inplace=True)
+    stocks_df = normalize_stocknames(stocks_df, "stockname")
     return stocks_df[["stockname", "companyname"]]
 
 
@@ -78,6 +82,8 @@ def fetch_ltp(symbols: list[str]) -> pd.DataFrame:
     resp.raise_for_status()
     ltps = resp.json()  # { "SYMBOL": price, ... }
     df = pd.DataFrame(list(ltps.items()), columns=["stockname", "price"])
+    df = normalize_stocknames(df, "stockname")
+
     return df
 
 
@@ -86,9 +92,6 @@ def fetch_ltp(symbols: list[str]) -> pd.DataFrame:
 # ----------------------------
 def recommend_top_stocks(transactions_df, stocks_df, top_n=5):
     # Merge portfolio with master stock info
-    data = transactions_df.merge(stocks_df, on="stockname", how="left")
-    
-    # Merge portfolio with master stock info + LTP
     data = transactions_df.merge(stocks_df, on="stockname", how="left")
 
     # Fix price column (prefer live price if available)

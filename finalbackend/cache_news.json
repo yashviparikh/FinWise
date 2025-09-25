@@ -1,40 +1,40 @@
 {
-  "last_updated": "2025-09-24T04:56:47.415706",
+  "last_updated": "2025-09-25T02:19:33.581521",
   "news": [
     {
-      "headline": "Has NSE changed the Diwali 'Muhurat trading' timing? What you need to know",
-      "summary": " Muhurat Trading, the special one-hour stock market session conducted on Diwali, will be conducted on October 21 . The session is considered auspicious by traders and investors .",
+      "headline": "Markets await earnings revival amid range-bound trading, says Manish Sonthalia",
+      "summary": "The Indian stock market is range-bound, influenced by earnings and policy. Manish Sonthalia suggests...",
       "sentiment": "neutral",
       "market reaction": "Hold or sideways",
       "investor reaction": "Hold positions, monitor closely"
     },
     {
-      "headline": "Wall Street's Balancing Act: Tech Rally Meets Fed Uncertainty",
-      "summary": " Traders await remarks from Federal Reserve Chair Jerome Powell that could influence interest rate projections . Tech stocks continue to drive market resilience despite valuation concerns .",
+      "headline": "A pocket of India's stock market is defying Donald Trump's \u2018America First\u2019 policy",
+      "summary": "While Nifty IT index is down about 19%, Nifty Bank, Nifty Auto and Nifty India Consumption are up 8%...",
+      "sentiment": "bearish",
+      "market reaction": "Selling pressure",
+      "investor reaction": "Consider reducing positions or hedging"
+    },
+    {
+      "headline": "Stocks making the biggest moves midday: Sri Lotus Developers, Premier Energies, Waaree Energies and more",
+      "summary": "Discover top stock movers like Sri Lotus Developers, Cartrade Tech, and more with strong gains\u2014explo...",
       "sentiment": "neutral",
       "market reaction": "Hold or sideways",
       "investor reaction": "Hold positions, monitor closely"
     },
     {
-      "headline": "Stock market settles flat, auto and financial services stock gain",
-      "summary": " Stock market settles flat, auto and financial services stock gain - Mumbai, Sep 23 . Domestic equity indices settled flat on Tuesday amid persistent selling in IT stocks .",
-      "sentiment": "neutral",
-      "market reaction": "Hold or sideways",
-      "investor reaction": "Hold positions, monitor closely"
+      "headline": "Epack Prefab Technologies IPO: Issue subscribed 7% so far on Day 1. Check GMP and other key details",
+      "summary": "Epack Prefab Technologies IPO: The Epack Prefab Technologies IPO is currently showing a grey market ...",
+      "sentiment": "bullish",
+      "market reaction": "Buying pressure",
+      "investor reaction": "Consider increasing positions"
     },
     {
-      "headline": "Stock market settles flat, auto and financial services stock gain",
-      "summary": " Stock market settles flat, auto and financial services stock gain - Mumbai, Sep 23 . Domestic equity indices settled flat on Tuesday amid persistent selling in IT stocks .",
-      "sentiment": "neutral",
-      "market reaction": "Hold or sideways",
-      "investor reaction": "Hold positions, monitor closely"
-    },
-    {
-      "headline": "Power Surge: Stocks Soar as Nvidia Fuels AI Future",
-      "summary": " Nvidia's $100 billion AI infrastructure investment boosts stocks for power equipment companies like HD Hyundai Electric and LS Electric . The firm's plans for a massive 10-gigawatt data center",
-      "sentiment": "neutral",
-      "market reaction": "Hold or sideways",
-      "investor reaction": "Hold positions, monitor closely"
+      "headline": "HSBC Upgrades Indian Stock Market To 'Overweight', Expects Sensex To Rise To 94,000 by 2026-End",
+      "summary": "'In stark contrast to the crowded trades in Korea and Taiwan, India is Asia's quiet corner,' says gl...",
+      "sentiment": "bullish",
+      "market reaction": "Buying pressure",
+      "investor reaction": "Consider increasing positions"
     }
   ]
 }
