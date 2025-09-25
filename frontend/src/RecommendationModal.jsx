@@ -7,10 +7,11 @@ export default function RecommendationModal({ onClose, userId }) {
   const [recommendations, setRecommendations] = useState([]);
 
   useEffect(() => {
+    console.log("Fetching recommendations for userId:", userId);
     const fetchRecommendations = async () => {
       try {
         const res = await axios.get(`http://127.0.0.1:5000/recommendations/${userId}`);
-        setRecommendations(res.data.recommendations || []);
+        setRecommendations(res.data || []);
       } catch (err) {
         console.error("Error fetching recommendations:", err);
       }
