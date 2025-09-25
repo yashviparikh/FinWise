@@ -51,11 +51,11 @@ def fetch_transactions(userid: int) -> pd.DataFrame:
     resp = requests.get(f"{TRANSACTIONS_API}/{userid}")
     resp.raise_for_status()
     data = resp.json()
-    
+    if not data:
+        return pd.DataFrame(columns=["userid", "stockname", "quantity", "price", "type", "date"])
     # Force dataframe with explicit column order
-    df = pd.DataFrame(data, columns=["userid", "stockname", "quantity", "price", "type", "date"])
+    df = pd.DataFrame(data)
     df.columns = df.columns.str.lower()
-    
     df = normalize_stocknames(df, "stockname")
 
     # numeric conversions
@@ -69,12 +69,14 @@ def fetch_transactions(userid: int) -> pd.DataFrame:
 
 
 
-def fetch_stock_universe(limit=100) -> pd.DataFrame:
-    # For demo, read from your NSE master CSV
+def fetch_stock_universe(limit=200) -> pd.DataFrame:
     stocks_df = pd.read_csv("invest/stocks_df_ready.csv").head(limit)
-    stocks_df.rename(columns={"SYMBOL": "stockname", "NAME OF COMPANY": "companyname"}, inplace=True)
+    stocks_df.rename(
+        columns={"SYMBOL": "stockname", "NAME OF COMPANY": "companyname"},
+        inplace=True
+    )
     stocks_df = normalize_stocknames(stocks_df, "stockname")
-    return stocks_df[["stockname", "companyname"]]
+    return stocks_df[["stockname", "companyname"]] 
 
 
 def fetch_ltp(symbols: list[str]) -> pd.DataFrame:
@@ -91,8 +93,10 @@ def fetch_ltp(symbols: list[str]) -> pd.DataFrame:
 # Main recommendation function
 # ----------------------------
 def recommend_top_stocks(transactions_df, stocks_df, top_n=5):
+    if transactions_df.empty:
+        return pd.DataFrame(columns=["stockname", "companyname", "buy_prob", "price"])
     # Merge portfolio with master stock info
-    data = transactions_df.merge(stocks_df, on="stockname", how="left")
+    data = stocks_df.copy()
 
     # Fix price column (prefer live price if available)
     if "price_x" in data.columns and "price_y" in data.columns:
@@ -115,7 +119,11 @@ def recommend_top_stocks(transactions_df, stocks_df, top_n=5):
         user_avg_quantity=("quantity", "mean"),
         user_avg_value=("quantity", lambda x: np.mean(x * data.loc[x.index, "price"]))
     ).reset_index()
-    data = data.merge(user_agg, on="userid", how="left")
+    user_features = user_agg.drop(columns="userid").iloc[0].to_dict()
+
+# Add these as constant columns to all stocks
+    for k, v in user_features.items():
+        data[k] = v
 
     # Stock-level features
     stock_agg = transactions_df.groupby("stockname").agg(
@@ -154,9 +162,10 @@ def recommend_top_stocks(transactions_df, stocks_df, top_n=5):
     # Filter: exclude stocks already in user’s portfolio
     portfolio_stocks = set(transactions_df["stockname"].unique())
     recs = data[~data["stockname"].isin(portfolio_stocks)]
-
     # Top N
-    top_recs = recs.sort_values("buy_prob", ascending=False).head(top_n)
+    recs = recs.drop_duplicates(subset=["stockname"])
+
+    top_recs = data.sort_values("buy_prob", ascending=False).head(top_n)
 
     # Final columns
     cols_to_return = [c for c in ["stockname", "companyname", "buy_prob", "price"] if c in top_recs.columns]
@@ -170,7 +179,7 @@ if __name__ == "__main__":
     userid = 1
 
     # Fetch data from portfolio service
-    transactions_df = fetch_portfolio(userid)
+    transactions_df = fetch_transactions(userid)
     stocks_df = fetch_stock_universe(limit=100)
 
     # Fetch live prices for those 100 stocks

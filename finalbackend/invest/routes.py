@@ -478,7 +478,7 @@ def get_recommendations(userid):
             ltp_df = fetch_ltp(stocks_df["stockname"].tolist())
             print("ltp df:",ltp_df)
             stocks_df = stocks_df.merge(ltp_df, on="stockname", how="left")
-            print("stocks df on merge:", stock_df.head())
+            print("stocks df on merge:", stocks_df.head())
         except Exception as e:
             return jsonify({"error": f"LTP fetch failed: {str(e)}"}), 500
 

@@ -11,7 +11,7 @@ import StockPrediction from "./StockPrediction.jsx";
 import Log from './Log.jsx';
 import Signup from './Signup';
 import OtpReset from './OTPReset';
-import ErrorBoundary from './ErrorBoundary';
+
 function App() {
   const [wallet, setWallet] = useState(10000);
 
