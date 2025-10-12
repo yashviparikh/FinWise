@@ -167,7 +167,7 @@ from flask import Blueprint, request, jsonify, Response, current_app, g
 from tensorflow.keras.models import load_model
 from invest.models import Users, Stock, Transactionhistory
 from invest import watchlist, learnings, portfolio as portfolio_module
-from .portfolio import get_dashboard_data
+from .portfolio import get_dashboard_data, _get_live_price_for_symbol, fetch_ltp_parallel
 import csv, io, os, json, time
 import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler
@@ -198,70 +198,6 @@ try:
     stock_df = pd.read_csv(CSV_PATH, dtype=str, keep_default_na=False)
 except (FileNotFoundError, pd.errors.EmptyDataError):
     stock_df = pd.DataFrame(columns=["SYMBOL", "NAME OF COMPANY"])
-
-# ---------------- LTP Cache ----------------
-LTP_CACHE = {}
-CACHE_TTL = 300  # seconds
-
-def _get_live_price_for_symbol(symbol_plain):
-    """Fetch live price with in-memory caching"""
-    symbol_plain = symbol_plain.upper()
-    now = time.time()
-
-    # 1️⃣ Check cache
-    cached = LTP_CACHE.get(symbol_plain)
-    if cached and (now - cached["timestamp"] < CACHE_TTL):
-        return cached["price"], cached["change"], cached["change_percent"]
-
-    # 2️⃣ Fetch from yfinance
-    try:
-        ticker_symbol = f"{symbol_plain}.NS"
-        t = yf.Ticker(ticker_symbol)
-        info = t.info or {}
-
-        price = info.get("regularMarketPrice") or info.get("previousClose")
-        prev = info.get("previousClose")
-
-        if price is None:
-            return None, None, None
-
-        change = round(float(price) - float(prev), 2) if prev else 0
-        change_percent = round((change / float(prev)) * 100, 2) if prev and prev != 0 else 0
-
-        # 3️⃣ Store in cache
-        LTP_CACHE[symbol_plain] = {
-            "price": round(float(price), 2),
-            "change": change,
-            "change_percent": change_percent,
-            "timestamp": now,
-        }
-
-        return round(float(price), 2), change, change_percent
-
-    except Exception:
-        return None, None, None
-
-# ---------------- Parallel LTP Fetch ----------------
-def fetch_ltp_parallel(symbols):
-    """Fetch multiple LTPs concurrently"""
-    results = []
-
-    def fetch(symbol):
-        price, change, change_percent = _get_live_price_for_symbol(symbol)
-        return {
-            "stockname": symbol,
-            "price": price,
-            "change": change,
-            "change_percent": change_percent
-        }
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
-        future_to_sym = {executor.submit(fetch, sym): sym for sym in symbols}
-        for future in concurrent.futures.as_completed(future_to_sym):
-            res = future.result()
-            results.append(res)
-
-    return pd.DataFrame(results)
 
 # ---------------- General Routes ----------------
 @routes_bp.route("/")

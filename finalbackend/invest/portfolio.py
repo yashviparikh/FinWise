@@ -5,13 +5,76 @@ import pandas as pd
 from decimal import Decimal
 from datetime import datetime, timedelta
 from sqlalchemy.orm.exc import NoResultFound
-
+import concurrent.futures
+import time
 # Import all necessary models
 from invest.models import (
     Users, Portfolio, Transactionhistory, FIFOLot,
     Useractivity, Stockhistory, Stockdata, Milestones, UserMilestones, db
 )
+# ---------------- LTP Cache ----------------
+LTP_CACHE = {}
+CACHE_TTL = 300  # seconds
 
+def _get_live_price_for_symbol(symbol_plain):
+    """Fetch live price with in-memory caching"""
+    symbol_plain = symbol_plain.upper()
+    now = time.time()
+
+    # 1️⃣ Check cache
+    cached = LTP_CACHE.get(symbol_plain)
+    if cached and (now - cached["timestamp"] < CACHE_TTL):
+        return cached["price"], cached["change"], cached["change_percent"]
+
+    # 2️⃣ Fetch from yfinance
+    try:
+        ticker_symbol = f"{symbol_plain}.NS"
+        t = yf.Ticker(ticker_symbol)
+        info = t.info or {}
+
+        price = info.get("regularMarketPrice") or info.get("previousClose")
+        prev = info.get("previousClose")
+
+        if price is None:
+            return None, None, None
+
+        change = round(float(price) - float(prev), 2) if prev else 0
+        change_percent = round((change / float(prev)) * 100, 2) if prev and prev != 0 else 0
+
+        # 3️⃣ Store in cache
+        LTP_CACHE[symbol_plain] = {
+            "price": round(float(price), 2),
+            "change": change,
+            "change_percent": change_percent,
+            "timestamp": now,
+        }
+
+        return round(float(price), 2), change, change_percent
+
+    except Exception:
+        return None, None, None
+
+# ---------------- Parallel LTP Fetch ----------------
+def fetch_ltp_parallel(symbols):
+    """Fetch multiple LTPs concurrently"""
+    results = []
+
+    def fetch(symbol):
+        price, change, change_percent = _get_live_price_for_symbol(symbol)
+        return {
+            "stockname": symbol,
+            "price": price,
+            "change": change,
+            "change_percent": change_percent
+        }
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        future_to_sym = {executor.submit(fetch, sym): sym for sym in symbols}
+        for future in concurrent.futures.as_completed(future_to_sym):
+            res = future.result()
+            results.append(res)
+
+    return pd.DataFrame(results)
 # --- Fix SSL issues for yfinance if needed ---
 old_get = requests.get
 def safe_get(*args, **kwargs):
@@ -20,36 +83,52 @@ def safe_get(*args, **kwargs):
 requests.get = safe_get
 
 # ---------------- Utils ----------------
+SECTOR_DICT = {}
+def preload_sectors():
+    symbols = [s.stockname.upper() for s in Stockdata.query.all()]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        future_to_sym = {executor.submit(fetch_sector, sym): sym for sym in symbols}
+        for future in concurrent.futures.as_completed(future_to_sym):
+            sym, sector = future.result()
+            SECTOR_DICT[sym] = sector
 
-def getfromapi(stockname):
-    """Fetch latest price safely from yfinance."""
+def fetch_sector(symbol):
+    """Fetch sector from yfinance once"""
     try:
-        if not stockname.endswith('.NS'):
-            ticker_symbol = f"{stockname}.NS"
-        else:
-            ticker_symbol = stockname
-        ticker = yf.Ticker(ticker_symbol)
-        # Use info for faster price fetching
-        info = ticker.info
-        price = info.get("regularMarketPrice") or info.get("currentPrice") or info.get("previousClose")
-        if price:
-            return float(price)
-        
-        # Fallback to history if info fails
-        hist = ticker.history(period="1d")
-        if not hist.empty:
-            return float(hist["Close"].iloc[-1])
-        return None
+        ticker_symbol = f"{symbol}.NS" if not symbol.endswith(".NS") else symbol
+        info = yf.Ticker(ticker_symbol).info
+        sector = info.get("sector") or "Other"
+        return symbol, sector
     except Exception:
-        return None
+        return symbol, "Other"
 
+def get_sector(symbol):
+    """Get sector from preloaded dictionary"""
+    return SECTOR_DICT.get(symbol.upper(), "Other")
 
 def gettingfromdb(userid):
     """Fetch holdings and enrich with live data & P&L."""
     rows = Portfolio.query.filter_by(userid=userid).all()
+    if not rows:
+        return []
+
+    # 1️⃣ Prepare stock symbols
+    symbols = [r.stockname for r in rows]
+
+    # 2️⃣ Fetch LTPs concurrently using the cached function
+    ltp_results = {}
+    def fetch_ltp(stockname):
+        price, _, _ = _get_live_price_for_symbol(stockname)
+        return stockname, price
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        future_to_stock = {executor.submit(fetch_ltp, s): s for s in symbols}
+        for future in concurrent.futures.as_completed(future_to_stock):
+            stock, price = future.result()
+            ltp_results[stock] = price
     processed = []
     for r in rows:
-        ltp = getfromapi(r.stockname) or float(r.averagebuyprice or 0)
+        ltp = ltp_results.get(r.stockname) or float(r.averagebuyprice or 0)
         total_quantity = r.totalquantity or 0
         total_invested = float(r.totalinvested or 0)
         now_value = ltp * total_quantity
@@ -252,19 +331,9 @@ def calculate_user_metrics(userid):
 
 # ---------------- Main Dashboard Data Aggregator ------------------
 
-def get_sector(stockname):
-    """Fetch sector info from yfinance."""
-    try:
-        ticker = yf.Ticker(stockname if stockname.endswith(".NS") else stockname + ".NS")
-        return ticker.info.get("sector", "Other") or "Other"
-    except Exception:
-        return "Other"
-
 from flask import Response
 import csv
 import io
-
-
 
 def get_dashboard_data(userid):
     """Unify portfolio + analytics for dashboard, with sector info for pie chart."""
