@@ -56,7 +56,7 @@ export default function RecommendationModal({ onClose, userId }) {
                 )}
               </div>
               <p className="text-slate-400 text-sm">{stock.companyname}</p>
-              {stock.price && <p className="text-lg font-bold mt-2">${Number(stock.price).toFixed(2)}</p>}
+              {stock.price && <p className="text-lg font-bold mt-2">₹{Number(stock.price).toFixed(2)}</p>}
               <div className="flex items-center gap-1 mt-2 text-yellow-400 text-sm">
                 <Star size={14} /> {(stock.buy_prob * 100).toFixed(1)}% Match
               </div>

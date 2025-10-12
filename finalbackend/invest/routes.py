@@ -163,61 +163,107 @@
 import numpy as np
 import pandas as pd
 import joblib
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response, current_app, g
 from tensorflow.keras.models import load_model
-from invest.models import Users, Stock
+from invest.models import Users, Stock, Transactionhistory
 from invest import watchlist, learnings, portfolio as portfolio_module
 from .portfolio import get_dashboard_data
-import csv,io,os,json,time
-from flask import Response, current_app
+import csv, io, os, json, time
 import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler
+import concurrent.futures
 
 import invest.whenmerging as base_recommend
+from invest.whenmerging import fetch_transactions, fetch_stock_universe, recommend_top_stocks
 
-# This Blueprint will handle all routes EXCEPT the main dashboard
+# Blueprint
 routes_bp = Blueprint("routes_bp", __name__)
 
-# --- Load stock list CSV safely ---
+# ---------------- Request timing ----------------
+@routes_bp.before_request
+def start_timer():
+    g.start_time = time.perf_counter()
+
+@routes_bp.after_request
+def log_request_time(response):
+    if hasattr(g, "start_time"):
+        elapsed = time.perf_counter() - g.start_time
+        print(f"[TIMER] {request.method} {request.path} took {elapsed:.3f}s")
+        response.headers["X-Response-Time"] = f"{elapsed:.3f}s"
+    return response
+
+# ---------------- Load stock list ----------------
 try:
     CSV_PATH = os.path.join(os.path.dirname(__file__), "stock_list.csv")
     stock_df = pd.read_csv(CSV_PATH, dtype=str, keep_default_na=False)
 except (FileNotFoundError, pd.errors.EmptyDataError):
     stock_df = pd.DataFrame(columns=["SYMBOL", "NAME OF COMPANY"])
 
+# ---------------- LTP Cache ----------------
+LTP_CACHE = {}
+CACHE_TTL = 300  # seconds
 
-CACHE_FILE = "price_cache.json"
-CACHE_TTL = 300  # 5 min
-
-if os.path.exists(CACHE_FILE):
-    with open(CACHE_FILE, "r") as f:
-        _price_cache = json.load(f)
-else:
-    _price_cache = {}
-
-def _save_cache():
-    with open(CACHE_FILE, "w") as f:
-        json.dump(_price_cache, f)
-
-
-# --- Helper for live price ---
 def _get_live_price_for_symbol(symbol_plain):
+    """Fetch live price with in-memory caching"""
+    symbol_plain = symbol_plain.upper()
+    now = time.time()
+
+    # 1️⃣ Check cache
+    cached = LTP_CACHE.get(symbol_plain)
+    if cached and (now - cached["timestamp"] < CACHE_TTL):
+        return cached["price"], cached["change"], cached["change_percent"]
+
+    # 2️⃣ Fetch from yfinance
     try:
-        ticker_symbol = f"{symbol_plain.upper()}.NS"
+        ticker_symbol = f"{symbol_plain}.NS"
         t = yf.Ticker(ticker_symbol)
         info = t.info or {}
+
         price = info.get("regularMarketPrice") or info.get("previousClose")
         prev = info.get("previousClose")
-        if price is None: return None, None, None
-        
+
+        if price is None:
+            return None, None, None
+
         change = round(float(price) - float(prev), 2) if prev else 0
         change_percent = round((change / float(prev)) * 100, 2) if prev and prev != 0 else 0
+
+        # 3️⃣ Store in cache
+        LTP_CACHE[symbol_plain] = {
+            "price": round(float(price), 2),
+            "change": change,
+            "change_percent": change_percent,
+            "timestamp": now,
+        }
+
         return round(float(price), 2), change, change_percent
+
     except Exception:
         return None, None, None
 
+# ---------------- Parallel LTP Fetch ----------------
+def fetch_ltp_parallel(symbols):
+    """Fetch multiple LTPs concurrently"""
+    results = []
 
-# --- General and Info Routes ---
+    def fetch(symbol):
+        price, change, change_percent = _get_live_price_for_symbol(symbol)
+        return {
+            "stockname": symbol,
+            "price": price,
+            "change": change,
+            "change_percent": change_percent
+        }
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        future_to_sym = {executor.submit(fetch, sym): sym for sym in symbols}
+        for future in concurrent.futures.as_completed(future_to_sym):
+            res = future.result()
+            results.append(res)
+
+    return pd.DataFrame(results)
+
+# ---------------- General Routes ----------------
 @routes_bp.route("/")
 def index():
     return jsonify({"status": "ok", "message": "API is running"})
@@ -226,7 +272,7 @@ def index():
 def autocomplete():
     q = (request.args.get("q") or "").strip().upper()
     if not q or stock_df.empty: return jsonify([])
-    
+
     mask = stock_df["SYMBOL"].str.upper().str.startswith(q) | stock_df["NAME OF COMPANY"].str.upper().str.startswith(q)
     matches = stock_df[mask].head(10)
     results = matches[["SYMBOL", "NAME OF COMPANY"]].to_dict(orient="records")
@@ -244,8 +290,7 @@ def get_wallet_route(userid):
     if not user: return jsonify({"error": "User not found"}), 404
     return jsonify({"money": float(user.money or 0)})
 
-
-# --- Watchlist Routes ---
+# ---------------- Watchlist Routes ----------------
 @routes_bp.route("/add_to_watchlist", methods=["POST"])
 def add_to_watchlist_route(): return watchlist.add_to_watchlist()
 
@@ -255,32 +300,23 @@ def get_watchlist_route(userid): return watchlist.get_watchlist(userid)
 @routes_bp.route("/remove_from_watchlist/<int:userid>/<int:stock_id>", methods=["POST"])
 def remove_from_watchlist_route(userid, stock_id): return watchlist.remove_from_watchlist(userid, stock_id)
 
-
 @routes_bp.route("/get_stock_id/<symbol>", methods=["GET"])
 def get_stock_id(symbol):
     try:
-        # Normalize symbol
         sym = symbol.strip().upper()
-
-        # Try to match stock_symbol directly
         stock = Stock.query.filter_by(stock_symbol=sym).first()
-
-        # If not found, try with ".NS"
         if not stock:
             stock = Stock.query.filter_by(stock_symbol=f"{sym}.NS").first()
-
         if not stock:
             return jsonify({"error": f"Stock {sym} not found"}), 404
-
         return jsonify({"stock_id": stock.stock_id, "symbol": stock.stock_symbol, "name": stock.stock_name})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@routes_bp.route('/buy_from_watchlist', methods=['POST'])#takes userid, symbol and qty
-def buy_from_watchlist_route():
-     return watchlist.buy_from_watchlist()
+@routes_bp.route('/buy_from_watchlist', methods=['POST'])
+def buy_from_watchlist_route(): return watchlist.buy_from_watchlist()
 
-# --- Portfolio & Transaction Routes ---
+# ---------------- Portfolio & Transactions ----------------
 @routes_bp.route("/portfolio/<int:userid>", methods=["GET"])
 def get_portfolio(userid):
     try:
@@ -314,8 +350,7 @@ def sell_stock():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-# --- Learnings Routes ---
+# ---------------- Learnings ----------------
 @routes_bp.route("/learnings/news", methods=["GET"])
 def get_learnings_news():
     try:
@@ -323,17 +358,14 @@ def get_learnings_news():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
+# ---------------- Dashboard CSV Export ----------------
 @routes_bp.route("/dashboard/<int:userid>/export", methods=["GET"])
 def export_dashboard_csv(userid):
     data = get_dashboard_data(userid)
-    if "error" in data:
-        return jsonify(data), 404
+    if "error" in data: return jsonify(data), 404
 
     si = io.StringIO()
     cw = csv.writer(si)
-
-    # First section: Wallet + Metrics
     cw.writerow(["Wallet", data["wallet"]])
     cw.writerow([])
     cw.writerow(["Progress Score", data["metrics"].get("progress_score", "")])
@@ -341,7 +373,6 @@ def export_dashboard_csv(userid):
     cw.writerow(["Login Streak", data["metrics"].get("login_streak", "")])
     cw.writerow([])
 
-    # Portfolio section
     cw.writerow(["Company", "Stock", "Quantity", "Avg Buy Price", "Invested", "LTP", "Now Value", "P/L"])
     for p in data["portfolio"]:
         cw.writerow([
@@ -350,41 +381,32 @@ def export_dashboard_csv(userid):
             p["ltp"], p["nowvalue"], p["profitorloss"]
         ])
     cw.writerow([])
-
-    # Transactions section
     cw.writerow(["Type", "Stock", "Price", "Date"])
     for t in data["transactions"]:
         cw.writerow([t["type"], t["stockname"], t["price"], t["date"]])
 
     output = si.getvalue()
-    return Response(
-        output,
-        mimetype="text/csv",
-        headers={"Content-Disposition": "attachment;filename=dashboard_full_export.csv"}
-    )
+    return Response(output, mimetype="text/csv",
+                    headers={"Content-Disposition": "attachment;filename=dashboard_full_export.csv"})
 
+# ---------------- Stock Prediction ----------------
 @routes_bp.route("/predict-stock/<symbol>", methods=["GET"])
 def predict_stock(symbol):
     symbol = symbol.upper()
-
     base_path = os.path.dirname(os.path.abspath(__file__))
     model_file = os.path.join(base_path, f"model_{symbol}.NS.h5")
     scaler_file = os.path.join(base_path, f"scaler_{symbol}.NS.joblib")
     data_file = os.path.join(base_path, f"data_{symbol}.NS.csv")
 
     try:
-        # --- Try cached version
         model = load_model(model_file)
         scaler = joblib.load(scaler_file)
         df = pd.read_csv(data_file)
         logs = f"✅ Loaded cached model for {symbol}."
     except Exception:
-        # --- Fallback: train new model
         try:
-            import yfinance as yf
             df = yf.download(f"{symbol}.NS", period="8y")
-            if df.empty:
-                return jsonify({"error": f"No data available for {symbol}"}), 404
+            if df.empty: return jsonify({"error": f"No data available for {symbol}"}), 404
 
             data = df[['Close']].values
             scaler = MinMaxScaler(feature_range=(0, 1))
@@ -403,9 +425,8 @@ def predict_stock(symbol):
             ])
             model.compile(optimizer="adam", loss="mean_squared_error")
 
-            # Sequences
-            seq_len = 60
             x, y = [], []
+            seq_len = 60
             for i in range(seq_len, len(scaled_data)):
                 x.append(scaled_data[i - seq_len:i, 0])
                 y.append(scaled_data[i, 0])
@@ -416,7 +437,6 @@ def predict_stock(symbol):
             x_train, y_train = x[:split], y[:split]
             model.fit(x_train, y_train, epochs=20, batch_size=32, verbose=0)
 
-            # Save for next time
             model.save(model_file)
             joblib.dump(scaler, scaler_file)
             df.reset_index().to_csv(data_file, index=False)
@@ -424,31 +444,24 @@ def predict_stock(symbol):
         except Exception as inner_e:
             return jsonify({"error": f"Model and fallback failed: {str(inner_e)}"}), 500
 
-    # --- Ensure Date column is correct
     if "Date" not in df.columns:
         df = df.reset_index()
-
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
-    df = df.dropna(subset=["Date"])
-    df = df.sort_values("Date")
+    df = df.dropna(subset=["Date"]).sort_values("Date")
 
-    # --- Prediction
-    seq_len = 60
-    df['Close'] = pd.to_numeric(df['Close'], errors='coerce')
     data = df[['Close']].values
     scaled_data = scaler.transform(data)
-
-    x = np.array([scaled_data[i - seq_len:i, 0] for i in range(seq_len, len(scaled_data))])
+    x = np.array([scaled_data[i - 60:i, 0] for i in range(60, len(scaled_data))])
     x = x.reshape((x.shape[0], x.shape[1], 1))
 
     predictions = model.predict(x)
     predictions_rescaled = scaler.inverse_transform(predictions)
-    y_test_rescaled = data[seq_len:]
+    y_test_rescaled = data[60:]
 
     df['MA100'] = df['Close'].rolling(100).mean()
     df['MA200'] = df['Close'].rolling(200).mean()
-
     n = 180
+
     return jsonify({
         "dates": df['Date'].dt.strftime("%Y-%m-%d").iloc[-n:].tolist(),
         "actual": y_test_rescaled[-n:].flatten().tolist(),
@@ -458,69 +471,51 @@ def predict_stock(symbol):
         "logs": logs
     })
 
-from invest.whenmerging import fetch_transactions, fetch_stock_universe, fetch_ltp, recommend_top_stocks
+# ---------------- Recommendations ----------------
 @routes_bp.route("/recommendations/<int:userid>", methods=["GET"])
 def get_recommendations(userid):
+    t0 = time.perf_counter()
     try:
-        # Fetch data
         transactions_df = fetch_transactions(userid)
-        print("transactions:",transactions_df)
-        print(transactions_df.columns)
-        print(transactions_df.head())
-
         if transactions_df.empty:
             return jsonify({"error": "No transactions found for user"}), 404
 
         stocks_df = fetch_stock_universe(limit=100)
-        print("stocks_df:",stocks_df)
-# Fetch live prices
-        try:
-            ltp_df = fetch_ltp(stocks_df["stockname"].tolist())
-            print("ltp df:",ltp_df)
-            stocks_df = stocks_df.merge(ltp_df, on="stockname", how="left")
-            print("stocks df on merge:", stocks_df.head())
-        except Exception as e:
-            return jsonify({"error": f"LTP fetch failed: {str(e)}"}), 500
+        ltp_df = fetch_ltp_parallel(stocks_df["stockname"].tolist())
+        stocks_df = stocks_df.merge(ltp_df, on="stockname", how="left")
 
-        # Run recommender
         top5 = recommend_top_stocks(transactions_df, stocks_df, top_n=5)
-        print("top5:",top5)
-        return jsonify(top5.to_dict(orient="records"))
+        print(f"[PERF] TOTAL /recommendations: {time.perf_counter() - t0:.3f}s")
 
+        return jsonify(top5.to_dict(orient="records"))
     except Exception as e:
         import traceback
-        print("Error in recommendations:", traceback.format_exc())  # logs full stack trace
+        print("Error in recommendations:", traceback.format_exc())
         return jsonify({"error": str(e)}), 500
-    
 
+# ---------------- LTP Batch & Cache ----------------
 @routes_bp.route("/ltp", methods=["POST"])
 def ltp_batch():
     try:
         data = request.get_json() or {}
         symbols = data.get("symbols", [])
-
-        results = []
-        for sym in symbols:
-            try:
-                price, change, change_percent = _get_live_price_for_symbol(sym)
-                if price is not None:
-                    results.append({"stockname": sym, "price": price})
-            except Exception:
-                continue
-
-        return jsonify({row["stockname"]: row["price"] for row in results})
+        df = fetch_ltp_parallel(symbols)
+        results = {row["stockname"].upper(): row["price"] for _, row in df.iterrows() if row["price"] is not None}
+        return jsonify(results)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-from invest.models import Transactionhistory
-from flask import current_app
+@routes_bp.route("/ltp/clear_cache", methods=["POST"])
+def clear_ltp_cache():
+    LTP_CACHE.clear()
+    return jsonify({"message": "LTP cache cleared"})
 
+# ---------------- Transactions ----------------
 @routes_bp.route("/transactions/<int:userid>", methods=["GET"])
 def get_transactions(userid):
     try:
         txns = Transactionhistory.query.filter_by(userid=userid).all()
-        if not txns:
-            return jsonify([])
+        if not txns: return jsonify([])
 
         result = [
             {
@@ -528,7 +523,7 @@ def get_transactions(userid):
                 "stockname": t.stockname,
                 "quantity": t.quantity,
                 "price": t.price,
-                "type": t.transactiontype,   # buy/sell
+                "type": t.transactiontype,
                 "date": t.timestamp.strftime("%Y-%m-%d %H:%M:%S") if t.timestamp else None
             }
             for t in txns

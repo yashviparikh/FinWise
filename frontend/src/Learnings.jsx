@@ -148,7 +148,7 @@ function Learning() {
       </div>
 
       {/* News Section */}
-      <h2 className="section-title">Top 10 News Headlines</h2>
+      <h2 className="section-title">Top 5 News Headlines</h2>
       <div className="news-section">
         {newsHeadlines.length === 0 ? (
           <div className="news-empty">No news available right now.</div>
