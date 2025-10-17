@@ -1,0 +1,31 @@
+# Text auto-normalize
+* text=auto
+
+# Source files
+*.py    text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.csv   text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.md    text eol=lf
+*.sh    text eol=lf
+
+# Windows scripts
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# Binaries (never normalize)
+*.zip   binary
+*.gz    binary
+*.tar   binary
+*.7z    binary
+*.exe   binary
+*.dll   binary
+*.so    binary
+*.dylib binary
+*.pkl   binary
+*.h5    binary
+*.joblib binary
+*.sql   binary

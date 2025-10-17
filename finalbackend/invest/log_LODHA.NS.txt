@@ -1,0 +1,13 @@
+Epoch 1/10 - loss: 0.0671
+Epoch 2/10 - loss: 0.0071
+Epoch 3/10 - loss: 0.0040
+Epoch 4/10 - loss: 0.0040
+Epoch 5/10 - loss: 0.0037
+Epoch 6/10 - loss: 0.0032
+Epoch 7/10 - loss: 0.0030
+Epoch 8/10 - loss: 0.0032
+Epoch 9/10 - loss: 0.0033
+Epoch 10/10 - loss: 0.0028
+
+Model Accuracy: 92.9%
+Final Verdict: The model predicts an upward trend.
