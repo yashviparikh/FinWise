@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import './forgot.css';
 
-const API_BASE = 'http://localhost:5000';
+const API_BASE = 'http://localhost:5001';
 
 const formatPhoneForServer = (raw) => {
   if (!raw) return '';
@@ -87,7 +87,7 @@ const OTPReset = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `${API_BASE}/forgot-password`,
+        `${API_BASE}/reset-password`,
         { phone: phoneToSend, otp, newPassword },
         { headers: { 'Content-Type': 'application/json' } }
       );
