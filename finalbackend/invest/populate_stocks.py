@@ -1,0 +1,23 @@
+import csv
+from invest import app
+from invest.models import Stock
+from invest import db
+
+with app.app_context():
+    with open('invest/stock_list.csv', mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            symbol = row['SYMBOL'].strip()
+            name = row['NAME OF COMPANY'].strip()
+
+            if not Stock.query.filter_by(stock_symbol=symbol).first():
+                new_stock = Stock(
+                    stock_symbol=symbol,
+                    stock_name=name,
+                )
+                db.session.add(new_stock)
+
+        db.session.commit()
+    print("Stock data inserted successfully.")
+
+
