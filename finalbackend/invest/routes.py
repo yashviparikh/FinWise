@@ -12,7 +12,7 @@ import concurrent.futures
 # Corrected relative imports
 from .models import Users, Stock, Transactionhistory
 from . import watchlist, learnings, portfolio as portfolio_module
-from .portfolio import get_dashboard_data, _get_live_price_for_symbol, fetch_ltp_parallel
+from .portfolio import get_dashboard_data, _get_live_price_for_symbol, fetch_ltp_parallel,LTP_CACHE
 from . import whenmerging as base_recommend
 from .whenmerging import fetch_transactions, fetch_stock_universe, recommend_top_stocks
 

@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 import pickle
-from datetime import datetime
+from datetime import datetime,timedelta
 
 # ----------------------------
 # Load trained model + training columns
@@ -66,6 +66,36 @@ def recommend_top_stocks(transactions_df, stocks_df, top_n=5):
         data = data.merge(stock_agg, on="stockname", how="left")
 
     data.fillna(0, inplace=True)
+        # --- [Option 3] Add user–stock personalization ---
+    if not transactions_df.empty and "userid" in transactions_df.columns:
+        user_id = transactions_df["userid"].iloc[0]  # assuming single user context
+
+        user_stock = transactions_df.groupby(["userid", "stockname"]).agg(
+            user_stock_times_bought=("quantity", "count"),
+            user_stock_avg_qty=("quantity", "mean"),
+            user_stock_last_bought=("timestamp", "max")
+        ).reset_index()
+
+        user_stock = user_stock[user_stock["userid"] == user_id].copy()
+        user_stock["days_since_last_trade"] = (
+            datetime.now() - user_stock["user_stock_last_bought"]
+        ).dt.days.fillna(999)
+
+        data = data.merge(
+            user_stock[["stockname", "user_stock_times_bought",
+                        "user_stock_avg_qty", "days_since_last_trade"]],
+            on="stockname", how="left"
+        )
+
+    # Fill missing personalization fields safely
+    for col in ["user_stock_times_bought", "user_stock_avg_qty", "days_since_last_trade"]:
+        if col not in data.columns:
+            data[col] = 0
+    data.fillna({
+        "user_stock_times_bought": 0,
+        "user_stock_avg_qty": 0,
+        "days_since_last_trade": 999
+    }, inplace=True)
 
     # 4. Technical indicators
     data = add_technical_indicators(data)
@@ -85,47 +115,18 @@ def recommend_top_stocks(transactions_df, stocks_df, top_n=5):
     data["buy_prob"] = probs
 
     # 8. Return top N recommendations
+    # 8. Return top N recommendations (with exploration randomness)
     cols_to_return = [c for c in ["stockname", "companyname", "buy_prob", "price"] if c in data.columns]
-    top_recs = data.sort_values("buy_prob", ascending=False).head(top_n)
 
+    # --- [Option 2] Add slight randomness & softmax sampling for diversity ---
+    # Add small Gaussian noise to break ties among similar probabilities
+    data["buy_prob"] += np.random.normal(0, 0.01, len(data))
+
+    # Compute softmax weights for probabilistic sampling
+    data["softmax_prob"] = np.exp(data["buy_prob"]) / np.sum(np.exp(data["buy_prob"]))
+
+    # Sample top N by weighted probability (adds controlled randomness)
+    top_recs = data.sample(n=min(top_n, len(data)), weights=data["softmax_prob"], replace=False)
+
+    top_recs = top_recs.sort_values("buy_prob", ascending=False).head(top_n)
     return top_recs[cols_to_return]
-
-
-# ----------------------------
-# Example usage (demo)
-# ----------------------------
-import pandas as pd
-
-# Hardcoded transactions only for user1
-transactions_data = [
-    [1, "RELIANCE", "2024-06-05", "BUY", 10, 2850.50],
-    [ 1, "TCS", "2024-06-06", "BUY", 5, 3780.75],
-    [1, "HDFC", "2024-06-08", "BUY", 12, 1620.00],
-    [1, "ICICI", "2024-06-09", "BUY", 15, 995.40],
-    [1, "BHARTIARTL", "2024-06-11", "BUY", 10, 1295.80],
-    [1, "BAJFINANCE", "2024-06-14", "BUY", 3, 7150.00],
-    [1, "HINDUNILVR", "2024-06-15", "BUY", 7, 2480.35],
-    [1, "KOTAKBANK", "2024-06-17", "BUY", 8, 1825.75],
-    [1, "INFOSYS", "2024-06-22", "BUY", 12, 1555.75],
-    [1, "SBI", "2024-06-23", "BUY", 25, 635.40]
-]
-
-transactions_df = pd.DataFrame(
-    transactions_data,
-    columns=["userid", "stockname", "date", "action", "quantity", "price"]
-)
-
-transactions_df["date"] = pd.to_datetime(transactions_df["date"])
-
-df=pd.read_csv("stocks_df_ready.csv")
-# stocks_df = pd.DataFrame([
-#     {"stockname": "VIPCLOTHNG", "companyname": "VIP Clothing Limited", "sector": "Textiles", "market_cap_bucket": "small", "PE": 40.5, "sentiment": 0.05, "price": 700.49},
-#     {"stockname": "SHREECEM", "companyname": "SHREE CEMENT LIMITED", "sector": "Cement", "market_cap_bucket": "large", "PE": 39.0, "sentiment": 0.07, "price": 26000.0},
-#     {"stockname": "UCAL", "companyname": "UCAL LIMITED", "sector": "Automobile (Tyres)", "market_cap_bucket": "mid", "PE": 14.0, "sentiment": -0.02, "price": 120.0},
-#     {"stockname": "INFY", "companyname": "Infosys Ltd", "sector": "IT Services", "market_cap_bucket": "large", "PE": 25.0, "sentiment": 0.12, "price": 1550.0},
-#     {"stockname": "RELIANCE", "companyname": "Reliance Industries Ltd", "sector": "Energy", "market_cap_bucket": "large", "PE": 28.0, "sentiment": 0.10, "price": 2700.0},
-# ])
-stocks_df=df
-top5 = recommend_top_stocks(transactions_df, stocks_df, top_n=5)
-print("Top Recommendations:")
-print(top5)
