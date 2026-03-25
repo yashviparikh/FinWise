@@ -8,6 +8,7 @@ import Watchlist from "./Watchlist.jsx";
 import Learnings from "./Learnings.jsx";
 import Home from "./Home.jsx";
 import StockPrediction from "./StockPrediction.jsx";
+import TradeSimulator from "./TradeSimulator.jsx";
 import Log from './Log.jsx';
 import Signup from './Signup';
 import OtpReset from './OTPReset';
@@ -90,6 +91,7 @@ function App() {
           <Route path="/learnings" element={<Learnings />} />
        
         <Route path="/stockprediction" element={<StockPrediction />} />
+        <Route path="/trade-simulator" element={<TradeSimulator />} />
 
             
           <Route path="/Log" element={<Log />} />

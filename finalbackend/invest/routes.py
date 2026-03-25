@@ -13,6 +13,7 @@ import concurrent.futures
 from .models import Users, Stock, Transactionhistory
 from . import watchlist, learnings, portfolio as portfolio_module
 from .portfolio import get_dashboard_data, _get_live_price_for_symbol, fetch_ltp_parallel
+from . import trade_simulator
 from . import whenmerging as base_recommend
 from .whenmerging import fetch_transactions, fetch_stock_universe, recommend_top_stocks
 from .auth import require_user
@@ -53,6 +54,23 @@ def autocomplete():
     matches = stock_df[mask].head(10)
     results = matches[["SYMBOL", "NAME OF COMPANY"]].to_dict(orient="records")
     return jsonify(results)
+
+
+@routes_bp.route("/api/simulate-trade/history", methods=["GET"])
+def simulate_trade_history():
+    symbol = (request.args.get("symbol") or "").strip()
+    range_key = (request.args.get("range") or "6M").strip().upper()
+    result = trade_simulator.fetch_history(symbol, range_key)
+    if "error" in result:
+        return jsonify(result), 404
+    return jsonify(result)
+
+
+@routes_bp.route("/api/simulate-trade", methods=["POST"])
+def simulate_trade_api():
+    payload = request.get_json() or {}
+    result, status = trade_simulator.simulate_trade(payload)
+    return jsonify(result), status
 
 @routes_bp.route("/get-price/<symbol>", methods=["GET"])
 def get_price(symbol):

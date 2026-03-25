@@ -1,0 +1,275 @@
+.sim-wrap {
+  max-width: 1320px;
+  margin: 22px auto 70px;
+  padding: 24px 30px;
+  color: #eaf4f6;
+  background: #0b0f12;
+}
+
+.sim-head h1 {
+  margin: 0;
+  font-size: 30px;
+  letter-spacing: 0.2px;
+}
+
+.sim-head p {
+  margin: 8px 0 0;
+  color: #94a3a8;
+}
+
+.sim-card {
+  margin-top: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  padding: 18px;
+}
+
+.sim-controls {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.sim-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sim-field label {
+  font-size: 13px;
+  color: #9eb0bc;
+}
+
+.sim-field input {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 13, 18, 0.8);
+  color: #eaf4f6;
+  padding: 11px 12px;
+}
+
+.sim-suggestions {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0e141a;
+}
+
+.sim-suggestion-item {
+  width: 100%;
+  border: 0;
+  color: #eaf4f6;
+  background: transparent;
+  text-align: left;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.sim-suggestion-item:hover {
+  background: rgba(78, 203, 255, 0.12);
+}
+
+.sim-suggestion-item span {
+  color: #9fb0bf;
+  margin-left: 10px;
+}
+
+.sim-range-row,
+.sim-action-row {
+  display: flex;
+  gap: 8px;
+}
+
+.sim-chip,
+.sim-btn {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(12, 19, 24, 0.8);
+  color: #dbe6ea;
+  padding: 10px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sim-chip.active {
+  border-color: rgba(78, 203, 255, 0.5);
+  color: #4ecbff;
+}
+
+.sim-btn.buy {
+  border-color: rgba(31, 208, 125, 0.55);
+  color: #1fd07d;
+}
+
+.sim-btn.sell {
+  border-color: rgba(255, 107, 107, 0.55);
+  color: #ff6b6b;
+}
+
+.sim-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sim-chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.sim-chart-head h2 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.sim-points {
+  display: flex;
+  gap: 16px;
+  color: #9fb0bf;
+  font-size: 13px;
+}
+
+.sim-chart-wrap {
+  margin-top: 14px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+.sim-chart-wrap:focus-visible {
+  outline: 2px solid rgba(78, 203, 255, 0.6);
+  outline-offset: 2px;
+}
+
+.sim-helper {
+  margin-top: 10px;
+  color: #9fc7da;
+  font-size: 13px;
+}
+
+.sim-hover-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.sim-hover-actions .sim-btn {
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.sim-chart-error {
+  margin-top: 8px;
+  color: #ffb0b0;
+  font-size: 13px;
+}
+
+.sim-empty {
+  margin-top: 14px;
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  padding: 18px;
+  color: #9fb0bf;
+}
+
+.sim-empty.error,
+.sim-msg.error {
+  color: #ffb0b0;
+}
+
+.sim-result {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sim-run {
+  width: fit-content;
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 16px;
+  background: linear-gradient(90deg, #2aa6ff, #3a83ff);
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.sim-run:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sim-output {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sim-output > div {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 16, 21, 0.7);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sim-output span {
+  font-size: 12px;
+  color: #9fb0bf;
+}
+
+.sim-output strong {
+  font-size: 19px;
+}
+
+.sim-output .pos {
+  color: #1fd07d;
+}
+
+.sim-output .neg {
+  color: #ff6b6b;
+}
+
+@media (max-width: 1100px) {
+  .sim-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sim-output {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .sim-wrap {
+    padding: 18px 14px;
+  }
+
+  .sim-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-chart-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sim-points {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}

@@ -9,6 +9,7 @@ import Log from './Log.jsx';
 import Signup from './Signup';
 import OtpReset from './OTPReset';
 import StockPrediction from './StockPrediction.jsx';
+import TradeSimulator from './TradeSimulator.jsx';
 function AppWrapper() {
 
   const [allStocks] = useState([
@@ -112,6 +113,7 @@ useEffect(() => {
         <StockPrediction />
       }
       />
+      <Route path='/trade-simulator' element={<TradeSimulator />} />
     </Routes>
   );
 }
