@@ -1,0 +1,77 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+.venv/
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / Frontend
+node_modules/
+**/node_modules/
+.npm/
+.cache/
+/frontend/build/
+/frontend/dist/
+/finalbackend/build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs / Temp
+logs/
+*.log
+*.tmp
+temp/
+tmp/
+
+
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Archives / Dumps
+*.zip
+*.sql
+
+# Local project folders you don't want in git
+/Learnings backend/
