@@ -85,8 +85,10 @@ body{background: linear-gradient(180deg, #05080a, #0b0f12 80%); color:var(--text
 
 /* stock column */
 .stock-col{display:flex; gap:12px; align-items:center; white-space:normal; text-align:left}
+.company-block{display:flex; flex-direction:column; gap:4px; min-width:0}
 .symbol{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:10px; padding:12px 14px; font-weight:800; min-width:68px; text-align:center; border:1px solid rgba(255,255,255,0.02); letter-spacing:0.6px}
 .company{color:var(--muted); font-size:13px}
+.chart-hint{font-size:12px; color:#7fe8ff}
 
 /* row actions - equal sizes for buy & sell */
 .row-actions{display:flex; gap:10px; align-items:center}
@@ -122,6 +124,12 @@ body{background: linear-gradient(180deg, #05080a, #0b0f12 80%); color:var(--text
 .modal-head{display:flex; justify-content:space-between; align-items:flex-start}
 .close-x{background:transparent; border:none; color:var(--muted); font-size:16px; cursor:pointer}
 .modal-body{margin-top:12px; display:flex; flex-direction:column; gap:10px}
+.chart-backdrop{padding:24px}
+.chart-modal-card{width:min(1100px, 96vw); max-height:92vh; display:flex; flex-direction:column; gap:16px; background:linear-gradient(180deg, rgba(13,18,24,0.98), rgba(8,12,16,0.98)); border-radius:18px; padding:20px; border:1px solid rgba(255,255,255,0.05); box-shadow:0 40px 120px rgba(2,6,10,0.86); animation:pop .26s forwards cubic-bezier(.2,.9,.2,1)}
+.chart-frame-wrap{height:min(70vh, 560px); border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,0.04); background:#0b0f12}
+.chart-frame-wrap iframe{display:block}
+.chart-fallback{display:flex; justify-content:space-between; align-items:center; gap:12px}
+.chart-open-link{text-decoration:none}
 .input-label{font-size:13px; color:var(--muted)}
 .number-input{padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--text); outline:none; font-size:15px; transition:box-shadow .14s, border-color .14s}
 .number-input:focus{box-shadow:0 10px 28px rgba(42,166,255,0.08); border-color:rgba(42,166,255,0.22)}
@@ -145,6 +153,8 @@ button:focus, a:focus, input:focus{outline:3px solid rgba(46,166,255,0.12); outl
   .table-head, .table-row{grid-template-columns: 2fr 0.7fr 0.95fr 1.05fr 0.8fr 1fr 0.85fr; gap:10px}
   .table-head div:nth-last-child(2), .table-row div:nth-last-child(2){display:none}
   .table-head div:last-child, .table-row div:last-child{display:none} /* hide action on very small to avoid overflow; actions available via row tap */
+  .chart-modal-card{width:100%; padding:16px}
+  .chart-frame-wrap{height:400px}
 }
 
 /* --- Add these styles at the end of Portfolio.css --- */

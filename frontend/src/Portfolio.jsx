@@ -7,6 +7,35 @@ import RecommendationModal from "./RecommendationModal";
 import { UserContext } from "./UserContext";
 import LoginPrompt from "./LoginPrompt";
 
+function getScanstockUrl(symbol) {
+  const cleanSymbol = String(symbol || "").trim().toUpperCase();
+  if (!cleanSymbol) return "#";
+  return `https://www.scanstock.in/js/tradingview/chart_free.jsp?symbol=${encodeURIComponent(
+    cleanSymbol
+  )}`;
+}
+
+function ScanstockChart({ symbol }) {
+const cleanSymbol = String(symbol || "")
+  .trim()
+  .toUpperCase()
+  .replace(/\.NS$/, "");  const chartUrl = getScanstockUrl(cleanSymbol);
+
+  if (!cleanSymbol) return null;
+
+  return (
+    <iframe
+      title={`${cleanSymbol} Candlestick Chart`}
+      src={chartUrl}
+      width="100%"
+      height="100%"
+      frameBorder="0"
+      allowTransparency={true}
+      scrolling="no"
+    />
+  );
+}
+
 function useAnimatedNumber(value, duration = 700) {
   const [display, setDisplay] = useState(value);
   const rafRef = useRef(null);
@@ -45,6 +74,7 @@ export default function Portfolio({ userid = 1 }) {
   const [modalType, setModalType] = useState("");
   const [modalError, setModalError] = useState("");
   const [showReco, setShowReco] = useState(false);
+  const [chartStock, setChartStock] = useState(null);
   // Note: Do NOT early-return before hooks; render login prompt conditionally instead.
 
   // ✅ Correct backend endpoints
@@ -111,6 +141,13 @@ export default function Portfolio({ userid = 1 }) {
     document.body.style.overflow = "";
   };
 
+  const closeChartModal = () => {
+    setChartStock(null);
+    if (!showModal) {
+      document.body.style.overflow = "";
+    }
+  };
+
   const openModal = (type, stock) => {
     setSelectedStock(stock);
     setSelectedHolding(stock);
@@ -118,6 +155,11 @@ export default function Portfolio({ userid = 1 }) {
     setModalError("");
     setModalType(type);
     setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const openChartModal = (stock) => {
+    setChartStock(stock);
     document.body.style.overflow = "hidden";
   };
 
@@ -291,10 +333,24 @@ export default function Portfolio({ userid = 1 }) {
                   key={`${holding.stockname}-${idx}`}
                   className="table-row"
                   style={{ transitionDelay: `${idx * 30}ms` }}
+                  onClick={() => openChartModal(holding)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      openChartModal(holding);
+                    }
+                  }}
                 >
                   <div className="stock-col">
                     <div className="symbol">{holding.stockname}</div>
-                    
+                    <div className="company-block">
+                      <div className="company">
+                        {holding.companyname || "View stock chart"}
+                      </div>
+                      <div className="chart-hint">Click to open Scanstock chart</div>
+                    </div>
                   </div>
                   <div>{holding.totalquantity}</div>
                   <div>{formatCurrency(holding.averagebuyprice)}</div>
@@ -314,13 +370,19 @@ export default function Portfolio({ userid = 1 }) {
                   <div>{formatCurrency(holding.nowvalue)}</div>
                   <div className="row-actions">
                     <button
-                      onClick={() => openModal("buy", holding)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openModal("buy", holding);
+                      }}
                       className="btn-primary action-equal"
                     >
                       + Buy
                     </button>
                     <button
-                      onClick={() => openModal("sell", holding)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openModal("sell", holding);
+                      }}
                       className="btn-danger action-equal"
                     >
                       Sell
@@ -395,6 +457,51 @@ export default function Portfolio({ userid = 1 }) {
               <button className="btn-submit" onClick={executeTransaction}>
                 {modalType === "buy" ? "Buy" : "Sell"}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {chartStock && (
+        <div
+          className="modal-backdrop chart-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${chartStock.stockname} chart`}
+          onClick={closeChartModal}
+        >
+          <div className="chart-modal-card" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-head">
+              <div>
+                <h3>
+                  <span className="muted">Chart</span>{" "}
+                  <span>{chartStock.stockname}</span>
+                </h3>
+                <div className="muted small">
+                  {chartStock.companyname || "Interactive stock chart"}
+                </div>
+              </div>
+              <button className="close-x" onClick={closeChartModal}>
+                âœ•
+              </button>
+            </div>
+
+            <div className="chart-frame-wrap">
+              <ScanstockChart symbol={chartStock.stockname} />
+            </div>
+
+            <div className="chart-fallback">
+              <span className="muted small">
+                If the iframe is blocked, open the chart directly.
+              </span>
+              <a
+                className="btn-outline chart-open-link"
+                href={getScanstockUrl(chartStock.stockname)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open on Scanstock
+              </a>
             </div>
           </div>
         </div>
