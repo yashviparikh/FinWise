@@ -309,62 +309,78 @@ export default function TradeSimulator() {
             tabIndex={0}
           >
             <ResponsiveContainer width="100%" height={400}>
-              <LineChart
-                data={history}
-                onMouseMove={(evt) => setHoverPoint(evt?.activePayload?.[0]?.payload || null)}
-                onMouseLeave={() => setHoverPoint(null)}
-              >
-                <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
-                <XAxis dataKey="date" tick={{ fill: "#9fb0bf", fontSize: 12 }} minTickGap={24} />
-                <YAxis
-                  tick={{ fill: "#9fb0bf", fontSize: 12 }}
-                  tickFormatter={(v) => `INR ${Number(v).toFixed(0)}`}
-                />
-                <Tooltip
-                  formatter={(value) => [formatInr(value), "Close"]}
-                  labelFormatter={(label) => `Date: ${label}`}
-                  wrapperStyle={{ pointerEvents: "none" }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="close"
-                  stroke="#4ecbff"
-                  dot={{ r: 2, fill: "#4ecbff", stroke: "#4ecbff" }}
-                  activeDot={{ r: 5 }}
-                  strokeWidth={2}
-                />
+  <LineChart
+    data={history}
+    onMouseMove={(evt) => setHoverPoint(evt?.activePayload?.[0]?.payload || null)}
+    onMouseLeave={() => setHoverPoint(null)}
+  >
+    <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
+    <XAxis dataKey="date" tick={{ fill: "#9fb0bf", fontSize: 12 }} minTickGap={24} />
+    <YAxis
+      tick={{ fill: "#9fb0bf", fontSize: 12 }}
+      tickFormatter={(v) => `INR ${Number(v).toFixed(0)}`}
+    />
+    <Tooltip
+      formatter={(value) => [formatInr(value), "Close"]}
+      labelFormatter={(label) => `Date: ${label}`}
+      wrapperStyle={{ pointerEvents: "none" }}
+    />
 
-                {hoverPoint && (
-                  <ReferenceLine
-                    x={hoverPoint.date}
-                    stroke="#4ecbff"
-                    strokeDasharray="4 4"
-                    strokeOpacity={0.5}
-                  />
-                )}
+    {/* Main Line */}
+    <Line
+      type="monotone"
+      dataKey="close"
+      stroke="#4ecbff"
+      dot={false} // hide default dots, we will overlay ReferenceDots
+      strokeWidth={2}
+    />
 
-                {buyPoint && (
-                  <ReferenceDot
-                    x={buyPoint.date}
-                    y={buyPoint.close}
-                    r={6}
-                    fill="#1fd07d"
-                    stroke="#0d301f"
-                    label={{ value: "B", position: "top", fill: "#1fd07d" }}
-                  />
-                )}
-                {sellPoint && (
-                  <ReferenceDot
-                    x={sellPoint.date}
-                    y={sellPoint.close}
-                    r={6}
-                    fill="#ff6b6b"
-                    stroke="#3a1010"
-                    label={{ value: "S", position: "top", fill: "#ff6b6b" }}
-                  />
-                )}
-              </LineChart>
-            </ResponsiveContainer>
+    {/* Hover line */}
+    {hoverPoint && (
+      <ReferenceLine
+        x={hoverPoint.date}
+        stroke="#4ecbff"
+        strokeDasharray="4 4"
+        strokeOpacity={0.5}
+      />
+    )}
+
+    {/* BUY / SELL points */}
+    {buyPoint && (
+      <ReferenceDot
+        x={buyPoint.date}
+        y={buyPoint.close}
+        r={6}
+        fill="#1fd07d"
+        stroke="#0d301f"
+        label={{ value: "B", position: "top", fill: "#1fd07d" }}
+      />
+    )}
+    {sellPoint && (
+      <ReferenceDot
+        x={sellPoint.date}
+        y={sellPoint.close}
+        r={6}
+        fill="#ff6b6b"
+        stroke="#3a1010"
+        label={{ value: "S", position: "top", fill: "#ff6b6b" }}
+      />
+    )}
+
+    {/* Invisible clickable overlay for all points */}
+    {history.map((p) => (
+      <ReferenceDot
+        key={p.date}
+        x={p.date}
+        y={p.close}
+        r={10} // large clickable area
+        fill="transparent"
+        onClick={() => applyPointSelection(p)}
+        cursor="pointer"
+      />
+    ))}
+  </LineChart>
+</ResponsiveContainer>
           </div>
         )}
       </section>
