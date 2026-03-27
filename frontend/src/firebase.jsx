@@ -4,13 +4,13 @@ import { getAuth, GoogleAuthProvider, signInWithPopup  } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDOFkleEgowIDUXPOHczOuBUY1FS_OUiIQ",
-  authDomain: "finwise-cfa37.firebaseapp.com",
-  projectId: "finwise-cfa37",
-  storageBucket: "finwise-cfa37.appspot.com",
-  messagingSenderId: "813880104994",
-  appId: "1:813880104994:web:4730242ba640d5f5c8527b",
-  measurementId: "G-83ZH8NW93T",
+  apiKey: "AIzaSyBMSrNU134nZek8-3lnPij_nX7wtaHSniw",
+  authDomain: "finwise-d6812.firebaseapp.com",
+  projectId: "finwise-d6812",
+  storageBucket: "finwise-d6812.appspot.com",
+  messagingSenderId: "734778749701",
+  appId: "1:734778749701:web:d558818ab9a160f5143d6c",
+  measurementId: "G-EPT4TET5DF"
 };
 
 const app = initializeApp(firebaseConfig);
