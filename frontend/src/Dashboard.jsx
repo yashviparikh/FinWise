@@ -51,6 +51,29 @@ export default function Dashboard() {
   const [plSeries, setPlSeries] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [activePieIndex, setActivePieIndex] = useState(-1);
+  const makeFallbackTrend = (portfolioRows = []) => {
+    const now = new Date();
+    const prev = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const labelNow = now.toLocaleString("en-US", { month: "short" });
+    const labelPrev = prev.toLocaleString("en-US", { month: "short" });
+
+    const active = (portfolioRows || []).filter(
+      (p) => Number(p?.totalquantity || 0) > 0
+    );
+    const totalValue = active.reduce((acc, p) => acc + Number(p?.nowvalue || 0), 0);
+    const totalPnL = active.reduce((acc, p) => acc + Number(p?.profitorloss || 0), 0);
+
+    return {
+      valueSeries: [
+        { date: labelPrev, value: totalValue },
+        { date: labelNow, value: totalValue },
+      ],
+      pnlSeries: [
+        { date: labelPrev, profit_loss: totalPnL },
+        { date: labelNow, profit_loss: totalPnL },
+      ],
+    };
+  };
 
   const fmtCurrency = (n) =>
     (n ?? 0).toLocaleString("en-IN", {
@@ -78,11 +101,53 @@ export default function Dashboard() {
           { headers: { "X-User-Id": String(uid) } }
         );
        
+        const portfolioRows = res.data.portfolio || [];
         setWallet(res.data.wallet || 0);
-        setPortfolio(res.data.portfolio || []);
+        setPortfolio(portfolioRows);
         setMetrics(res.data.metrics || {});
-        setPortfolioValueSeries(res.data.portfolio_value_trend || []);
-        setPlSeries(res.data.profit_loss_trend || []);
+
+        const rawValueTrend = Array.isArray(res.data.portfolio_value_trend)
+          ? res.data.portfolio_value_trend
+          : [];
+        const rawPlTrend = Array.isArray(res.data.profit_loss_trend)
+          ? res.data.profit_loss_trend
+          : [];
+
+        const normalizedValueTrend = rawValueTrend
+          .map((d) => ({
+            date: d?.date || "",
+            value: Number(d?.value ?? 0),
+          }))
+          .filter((d) => d.date);
+
+        const normalizedPlTrend = rawPlTrend
+          .map((d) => ({
+            date: d?.date || "",
+            profit_loss: Number(d?.profit_loss ?? 0),
+          }))
+          .filter((d) => d.date);
+
+        const hasActiveHoldings = portfolioRows.some(
+          (p) => Number(p?.totalquantity || 0) > 0
+        );
+        const valueTrendLooksEmpty =
+          normalizedValueTrend.length === 0 ||
+          normalizedValueTrend.every((d) => d.value === 0);
+        const plTrendLooksEmpty =
+          normalizedPlTrend.length === 0 ||
+          normalizedPlTrend.every((d) => d.profit_loss === 0);
+
+        if (hasActiveHoldings && (valueTrendLooksEmpty || plTrendLooksEmpty)) {
+          const fallback = makeFallbackTrend(portfolioRows);
+          setPortfolioValueSeries(
+            valueTrendLooksEmpty ? fallback.valueSeries : normalizedValueTrend
+          );
+          setPlSeries(plTrendLooksEmpty ? fallback.pnlSeries : normalizedPlTrend);
+        } else {
+          setPortfolioValueSeries(normalizedValueTrend);
+          setPlSeries(normalizedPlTrend);
+        }
+
         setTransactions(res.data.transactions || []);
 
         // ✅ Group companies into sectors

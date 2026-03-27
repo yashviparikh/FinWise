@@ -10,7 +10,7 @@ class Users(db.Model):
     password_hash = db.Column(db.String(255))  # nullable for SSO users
     otp_code = db.Column(db.String(10))
     otp_ts = db.Column(db.DateTime)
-    money=db.Column(db.Numeric(12,2), default=10000)
+    money=db.Column(db.Numeric(12,2), default=50000)
     profitorloss=db.Column(db.Numeric(12,2), default=0)
     profitpercent=db.Column(db.Float,default=0.0)
     losspercent=db.Column(db.Float,default=0.0)

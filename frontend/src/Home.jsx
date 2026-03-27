@@ -47,7 +47,7 @@ function Home() {
       {/* 🔑 Login Section */}
       <section className="login-section">
         <p>
-          🔑 <button onClick={() => nav('/Log')}>Login</button>
+          🔑 <button className="btn-login" onClick={() => nav('/Log')}>Login</button>
         </p>
       </section>
     </div>

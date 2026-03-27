@@ -140,7 +140,10 @@ def update_user_portfolio_history(userid: int, months: int = 6) -> int:
     """Fetch recent price history for all user's portfolio symbols and upsert into Stockhistory.
     Returns number of rows upserted. Uses weekly data for last `months` months.
     """
-    rows = Portfolio.query.filter_by(userid=userid).all()
+    rows = Portfolio.query.filter(
+        Portfolio.userid == int(userid),
+        Portfolio.totalquantity > 0
+    ).all()
     if not rows:
         return 0
 
@@ -484,8 +487,14 @@ def get_dashboard_data(userid):
     ]
 
     history = Stockhistory.query.filter_by(userid=userid).order_by(Stockhistory.dates.asc()).all()
-    # If no history yet, try to backfill from yfinance for last 6 months
-    if not history:
+    current_symbols = {
+        h["stockname"] for h in portfolio if int(h.get("totalquantity") or 0) > 0 and h.get("stockname")
+    }
+    history_symbols = {h.stock_name for h in history}
+    missing_symbols = current_symbols - history_symbols
+
+    # Backfill if history is empty OR missing one or more currently held symbols.
+    if (not history) or missing_symbols:
         try:
             updated = update_user_portfolio_history(userid, months=6)
             if updated:
@@ -501,7 +510,11 @@ def get_dashboard_data(userid):
         ])
         if not df.empty:
             # Map each stock to user's current quantity (approximation without full lot history)
-            qty_map = {h["stockname"]: int(h["totalquantity"] or 0) for h in portfolio}
+            qty_map = {
+                h["stockname"]: int(h["totalquantity"] or 0)
+                for h in portfolio
+                if int(h.get("totalquantity") or 0) > 0
+            }
             df["qty"] = df["stock"].map(lambda s: qty_map.get(s, 0))
             df["value"] = df["close"] * df["qty"]
 
@@ -530,4 +543,3 @@ def get_dashboard_data(userid):
         "investment_split": investment_split, "portfolio_value_trend": portfolio_value_trend,
         "profit_loss_trend": profit_loss_trend, "transactions": transactions
     }
-

@@ -14,7 +14,7 @@ import Signup from './Signup';
 import OtpReset from './OTPReset';
 
 function App() {
-  const [wallet, setWallet] = useState(10000);
+  const [wallet, setWallet] = useState(50000);
 
   const [portfolio, setPortfolio] = useState([]);
 

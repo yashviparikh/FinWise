@@ -256,28 +256,6 @@ export default function TradeSimulator() {
             ? `Click to set ${activeAction} at ${formatInr(hoverPoint.close)} on ${hoverPoint.date}`
             : `Hover over chart, then left or right click to set ${activeAction}`}
         </div>
-        <div className="sim-hover-actions">
-          <button
-            className="sim-btn buy"
-            disabled={!hoverPoint}
-            onClick={() => {
-              setActiveAction("BUY");
-              applyPointSelection(hoverPoint);
-            }}
-          >
-            Set BUY At Hovered
-          </button>
-          <button
-            className="sim-btn sell"
-            disabled={!hoverPoint || !buyPoint}
-            onClick={() => {
-              setActiveAction("SELL");
-              applyPointSelection(hoverPoint);
-            }}
-          >
-            Set SELL At Hovered
-          </button>
-        </div>
         {chartActionError && <div className="sim-chart-error">{chartActionError}</div>}
 
         {loadingHistory ? (

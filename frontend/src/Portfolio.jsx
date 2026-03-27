@@ -310,15 +310,15 @@ export default function Portfolio({ userid = 1 }) {
 
           <div className="holdings-table">
             <div className="table-head">
-              <div>Stock Name</div>
-              <div>Total Quantity</div>
-              <div>Average Buy Price</div>
-              <div>Total Invested</div>
-              <div>LTP</div>
-              <div>Profit or Loss</div>
-              <div>Percentage</div>
-              <div>Now Value</div>
-              <div>Action</div>
+              <div className="col-stock">Stock Name</div>
+              <div className="col-num">Total Quantity</div>
+              <div className="col-num">Average Buy Price</div>
+              <div className="col-num">Total Invested</div>
+              <div className="col-num">LTP</div>
+              <div className="col-num">Profit or Loss</div>
+              <div className="col-num">Percentage</div>
+              <div className="col-num">Now Value</div>
+              <div className="col-action">Action</div>
             </div>
 
             {filteredPortfolio.length === 0 && (
@@ -343,32 +343,32 @@ export default function Portfolio({ userid = 1 }) {
                     }
                   }}
                 >
-                  <div className="stock-col">
+                  <div className="stock-col col-stock">
                     <div className="symbol">{holding.stockname}</div>
                     <div className="company-block">
                       <div className="company">
                         {holding.companyname || "View stock chart"}
                       </div>
-                      <div className="chart-hint">Click to open Scanstock chart</div>
+                      <div className="chart-hint">Click to open candlestick chart</div>
                     </div>
                   </div>
-                  <div>{holding.totalquantity}</div>
-                  <div>{formatCurrency(holding.averagebuyprice)}</div>
-                  <div>{formatCurrency(holding.totalinvested)}</div>
-                  <div>{formatCurrency(holding.ltp)}</div>
+                  <div className="col-num">{holding.totalquantity}</div>
+                  <div className="col-num">{formatCurrency(holding.averagebuyprice)}</div>
+                  <div className="col-num">{formatCurrency(holding.totalinvested)}</div>
+                  <div className="col-num">{formatCurrency(holding.ltp)}</div>
                   <div
-                    className={holding.profitorloss >= 0 ? "green" : "red"}
+                    className={`col-num ${holding.profitorloss >= 0 ? "green" : "red"}`}
                   >
                     {holding.profitorloss >= 0 ? "+" : "-"}
                     {formatCurrency(Math.abs(holding.profitorloss))}
                   </div>
                   <div
-                    className={holding.profitorloss >= 0 ? "green" : "red"}
+                    className={`col-num ${holding.profitorloss >= 0 ? "green" : "red"}`}
                   >
                     {holding.percentage.toFixed(2)}%
                   </div>
-                  <div>{formatCurrency(holding.nowvalue)}</div>
-                  <div className="row-actions">
+                  <div className="col-num">{formatCurrency(holding.nowvalue)}</div>
+                  <div className="row-actions col-action">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();

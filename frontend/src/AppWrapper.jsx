@@ -33,7 +33,7 @@ function AppWrapper() {
 
   const [wallet, setWallet] = useState(() => {
     const saved = localStorage.getItem('wallet');
-    return saved ? parseFloat(saved) : 10000;
+    return saved ? parseFloat(saved) : 50000;
   });
 
   const [watchlist, setWatchlist] = useState(() => {

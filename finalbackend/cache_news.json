@@ -1,37 +1,37 @@
 {
-  "last_updated": "2026-03-25T18:25:06.393099",
+  "last_updated": "2026-03-27T14:39:56.630860",
   "news": [
     {
-      "headline": "Stocks to buy: Raja Venkatraman recommends three stocks for 25 March",
-      "summary": "Market expert Raja Venkatraman shares his top stock picks for 25 March. Here\u2019s his technical outlook...",
+      "headline": "Dollar Strengthens Amid US-Iran Tensions and Energy Market Concerns",
+      "summary": "The U.S. dollar climbed against major currencies due to tensions between the U.S. and Iran, affectin...",
+      "sentiment": "bearish",
+      "market reaction": "Selling pressure",
+      "investor reaction": "Consider reducing positions or hedging"
+    },
+    {
+      "headline": "Global Markets Reeling: Energy Crisis and Market Turmoil",
+      "summary": "Global markets are in turmoil as the Middle East conflict continues, impacting stock indexes, oil pr...",
       "sentiment": "neutral",
       "market reaction": "Hold or sideways",
       "investor reaction": "Hold positions, monitor closely"
     },
     {
-      "headline": "Stock Market Today: All You Need To Know Before Going Into Trade On March 25",
-      "summary": "Stocks in the news, big brokerage calls of the day, complete trade setup and much more!...",
+      "headline": "Market Turmoil Amid U.S.-Iran Tensions",
+      "summary": "Wall Street faced sharp declines on Thursday as tensions in the U.S.-Iran conflict escalated. The on...",
       "sentiment": "neutral",
       "market reaction": "Hold or sideways",
       "investor reaction": "Hold positions, monitor closely"
     },
     {
-      "headline": "OpenAI's Abrupt Shift: Disney's Billion-Dollar Sora Project Cancelled",
-      "summary": "OpenAI unexpectedly discontinued its AI video tool, Sora, a cornerstone of a $1 billion deal with Di...",
+      "headline": "Global Stocks: FTSE Russell to align free-float rules for UK, foreign firms",
+      "summary": "FTSE Russell will lower the minimum free-float requirement for all companies in the FTSE UK Index Se...",
       "sentiment": "neutral",
       "market reaction": "Hold or sideways",
       "investor reaction": "Hold positions, monitor closely"
     },
     {
-      "headline": "AAP MP Chadha seeks relief for retail investors after market mayhem following West Asia crisis",
-      "summary": "NEW DELHI, Mar 24: Citing erosion of Rs 48 lakh crore wealth from Indian stock markets since the beg...",
-      "sentiment": "neutral",
-      "market reaction": "Hold or sideways",
-      "investor reaction": "Hold positions, monitor closely"
-    },
-    {
-      "headline": "Volatile Wall Street: Oil Prices and Middle East Tensions Rattle Markets",
-      "summary": "Wall Street faced a turbulent session with concerns over rising oil prices and ongoing Middle East t...",
+      "headline": "Why is US stock market crashing today? Dow, Nasdaq, S&P 500 down as oil prices surge - here's why tech stocks falling faster than the broader market",
+      "summary": "US stock market crash today deepened as the Dow Jones Industrial Average fell 222 points, while the ...",
       "sentiment": "bearish",
       "market reaction": "Selling pressure",
       "investor reaction": "Consider reducing positions or hedging"
