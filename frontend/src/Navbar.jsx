@@ -22,12 +22,12 @@ export default function Navbar() {
       </div>
 
       <div className="nav-right">
+        <Link to="/dashboard" className="nav-link">Dashboard</Link>
         <Link to="/watchlist" className="nav-link">Watchlist</Link>
+        <Link to="/stockprediction" className="nav-link">Stock Prediction</Link>
         <Link to="/portfolio" className="nav-link">Portfolio</Link>
         <Link to="/learnings" className="nav-link">Learnings</Link>
-        <Link to="/dashboard" className="nav-link">Dashboard</Link>
         <Link to="/trade-simulator" className="nav-link">Trade Simulator</Link>
-        <Link to="/stockprediction" className="nav-link">Stock Prediction</Link>
         {user ? (
           <>
             <button className="nav-account" onClick={() => setOpen(true)}>
